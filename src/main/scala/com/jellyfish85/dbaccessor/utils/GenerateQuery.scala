@@ -19,9 +19,10 @@ object GenerateQuery {
        val reader: BufferedReader =
          new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))
 
+       val buf: StringBuffer = new StringBuffer()
        var content: String = ""
        while ((content = reader.readLine()) != null) {
-         buf.append(contents)
+         buf.append(content)
          buf.append("\n")
        }
 

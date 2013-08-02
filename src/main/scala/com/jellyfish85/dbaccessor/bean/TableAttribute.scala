@@ -2,16 +2,16 @@ package com.jellyfish85.dbaccessor.bean
 
 class TableAttribute {
 
-  def logicalTableName:  String = _
-  def physicalTableName: String = _
+  var logicalTableName:  String = _
+  var physicalTableName: String = _
 
-  def logicalColumnName:  String = _
-  def physicalColumnName: String = _
+  var logicalColumnName:  String = _
+  var physicalColumnName: String = _
 
-  def dataBaseColumnType: String = _
-  def javaFieldType:      String = _
+  var dataBaseColumnType: String = _
+  var javaFieldType:      String = _
 
-  def isPk:     Boolean = _
-  def nullAble: Boolean = _
+  var isPk:     Boolean = _
+  var nullAble: Boolean = _
 
 }
