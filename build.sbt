@@ -19,4 +19,4 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.5"
 )
 
-testOptions += Tests.Argument(TestFrameworks.Specs2, "console", "junitxml")s
+testOptions += Tests.Argument(TestFrameworks.Specs2, "console", "junitxml")

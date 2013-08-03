@@ -1,5 +1,7 @@
 package com.jellyfish85.dbaccessor.dao
 
-class GeneralDao {
+import com.jellyfish85.dbaccessor.utils.GenerateQuery
+
+abstract class GeneralDao extends GenerateQuery {
 
 }
