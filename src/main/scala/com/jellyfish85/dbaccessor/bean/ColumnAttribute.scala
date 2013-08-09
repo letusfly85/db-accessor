@@ -1,6 +1,6 @@
 package com.jellyfish85.dbaccessor.bean
 
-class ColumnAttribute {
+class ColumnAttribute[A] {
 
   var logicalColumnName:  String = _
   var physicalColumnName: String = _
@@ -8,7 +8,7 @@ class ColumnAttribute {
   var dataBaseColumnType: String = _
   var javaFieldType:      String = _
 
-  var value: Object = _
+  var value: A = _
 
   var isPk:     Boolean = _
   var nullAble: Boolean = _
