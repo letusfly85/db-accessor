@@ -1,9 +1,6 @@
 package com.jellyfish85.dbaccessor.bean
 
-class TableAttribute {
-
-  var logicalTableName:  String = _
-  var physicalTableName: String = _
+class ColumnAttribute {
 
   var logicalColumnName:  String = _
   var physicalColumnName: String = _
@@ -11,7 +8,12 @@ class TableAttribute {
   var dataBaseColumnType: String = _
   var javaFieldType:      String = _
 
+  var value: Object = _
+
   var isPk:     Boolean = _
   var nullAble: Boolean = _
+
+  var isUpdateKey: Boolean = _
+  var isTargetKey: Boolean = _
 
 }

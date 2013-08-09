@@ -1,5 +1,8 @@
 package com.jellyfish85.dbaccessor.bean
 
-abstract class GeneralBean extends TableAttribute {
+trait GeneralBean extends ColumnAttribute {
+
+  val logicalTableName:  String
+  val physicalTableName: String
 
 }
