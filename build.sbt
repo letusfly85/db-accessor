@@ -11,8 +11,6 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 addSbtPlugin("reaktor" % "sbt-scct" % "0.2-SNAPSHOT")
 
 libraryDependencies ++= Seq(
-  "com.github.scala-incubator.io" %% "scala-io-core" % "0.4.0",
-  "com.github.scala-incubator.io" %% "scala-io-file" % "0.4.0",
   "org.apache.commons" % "commons-lang3" % "3.1",
   "commons-io" % "commons-io" % "2.4",
   "junit" % "junit" % "4.10",
