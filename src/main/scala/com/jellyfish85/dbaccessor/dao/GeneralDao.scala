@@ -9,12 +9,12 @@ abstract class GeneralDao[A] extends GenerateQuery {
 
   def find(db: DatabaseManager,   bean: A): List[A]
 
-  def insert(db: DatabaseManager, bean: A): BigDecimal
+  def insert(db: DatabaseManager, bean: A): Int
 
-  def update(db: DatabaseManager, bean: A): BigDecimal
+  def update(db: DatabaseManager, bean: A): Int
 
-  def delete(db: DatabaseManager, bean: A): BigDecimal
+  def delete(db: DatabaseManager, bean: A): Int
 
-  def merge(db: DatabaseManager,  bean: A): BigDecimal
+  def merge(db: DatabaseManager,  bean: A): Int
 
 }

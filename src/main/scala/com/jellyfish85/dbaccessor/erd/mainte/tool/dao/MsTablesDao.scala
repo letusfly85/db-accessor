@@ -55,20 +55,20 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
     list
   }
 
-  def insert(db: DatabaseManager, bean: MsTablesBean): BigDecimal = {
-    val result: BigDecimal = 0
+  def insert(db: DatabaseManager, bean: MsTablesBean): Int = {
+    val result: Int = 0
 
     result
   }
 
-  def update(db: DatabaseManager, bean: MsTablesBean) : BigDecimal = {
-    val result: BigDecimal = 0
+  def update(db: DatabaseManager, bean: MsTablesBean) : Int = {
+    val result: Int = 0
 
     result
   }
 
-  def delete(db: DatabaseManager, bean: MsTablesBean): BigDecimal = {
-    val result: BigDecimal = 0
+  def delete(db: DatabaseManager, bean: MsTablesBean): Int = {
+    val result: Int = 0
 
     result
   }
@@ -80,8 +80,8 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
    * @param bean
    * @return
    */
-  def merge(db: DatabaseManager,  bean: MsTablesBean): BigDecimal = {
-    val result: BigDecimal = 0
+  def merge(db: DatabaseManager,  bean: MsTablesBean): Int = {
+    var result: Int = 0
 
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_MS_TABLES.sql")
     val stmt: PreparedStatement = db.conn.prepareStatement(sql)
@@ -107,6 +107,8 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
       stmt.setString(16, bean.segoseiCheckStatusAttr.value)
       stmt.setBigDecimal(17, bean.ticketNumberAttr.value.asInstanceOf[java.math.BigDecimal])
       stmt.setString(18, bean.existsFlgAttr.value)
+
+      result = stmt.executeUpdate()
 
     } catch {
       case e: SQLException =>
