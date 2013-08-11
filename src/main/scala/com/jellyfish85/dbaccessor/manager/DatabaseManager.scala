@@ -16,7 +16,12 @@ class DatabaseManager {
     val property: Properties = new Properties()
 
     try {
-      property.load(getClass().getResourceAsStream("/properties/app.properties"))
+      if (System.getProperty("app.env.name") == "development") {
+        property.load(getClass().getResourceAsStream("/properties/dev.properties"))
+
+      } else {
+        property.load(getClass().getResourceAsStream("/properties/app.properties"))
+      }
 
       val jdbcURL: String = property.getProperty("URL")
       val user:    String = property.getProperty("USER")

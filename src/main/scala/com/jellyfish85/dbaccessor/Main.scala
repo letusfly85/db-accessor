@@ -27,7 +27,5 @@ object Main {
     } finally {
       db.jClose
     }
-
   }
-
 }
