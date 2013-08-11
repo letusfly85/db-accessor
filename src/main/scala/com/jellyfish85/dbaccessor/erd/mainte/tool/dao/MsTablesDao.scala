@@ -1,7 +1,6 @@
 package com.jellyfish85.dbaccessor.erd.mainte.tool.dao
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
-import com.jellyfish85.dbaccessor.manager.DatabaseManager
 import com.jellyfish85.dbaccessor.erd.mainte.tool.bean.MsTablesBean
 import java.sql.{Connection, SQLException, ResultSet, PreparedStatement}
 
