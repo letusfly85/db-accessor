@@ -5,15 +5,16 @@ import com.jellyfish85.dbaccessor.erd.mainte.tool.bean.MsTablesBean
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
 
 class MsTablesDaoTest extends Specification {
+  val db = new DatabaseManager
 
   "return true" should {
     val dao: MsTablesDao = new MsTablesDao
     var bean: MsTablesBean  = new MsTablesBean
     bean.physicalTableNameAttr.value =  "T_KK_KOKYK_KHN"
 
-    val db = new DatabaseManager
     db.connect
     bean = dao.find(db.conn, bean)(0)
+    db.jClose
 
     //顧客基本テーブルを指定してエンティティが取得できることを確認する
     "return true for T_KK_KOKYK_KHN" in {

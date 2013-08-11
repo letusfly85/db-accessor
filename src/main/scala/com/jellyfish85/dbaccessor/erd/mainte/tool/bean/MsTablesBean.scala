@@ -4,8 +4,8 @@ import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
 
 class MsTablesBean extends GeneralBean {
 
-  val logicalTableName:  String =  ""
-  val physicalTableName: String =  ""
+  val logicalTableName:  String =  "テーブルマスタ"
+  val physicalTableName: String =  "MS_TABLES"
 
   var	trkmIdAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var	tabDefIdAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
