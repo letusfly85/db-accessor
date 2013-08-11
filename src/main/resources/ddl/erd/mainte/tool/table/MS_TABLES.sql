@@ -1,6 +1,6 @@
-/****
+/************************************
     表名：テーブルマスタ
- ****/
+ ************************************/
 CREATE TABLE MS_TABLES (
 	TRKM_ID					NUMBER(38,0)		NOT NULL,
 	TAB_DEF_ID				NUMBER(38,0)		NOT NULL,

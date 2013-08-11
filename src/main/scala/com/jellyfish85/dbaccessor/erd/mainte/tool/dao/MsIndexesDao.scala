@@ -6,6 +6,13 @@ import java.sql.{PreparedStatement, Connection}
 
 class MsIndexesDao extends GeneralDao[MsIndexesBean] {
 
+  /**
+   * インデックスマスタ検索
+   *
+   * @param conn コネクション
+   * @param bean インデックス名（物理）
+   * @return インデックスマスタビーン
+   */
   def find(conn: Connection,   bean: MsIndexesBean): List[MsIndexesBean] = {
     var list: List[MsIndexesBean] = List()
 
@@ -61,6 +68,8 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
   }
 
   def merge(conn: Connection,  bean: MsIndexesBean): Int = {
+    //TODO 実装
+
     val result: Int = 0
 
     result
