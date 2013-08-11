@@ -6,9 +6,9 @@ import com.jellyfish85.dbaccessor.manager.DatabaseManager
 
 class MsTablesDaoTest extends Specification {
   val db = new DatabaseManager
+  val dao: MsTablesDao = new MsTablesDao
 
   "return true" should {
-    val dao: MsTablesDao = new MsTablesDao
     var bean: MsTablesBean  = new MsTablesBean
     bean.physicalTableNameAttr.value =  "T_KK_KOKYK_KHN"
 
@@ -22,6 +22,7 @@ class MsTablesDaoTest extends Specification {
       _bean.physicalTableNameAttr.value = "T_KK_KOKYK_KHN"
       _bean.logicalTableNameAttr.value  = "トラン_KK_顧客_基本"
 
+      bean.physicalTableNameAttr.value must beEqualTo(_bean.physicalTableNameAttr.value)
       bean.logicalTableNameAttr.value  must beEqualTo(_bean.logicalTableNameAttr.value)
     }
   }
