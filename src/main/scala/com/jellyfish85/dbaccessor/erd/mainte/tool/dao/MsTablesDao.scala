@@ -3,22 +3,22 @@ package com.jellyfish85.dbaccessor.erd.mainte.tool.dao
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
 import com.jellyfish85.dbaccessor.erd.mainte.tool.bean.MsTablesBean
-import java.sql.{SQLException, ResultSet, PreparedStatement}
+import java.sql.{Connection, SQLException, ResultSet, PreparedStatement}
 
 class MsTablesDao extends GeneralDao[MsTablesBean] {
 
   /**
    * テーブルマスタ検索
    *
-   * @param db
+   * @param conn
    * @param bean テーブル名（物理）を検索キーとする
    * @return テーブルマスタ明細を返却する
    */
-  def find(db: DatabaseManager,   bean: MsTablesBean): List[MsTablesBean] = {
+  def find(conn: Connection,   bean: MsTablesBean): List[MsTablesBean] = {
     var list: List[MsTablesBean] = List()
 
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_TABLES.sql")
-    val stmt: PreparedStatement = db.conn.prepareStatement(sql)
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
     try {
       stmt.setString(1, bean.physicalTableNameAttr.value)
 
@@ -46,7 +46,9 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
 
     } catch {
       case e: SQLException =>
+        conn.rollback()
         e.printStackTrace()
+        throw new RuntimeException
 
     } finally {
         stmt.close()
@@ -55,19 +57,19 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
     list
   }
 
-  def insert(db: DatabaseManager, bean: MsTablesBean): Int = {
+  def insert(conn: Connection, bean: MsTablesBean): Int = {
     val result: Int = 0
 
     result
   }
 
-  def update(db: DatabaseManager, bean: MsTablesBean) : Int = {
+  def update(conn: Connection, bean: MsTablesBean) : Int = {
     val result: Int = 0
 
     result
   }
 
-  def delete(db: DatabaseManager, bean: MsTablesBean): Int = {
+  def delete(conn: Connection, bean: MsTablesBean): Int = {
     val result: Int = 0
 
     result
@@ -76,15 +78,15 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
   /**
    * テーブルマスタマージ
    *
-   * @param db
+   * @param conn
    * @param bean
    * @return
    */
-  def merge(db: DatabaseManager,  bean: MsTablesBean): Int = {
+  def merge(conn: Connection,  bean: MsTablesBean): Int = {
     var result: Int = 0
 
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_MS_TABLES.sql")
-    val stmt: PreparedStatement = db.conn.prepareStatement(sql)
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     try {
 
@@ -112,7 +114,9 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
 
     } catch {
       case e: SQLException =>
+        conn.rollback()
         e.printStackTrace()
+        throw new RuntimeException
 
     } finally {
       stmt.close()

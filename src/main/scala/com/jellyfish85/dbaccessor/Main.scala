@@ -20,8 +20,9 @@ object Main {
       val bean: MsTablesBean = new MsTablesBean
       bean.physicalTableNameAttr.value = "T_KK_KOKYK_KHN"
 
-      val list: List[MsTablesBean] =  dao.find(db, bean)
+      val list: List[MsTablesBean] =  dao.find(db.conn, bean)
       list.foreach {b: MsTablesBean => println(b.physicalTableNameAttr.value)}
+
 
     } finally {
       db.jClose

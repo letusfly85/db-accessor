@@ -1,20 +1,19 @@
 package com.jellyfish85.dbaccessor.dao
 
 import com.jellyfish85.dbaccessor.utils.GenerateQuery
-import com.jellyfish85.dbaccessor.manager.DatabaseManager
 
-import java.sql.{PreparedStatement}
+import java.sql.Connection
 
 abstract class GeneralDao[A] extends GenerateQuery {
 
-  def find(db: DatabaseManager,   bean: A): List[A]
+  def find(conn: Connection,   bean: A): List[A]
 
-  def insert(db: DatabaseManager, bean: A): Int
+  def insert(conn: Connection, bean: A): Int
 
-  def update(db: DatabaseManager, bean: A): Int
+  def update(conn: Connection, bean: A): Int
 
-  def delete(db: DatabaseManager, bean: A): Int
+  def delete(conn: Connection, bean: A): Int
 
-  def merge(db: DatabaseManager,  bean: A): Int
+  def merge(conn: Connection,  bean: A): Int
 
 }
