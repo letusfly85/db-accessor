@@ -62,13 +62,49 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
     list
   }
 
-  def insert(conn: Connection, bean: MsTabColumnsBean): Int = {
+  def insert(conn: Connection, list: List[MsTabColumnsBean]): Int = {
     var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_MS_TAB_COLUMNS.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    try {
+      list.foreach {bean: MsTabColumnsBean =>
+        stmt.setBigDecimal(1, bean.tabDefIdAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setBigDecimal(2, bean.tableIdAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setBigDecimal(3, bean.revisionAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setString(4, bean.logicalTableNameAttr.value)
+        stmt.setString(5, bean.physicalTableNameAttr.value)
+        stmt.setString(6, bean.tableCommentAttr.value)
+        stmt.setBigDecimal(7, bean.columnIdAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setString(8, bean.logicalColumnNameAttr.value)
+        stmt.setString(9, bean.physicalColumnNameAttr.value)
+        stmt.setString(10, bean.columnCommentAttr.value)
+        stmt.setString(11, bean.dataTypeAttr.value)
+        stmt.setString(12, bean.dataLengthAttr.value)
+        stmt.setString(13, bean.dataPrecisionAttr.value)
+        stmt.setString(14, bean.dataDefaultAttr.value)
+        stmt.setString(15, bean.pkFlgAttr.value)
+        stmt.setString(16, bean.nullableAttr.value)
+        stmt.setString(17, bean.trkmStatusAttr.value)
+        stmt.setBigDecimal(18, bean.ticketNumberAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setString(19, bean.existsFlgAttr.value)
+
+        stmt.executeQuery()
+        result += 1
+      }
+
+    } catch {
+      case e: SQLException =>
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException("")
+    }
 
     result
   }
 
-  def update(conn: Connection, bean: MsTabColumnsBean): Int = {
+  def update(conn: Connection, list: List[MsTabColumnsBean]): Int = {
     var result: Int = 0
 
     result

@@ -56,13 +56,13 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
     list
   }
 
-  def insert(conn: Connection, bean: MsTablesBean): Int = {
+  def insert(conn: Connection, list: List[MsTablesBean]): Int = {
     val result: Int = 0
 
     result
   }
 
-  def update(conn: Connection, bean: MsTablesBean) : Int = {
+  def update(conn: Connection, list: List[MsTablesBean]) : Int = {
     val result: Int = 0
 
     result

@@ -49,13 +49,13 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
     list
   }
 
-  def insert(conn: Connection, bean: MsIndexesBean): Int = {
+  def insert(conn: Connection, list: List[MsIndexesBean]): Int = {
     val result: Int = 0
 
     result
   }
 
-  def update(conn: Connection, bean: MsIndexesBean): Int = {
+  def update(conn: Connection, list: List[MsIndexesBean]): Int = {
     val result: Int = 0
 
     result

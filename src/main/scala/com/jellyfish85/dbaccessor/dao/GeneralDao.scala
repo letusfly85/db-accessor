@@ -8,9 +8,9 @@ abstract class GeneralDao[A] extends GenerateQuery {
 
   def find(conn: Connection,   bean: A): List[A]
 
-  def insert(conn: Connection, bean: A): Int
+  def insert(conn: Connection, list: List[A]): Int
 
-  def update(conn: Connection, bean: A): Int
+  def update(conn: Connection, list: List[A]): Int
 
   def delete(conn: Connection, bean: A): Int
 
