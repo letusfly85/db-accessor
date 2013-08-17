@@ -1,6 +1,7 @@
 package com.jellyfish85.dbaccessor.erd.mainte.tool.bean
 
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
+import java.math.BigDecimal
 
 class MsTabColumnsBean extends GeneralBean {
 

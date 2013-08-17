@@ -90,7 +90,7 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
         stmt.setBigDecimal(18, bean.ticketNumberAttr.value.asInstanceOf[java.math.BigDecimal])
         stmt.setString(19, bean.existsFlgAttr.value)
 
-        stmt.executeQuery()
+        stmt.execute()
         result += 1
       }
 

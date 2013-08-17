@@ -29,11 +29,16 @@ class DatabaseManager {
 
       Class.forName("oracle.jdbc.driver.OracleDriver").newInstance()
       conn = DriverManager.getConnection(jdbcURL,user,pass)
+      conn.setAutoCommit(false)
 
     } catch  {
       case e:Exception =>
         e.printStackTrace()
     }
+  }
+
+  def jRollback {
+    if (!conn.isClosed) conn.rollback()
   }
 
   def jClose {
