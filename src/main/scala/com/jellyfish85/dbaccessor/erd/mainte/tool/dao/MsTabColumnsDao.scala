@@ -70,13 +70,13 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
 
     try {
       list.foreach {bean: MsTabColumnsBean =>
-        stmt.setBigDecimal(1, bean.tabDefIdAttr.value.asInstanceOf[java.math.BigDecimal])
-        stmt.setBigDecimal(2, bean.tableIdAttr.value.asInstanceOf[java.math.BigDecimal])
-        stmt.setBigDecimal(3, bean.revisionAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setBigDecimal(1, bean.tabDefIdAttr.value)
+        stmt.setBigDecimal(2, bean.tableIdAttr.value)
+        stmt.setBigDecimal(3, bean.revisionAttr.value)
         stmt.setString(4, bean.logicalTableNameAttr.value)
         stmt.setString(5, bean.physicalTableNameAttr.value)
         stmt.setString(6, bean.tableCommentAttr.value)
-        stmt.setBigDecimal(7, bean.columnIdAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setBigDecimal(7, bean.columnIdAttr.value)
         stmt.setString(8, bean.logicalColumnNameAttr.value)
         stmt.setString(9, bean.physicalColumnNameAttr.value)
         stmt.setString(10, bean.columnCommentAttr.value)
@@ -87,7 +87,7 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
         stmt.setString(15, bean.pkFlgAttr.value)
         stmt.setString(16, bean.nullableAttr.value)
         stmt.setString(17, bean.trkmStatusAttr.value)
-        stmt.setBigDecimal(18, bean.ticketNumberAttr.value.asInstanceOf[java.math.BigDecimal])
+        stmt.setBigDecimal(18, bean.ticketNumberAttr.value)
         stmt.setString(19, bean.existsFlgAttr.value)
 
         stmt.execute()
