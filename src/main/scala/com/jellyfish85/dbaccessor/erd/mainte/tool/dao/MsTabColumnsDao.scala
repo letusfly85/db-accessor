@@ -6,6 +6,13 @@ import java.sql.{Connection, SQLException, ResultSet, PreparedStatement}
 
 class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
 
+  /**
+   * カラムマスタ検索
+   *
+   * @param conn
+   * @param bean
+   * @return
+   */
   def find(conn: Connection,   bean: MsTabColumnsBean): List[MsTabColumnsBean] = {
     var list: List[MsTabColumnsBean] = List()
 
@@ -62,6 +69,13 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
     list
   }
 
+  /**
+   * カラムマスタ登録
+   *
+   * @param conn
+   * @param list
+   * @return
+   */
   def insert(conn: Connection, list: List[MsTabColumnsBean]): Int = {
     var result: Int = 0
 
@@ -110,8 +124,31 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
     result
   }
 
+  /**
+   * カラムマスタ削除
+   *
+   * @param conn
+   * @param bean
+   * @return
+   */
   def delete(conn: Connection, bean: MsTabColumnsBean): Int = {
     var result: Int = 0
+
+    val sql  = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_TAB_COLUMNS.sql")
+    val stmt = conn.prepareStatement(sql)
+
+    try {
+      stmt.setBigDecimal(1, bean.tableIdAttr.value)
+      stmt.setString(2, bean.physicalTableNameAttr.value)
+
+      result = stmt.executeUpdate()
+
+    } catch {
+    case e: SQLException =>
+      conn.rollback()
+      e.printStackTrace()
+      throw new RuntimeException("")
+    }
 
     result
   }

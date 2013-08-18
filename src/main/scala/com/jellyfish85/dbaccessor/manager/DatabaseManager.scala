@@ -45,4 +45,8 @@ class DatabaseManager {
     if (!conn.isClosed) conn.close()
   }
 
+  def jCommit {
+    if (!conn.isClosed) conn.commit()
+  }
+
 }
