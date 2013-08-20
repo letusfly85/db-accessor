@@ -57,7 +57,36 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
   }
 
   def insert(conn: Connection, list: List[MsTablesBean]): Int = {
-    val result: Int = 0
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_MS_TABLES.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    try {
+      list.foreach {bean: MsTablesBean =>
+        stmt.setBigDecimal(1, bean.trkmIdAttr.value)
+        stmt.setBigDecimal(2, bean.tabDefIdAttr.value)
+        stmt.setBigDecimal(3, bean.tableIdAttr.value)
+        stmt.setBigDecimal(4, bean.revisionAttr.value)
+        stmt.setString(5, bean.logicalTableTagAttr.value)
+        stmt.setString(6, bean.logicalTableNameAttr.value)
+        stmt.setString(7, bean.physicalTableNameAttr.value)
+        stmt.setString(8, bean.trkmStatusAttr.value)
+        stmt.setString(9, bean.tableCommentAttr.value)
+        stmt.setString(10, bean.segoseiCheckStatusAttr.value)
+        stmt.setBigDecimal(11, bean.ticketNumberAttr.value)
+        stmt.setString(12, bean.existsFlgAttr.value)
+
+        stmt.addBatch()
+      }
+
+      result = stmt.executeBatch().size
+
+    } catch {
+      case e: SQLException =>
+        conn.rollback()
+        e.printStackTrace()
+    }
 
     result
   }
@@ -69,7 +98,23 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
   }
 
   def delete(conn: Connection, bean: MsTablesBean): Int = {
-    val result: Int = 0
+    var result: Int = 0
+
+    val sql  = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_TABLES.sql")
+    val stmt = conn.prepareStatement(sql)
+
+    try {
+      stmt.setBigDecimal(1, bean.tableIdAttr.value)
+      stmt.setString(2, bean.physicalTableNameAttr.value)
+
+      result = stmt.executeUpdate()
+
+    } catch {
+      case e: SQLException =>
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException("")
+    }
 
     result
   }

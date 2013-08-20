@@ -2,7 +2,7 @@ package com.jellyfish85.dbaccessor.erd.mainte.tool.dao
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import com.jellyfish85.dbaccessor.erd.mainte.tool.bean.MsIndexesBean
-import java.sql.{PreparedStatement, Connection}
+import java.sql.{SQLException, PreparedStatement, Connection}
 
 class MsIndexesDao extends GeneralDao[MsIndexesBean] {
 
@@ -50,7 +50,41 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
   }
 
   def insert(conn: Connection, list: List[MsIndexesBean]): Int = {
-    val result: Int = 0
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_MS_INDEXES.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    try {
+      list.foreach {bean: MsIndexesBean =>
+        stmt.setString(1, bean.indexNameAttr.value)
+        stmt.setBigDecimal(2, bean.revisionAttr.value)
+        stmt.setBigDecimal(3, bean.tableIdAttr.value)
+        stmt.setBigDecimal(4, bean.tabDefIdAttr.value)
+        stmt.setBigDecimal(5, bean.ticketNumberAttr.value)
+        stmt.setString(6, bean.uniquenessAttr.value)
+        stmt.setString(7, bean.functionAttr.value)
+        stmt.setString(8, bean.bitmapAttr.value)
+        stmt.setString(9, bean.reverseAttr.value)
+        stmt.setString(10, bean.keyCompressAttr.value)
+        stmt.setString(11, bean.commitFlgAttr.value)
+        stmt.setString(12, bean.functionFomulaAttr.value)
+        stmt.setString(13, bean.localityAttr.value)
+        stmt.setString(14, bean.partitionedAttr.value)
+        stmt.setString(15, bean.statusAttr.value)
+        stmt.setString(16, bean.pkIndexFlgAttr.value)
+
+        stmt.addBatch()
+      }
+
+      result = stmt.executeBatch().size
+
+    } catch {
+      case e: SQLException =>
+        conn.rollback()
+        e.printStackTrace()
+        throw new SQLException()
+    }
 
     result
   }
@@ -62,7 +96,22 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
   }
 
   def delete(conn: Connection, bean: MsIndexesBean): Int = {
-    val result: Int = 0
+    var result: Int = 0
+
+    val sql  = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_INDEXES.sql")
+    val stmt = conn.prepareStatement(sql)
+
+    try {
+      stmt.setString(1, bean.indexNameAttr.value)
+
+      result = stmt.executeUpdate()
+
+    } catch {
+      case e: SQLException =>
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException("")
+    }
 
     result
   }
