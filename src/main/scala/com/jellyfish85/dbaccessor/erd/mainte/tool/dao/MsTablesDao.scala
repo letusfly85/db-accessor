@@ -120,11 +120,11 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
   }
 
   /**
-   * テーブルマスタマージ
+   * == table master merge ==
    *
-   * @param conn
-   * @param bean
-   * @return
+   * @param  conn JDBC Connection
+   * @param  bean MsTablesBean
+   * @return result which is the number of executed records
    */
   def merge(conn: Connection,  bean: MsTablesBean): Int = {
     var result: Int = 0
