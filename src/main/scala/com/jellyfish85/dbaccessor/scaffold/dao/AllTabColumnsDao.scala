@@ -20,7 +20,7 @@ class AllTabColumnsDao extends GeneralDao[AllTabColumnsBean] {
   def find(conn: Connection,   bean: AllTabColumnsBean): List[AllTabColumnsBean] = {
     var list: List[AllTabColumnsBean] = List()
 
-    val sql:  String = generateSimpleQuery("/scaffold/SELECT_ALL_TAB_COLUMNS.sql")
+    val sql:  String = generateSimpleQuery("/query/scaffold/SELECT_ALL_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setString(1, bean.ownerAttr.value)

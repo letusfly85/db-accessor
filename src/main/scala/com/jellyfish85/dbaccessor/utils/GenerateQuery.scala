@@ -2,7 +2,7 @@ package com.jellyfish85.dbaccessor.utils
 
 import java.io.{InputStreamReader, BufferedReader, InputStream}
 
-class GenerateQuery {
+trait GenerateQuery {
   var query: String = _
 
   /**

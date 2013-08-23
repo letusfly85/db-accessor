@@ -1,6 +1,7 @@
 package com.jellyfish85.dbaccessor.scaffold.bean
 
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
+import java.math.BigDecimal
 
 /**
  * == ALL_TAB_COLUMNS ==

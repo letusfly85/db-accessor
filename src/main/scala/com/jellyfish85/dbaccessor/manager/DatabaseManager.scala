@@ -6,6 +6,7 @@ import java.util.Properties
 class DatabaseManager {
 
   var conn: Connection = _
+  var user: String     = _
 
   /**
    * Database接続を行う
@@ -23,12 +24,12 @@ class DatabaseManager {
         property.load(getClass().getResourceAsStream("/properties/app.properties"))
       }
 
-      val jdbcURL: String = property.getProperty("URL")
-      val user:    String = property.getProperty("USER")
-      val pass:    String = property.getProperty("PASS")
+      user = property.getProperty("USER")
+      val pass: String = property.getProperty("PASS")
+      val url : String = property.getProperty("URL")
 
       Class.forName("oracle.jdbc.driver.OracleDriver").newInstance()
-      conn = DriverManager.getConnection(jdbcURL,user,pass)
+      conn = DriverManager.getConnection(url,user,pass)
       conn.setAutoCommit(false)
 
     } catch  {

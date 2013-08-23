@@ -5,12 +5,11 @@ import erd.mainte.tool.bean.MsTablesBean
 import erd.mainte.tool.dao.MsTablesDao
 import manager.DatabaseManager
 
-object Main {
+object Main extends GenerateQuery {
 
   def main(args :Array[String]) {
 
-    val generator: GenerateQuery = new GenerateQuery()
-    println(generator.generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_TABLES.sql"))
+    println(generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_TABLES.sql"))
 
     val db: DatabaseManager = new DatabaseManager
     try {
