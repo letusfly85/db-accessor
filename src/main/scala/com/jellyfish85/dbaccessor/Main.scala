@@ -17,7 +17,7 @@ object Main extends GenerateQuery {
 
       val dao:  MsTablesDao = new MsTablesDao
       val bean: MsTablesBean = new MsTablesBean
-      bean.physicalTableNameAttr.value = "T_KK_KOKYK_KHN"
+      bean.physicalTableNameAttr.value = args(0)
 
       val list: List[MsTablesBean] =  dao.find(db.conn, bean)
       list.foreach {b: MsTablesBean => println(b.physicalTableNameAttr.value)}
