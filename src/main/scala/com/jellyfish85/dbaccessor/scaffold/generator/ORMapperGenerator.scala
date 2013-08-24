@@ -106,7 +106,7 @@ class ORMapperGenerator extends CamelCase {
 
     } finally {
       //TODO 必要か確認
-      //engine.compiler.asInstanceOf[ScalaCompiler].compiler.askShutdown()
+      engine.compiler.asInstanceOf[ScalaCompiler].compiler.askShutdown()
 
     }
   }

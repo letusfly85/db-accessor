@@ -18,7 +18,8 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-nop" % "1.7.5",
   "org.slf4j" % "slf4j-api" % "1.7.5",
   "com.typesafe.akka" % "akka-actor" % "2.0.1",
-  "org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1"
+  //"org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1",
+  "org.fusesource.scalate" % "scalate-core" % "1.5.3"
 )
 
 testOptions += Tests.Argument(TestFrameworks.Specs2, "console", "junitxml")
