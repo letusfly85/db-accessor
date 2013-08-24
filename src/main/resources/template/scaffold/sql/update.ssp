@@ -1,0 +1,16 @@
+<% import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean %>
+<%@ val tableName: String                 %>
+<%@ val list:     List[AllTabColumnsBean] %>
+<%  var idx: Int = 0 %>
+UPDATE ${tableName}
+SET
+#for (l <- list)
+<% if (idx == 0){ %>
+  ${l.columnNameAttr.value} = ?             /* ${l.columnIdAttr.value}, ${l.columnNameAttr.value} */
+<%  } else { %>
+  ,${l.columnNameAttr.value} = ?            /* ${l.columnIdAttr.value}, ${l.columnNameAttr.value} */
+<%  } %>
+<% idx += 1 %>
+#end
+WHERE
+  1 = 0

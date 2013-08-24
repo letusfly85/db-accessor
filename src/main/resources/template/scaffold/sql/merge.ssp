@@ -1,0 +1,45 @@
+<% import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean %>
+<%@ val tableName: String                 %>
+<%@ val list:     List[AllTabColumnsBean] %>
+<%  var idx: Int = 0 %>
+MERGE INTO ${tableName}
+USING DUAL
+  ON (
+    /* TODO */
+  )
+-- 既存レコードの更新
+WHEN MATCHED THEN
+UPDATE SET
+#for (l <- list)
+<% if (idx == 0){ %>
+  ${l.columnNameAttr.value} = ?             /* ${l.columnIdAttr.value}, ${l.columnNameAttr.value} */
+<%  } else { %>
+  ,${l.columnNameAttr.value} = ?            /* ${l.columnIdAttr.value}, ${l.columnNameAttr.value} */
+<%  } %>
+<% idx += 1 %>
+#end
+-- 新規レコードの作成
+WHEN NOT MATCHED THEN
+INSERT (
+<% idx = 0 %>
+#for (l <- list)
+<% if (idx == 0){ %>
+  ${l.columnNameAttr.value}
+<%  } else { %>
+  ,${l.columnNameAttr.value}
+<%  } %>
+<% idx += 1 %>
+#end
+)
+VALUES
+(
+<% idx = 0 %>
+#for (l <- list)
+<% if (idx == 0){ %>
+  ?   /* ${l.columnIdAttr.value}, ${l.columnNameAttr.value} */
+<%  } else { %>
+  ,?  /* ${l.columnIdAttr.value}, ${l.columnNameAttr.value} */
+<%  } %>
+<% idx += 1 %>
+#end
+)

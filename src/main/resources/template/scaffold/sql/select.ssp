@@ -1,0 +1,18 @@
+<% import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean %>
+<%@ val tableName: String                 %>
+<%@ val list:     List[AllTabColumnsBean] %>
+<% var idx: Int = 0 %>
+SELECT
+#for (l <- list)
+<% if (idx == 0){ %>
+   ${l.columnNameAttr.value}
+<%  } else { %>
+  ,${l.columnNameAttr.value}
+<%  } %>
+<% idx += 1 %>
+#end
+FROM
+  ${tableName}
+WHERE
+  1 = 1
+  --TODO

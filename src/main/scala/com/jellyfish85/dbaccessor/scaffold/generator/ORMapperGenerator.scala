@@ -12,7 +12,7 @@ import org.fusesource.scalate.support.ScalaCompiler
 /**
  * == ORMapper Generator ==
  *
- * テーブルのメタ情報をもとにbeanとdaoを自動生成する
+ * it generates bean, dao, queries from meta info of RDBMS table.
  *
  */
 class ORMapperGenerator extends CamelCase {
@@ -94,7 +94,7 @@ class ORMapperGenerator extends CamelCase {
         "mergeQuery"  -> mergeQuery(tableName)
       )
 
-      // bean, daoの生成
+      // generate bean and dao
       val bean = engine.layout("/template/scaffold/scala/bean.ssp", bindings)
       val dao  = engine.layout("/template/scaffold/scala/dao.ssp",  bindings)
 
@@ -110,8 +110,7 @@ class ORMapperGenerator extends CamelCase {
       pw.write(dao)
       pw.close()
 
-      //TODO sqlの生成
-
+      //TODO generate queries
       val selectStr = engine.layout("/template/scaffold/sql/select.ssp", bindings)
       val updateStr = engine.layout("/template/scaffold/sql/update.ssp", bindings)
       val mergeStr  = engine.layout("/template/scaffold/sql/merge.ssp",  bindings)
@@ -156,7 +155,7 @@ class ORMapperGenerator extends CamelCase {
         e.printStackTrace()
 
     } finally {
-      //TODO 必要か確認
+      //TODO need to confirm if it's necessary or not.
       engine.compiler.asInstanceOf[ScalaCompiler].compiler.askShutdown()
 
     }

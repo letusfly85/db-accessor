@@ -1,0 +1,6 @@
+<% import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean %>
+<%@ val tableName: String                 %>
+<%@ val list:     List[AllTabColumnsBean] %>
+DELETE FROM ${tableName}
+WHERE
+  1 = 0
