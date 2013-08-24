@@ -29,6 +29,6 @@ object Main extends GenerateQuery {
     }
 
     val generator: ORMapperGenerator = new ORMapperGenerator
-    generator.generate("MS_TABLES")
+    generator.generate(args(0))
   }
 }

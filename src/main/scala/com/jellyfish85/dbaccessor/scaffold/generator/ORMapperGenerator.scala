@@ -1,7 +1,7 @@
 package com.jellyfish85.dbaccessor.scaffold.generator
 
 import java.io._
-import com.jellyfish85.dbaccessor.utils.CamelCase
+import com.jellyfish85.dbaccessor.utils.{TypeMapper, CamelCase}
 import org.fusesource.scalate.{TemplateException, TemplateEngine}
 import com.jellyfish85.dbaccessor.scaffold.dao.AllTabColumnsDao
 import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean
@@ -26,8 +26,11 @@ class ORMapperGenerator extends CamelCase {
   val db : DatabaseManager  = new DatabaseManager
   val dao: AllTabColumnsDao = new AllTabColumnsDao
 
-  val beanName = (tableName: String) => upperCamelCase(tableName) + "Bean.scala"
-  val daoName  = (tableName: String) => upperCamelCase(tableName) + "Dao.scala"
+  val beanName      = (tableName: String) => upperCamelCase(tableName) + "Bean"
+  val beanFileName  = (tableName: String) => beanName(tableName)  + ".scala"
+
+  val daoName       = (tableName: String) => upperCamelCase(tableName) + "Dao"
+  val daoFileName   = (tableName: String) => daoName(tableName)   + ".scala"
 
   val selectQuery = (tableName: String) => "SELLECT_" + tableName + ".sql"
   val deleteQuery = (tableName: String) => "DELETE_" + tableName + ".sql"
@@ -71,25 +74,32 @@ class ORMapperGenerator extends CamelCase {
       return
     }
 
+    val tm: TypeMapper = new TypeMapper {}
+    val cc: CamelCase  = new CamelCase  {}
     val engine: TemplateEngine = new TemplateEngine()
     try {
       engine.workingDirectory = new File("tmp")
 
       val bindings = Map(
-        "list" -> list
+        "tableName" -> tableName,
+        "list"      -> list,
+        "beanName"  -> beanName(tableName),
+        "daoName"   -> daoName(tableName),
+        "cc"        -> cc,
+        "tm"        -> tm
       )
 
       // bean, daoの生成
       val bean = engine.layout("/template/scaffold/scala/bean.ssp", bindings)
       val dao  = engine.layout("/template/scaffold/scala/dao.ssp",  bindings)
 
-      val beanFile = new File(beanDir.getPath, beanName(tableName))
+      val beanFile = new File(beanDir.getPath, beanFileName(tableName))
       var pw: PrintWriter = new PrintWriter(new BufferedWriter(
         new OutputStreamWriter(new FileOutputStream(beanFile),"UTF-8")))
       pw.write(bean)
       pw.close()
 
-      val daoFile = new File(daoDir.getPath, daoName(tableName))
+      val daoFile = new File(daoDir.getPath, daoFileName(tableName))
       pw = new PrintWriter(new BufferedWriter(
         new OutputStreamWriter(new FileOutputStream(daoFile),"UTF-8")))
       pw.write(dao)

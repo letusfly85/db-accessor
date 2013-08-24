@@ -42,7 +42,7 @@ class AllTabColumnsDao extends GeneralDao[AllTabColumnsBean] {
       bean.nullableAttr.value = result.getString("NULLABLE")
       bean.columnIdAttr.value = result.getBigDecimal("COLUMN_ID")
       bean.defaultLengthAttr.value = result.getBigDecimal("DEFAULT_LENGTH")
-      bean.dataDefaultAttr.value = result.getBigDecimal("DATA_DEFAULT")
+      //bean.dataDefaultAttr.value = result.getBigDecimal("DATA_DEFAULT")
       bean.numDistinctAttr.value = result.getBigDecimal("NUM_DISTINCT")
       bean.lowValueAttr.value = result.getBigDecimal("LOW_VALUE")
       bean.highValueAttr.value = result.getBigDecimal("HIGH_VALUE")
