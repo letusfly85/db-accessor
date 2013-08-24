@@ -30,6 +30,7 @@ class MsIndColumnsDaoTest extends Specification {
      * 	}}
      *
      */
+    // bean for insert
     val bean00: MsIndColumnsBean = new MsIndColumnsBean
     bean00.indexNameAttr.value      = "_IX01_T_KK_KOKYK_KHN"
     bean00.revisionAttr.value       = new BigDecimal(0)
@@ -38,20 +39,28 @@ class MsIndColumnsDaoTest extends Specification {
     bean00.columnPositionAttr.value = new BigDecimal(1)
     bean00.columnNameAttr.value     = "KANRITEN_NO"
 
-
-    dao.insert(db.conn, List(bean00))
-    db.jCommit
-
+    // bean for find, delete, update
     val beanXX: MsIndColumnsBean = new MsIndColumnsBean
     beanXX.indexNameAttr.value      = "_IX01_T_KK_KOKYK_KHN"
 
-    val _bean: MsIndColumnsBean = dao.find(db.conn, bean00).head
+    dao.delete(db.conn, bean00)
+    dao.insert(db.conn, List(bean00))
+    db.jCommit
 
-    "return KANRITEN_NOE for _IX01_T_KK_KOKYK_KHN's index key" in {
+    // result bean
+    val _bean: MsIndColumnsBean = dao.find(db.conn, beanXX).head
+    "return KANRITEN_NO for _IX01_T_KK_KOKYK_KHN's index key" in {
        _bean.columnNameAttr.value must beEqualTo("KANRITEN_NO")
     }
 
-  //TODO delete
+    dao.delete(db.conn, beanXX)
+    db.jCommit
+
+    val _list: List[MsIndColumnsBean] = dao.find(db.conn, beanXX)
+    "return empty for after deleting _IX01_T_KK_KOKYK_KHN" in {
+      _list.size must beEqualTo(0)
+    }
+
 
   //TODO update
 

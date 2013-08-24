@@ -117,7 +117,7 @@ class MsIndColumnsDao extends GeneralDao[MsIndColumnsBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_IND_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.indexNameAttr.value)
     result = stmt.executeUpdate()
 
     result
