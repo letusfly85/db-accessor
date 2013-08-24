@@ -1,0 +1,5 @@
+<% import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean %>
+<%@ val list: List[AllTabColumnsBean] %>
+#for (l <- list)
+  ${l.columnNameAttr.value}
+#end
