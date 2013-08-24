@@ -38,25 +38,38 @@ class ORMapperGenerator extends CamelCase {
   val updateQuery = (tableName: String) => "UPDATE_" + tableName + ".sql"
   val mergeQuery  = (tableName: String) => "MERGE_"  + tableName + ".sql"
 
+  /**
+   * == initialize ==
+   *
+   * if there is not output directory, make it.
+   *
+   * and if there are subdirectories below it,
+   * delete them and remake after then.
+   *
+   */
   def initialize {
     if (!outputDir.exists()) {
       FileUtils.forceMkdir(outputDir)
     }
 
-    if (!beanDir.exists()) {
-      FileUtils.forceMkdir(beanDir)
-    }
+    if (beanDir.exists())  FileUtils.deleteDirectory(beanDir)
+    FileUtils.forceMkdir(beanDir)
 
-    if (!daoDir.exists()) {
-      FileUtils.forceMkdir(daoDir)
-    }
+    if (daoDir.exists())   FileUtils.deleteDirectory(daoDir)
+    FileUtils.forceMkdir(daoDir)
 
-    if (!queryDir.exists()) {
-      FileUtils.forceMkdir(queryDir)
-    }
+    if (queryDir.exists()) FileUtils.deleteDirectory(queryDir)
+    FileUtils.forceMkdir(queryDir)
   }
 
 
+  /**
+   * == generate ==
+   *
+   * generate bean, dao and queries
+   *
+   * @param tableName oracle table name
+   */
   def generate(tableName: String) {
     initialize
 
@@ -110,7 +123,7 @@ class ORMapperGenerator extends CamelCase {
       pw.write(dao)
       pw.close()
 
-      //TODO generate queries
+      //generate queries
       val selectStr = engine.layout("/template/scaffold/sql/select.ssp", bindings)
       val updateStr = engine.layout("/template/scaffold/sql/update.ssp", bindings)
       val mergeStr  = engine.layout("/template/scaffold/sql/merge.ssp",  bindings)

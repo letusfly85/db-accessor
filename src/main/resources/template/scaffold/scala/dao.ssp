@@ -47,7 +47,7 @@ class ${daoName} extends GeneralDao[${beanName}] {
       val bean: ${beanName} = new ${beanName}
 
       #for (l <- list)
-bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = stmt.get${tm.convertOracleType2Java(l.dataTypeAttr.value)}("${l.columnNameAttr.value}")
+bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.convertOracleType2Java(l.dataTypeAttr.value)}("${l.columnNameAttr.value}")
       #end
 
       list ::= bean
