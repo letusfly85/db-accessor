@@ -1,0 +1,151 @@
+<%
+import com.jellyfish85.dbaccessor.bean.ColumnAttribute
+import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean
+import com.jellyfish85.dbaccessor.utils.CamelCase
+import com.jellyfish85.dbaccessor.utils.TypeMapper
+%>
+<%@ val tableName: String                 %>
+<%@ val list:     List[AllTabColumnsBean] %>
+<%@ val beanName: String                  %>
+<%@ val daoName:  String                  %>
+<%@ val cc:       CamelCase               %>
+<%@ val tm:       TypeMapper              %>
+<%@ val selectQuery: String               %>
+<%@ val deleteQuery: String               %>
+<%@ val insertQuery: String               %>
+<%@ val updateQuery: String               %>
+<%@ val mergeQuery: String                %>
+
+package com.jellyfish85.dbaccessor.TODO.dao
+
+import com.jellyfish85.dbaccessor.dao.GeneralDao
+import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
+
+/**
+ *
+ *
+ */
+class ${daoName} extends GeneralDao[${beanName}] {
+  /**
+   *
+   * @param conn JDBC Connection
+   * @param bean ${beanName}
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of ${tableName}
+   */
+  @throws(classOf[SQLException])
+  def find(conn: Connection,   bean: ${beanName}): List[${beanName}] = {
+    var list: List[${beanName}] = List()
+
+    val sql:  String = generateSimpleQuery("/query/TODO/${selectQuery}")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    //TODO stmt.setMethods
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: ${beanName} = new ${beanName}
+
+      #for (l <- list)
+bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = stmt.get${tm.convertOracleType2Java(l.dataTypeAttr.value)}("${l.columnNameAttr.value}")
+      #end
+
+      list ::= bean
+    }
+
+    list
+  }
+
+  /**
+   *
+   *
+   * @param conn JDBC Connection
+   * @param list list of ${beanName}
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: List[${beanName}]): Int  = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/TODO/${insertQuery}")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    list.foreach {bean: ${beanName} =>
+    #for (l <- list)
+  stmt.set${tm.convertOracleType2Java(l.dataTypeAttr.value)}(${l.columnIdAttr.value}, bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value)
+    #end
+    }
+
+    result = stmt.executeBatch().size
+
+    result
+  }
+
+  /**
+   *
+   *
+   * @param conn JDBC Connection
+   * @param list list of ${beanName}
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def update(conn: Connection, list: List[${beanName}]): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/TODO/${updateQuery}")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    list.foreach {bean: ${beanName} =>
+      #for (l <- list)
+        stmt.set${tm.convertOracleType2Java(l.dataTypeAttr.value)}(${l.columnIdAttr.value}, bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value)
+      #end
+    }
+
+    result = stmt.executeBatch().size
+
+    result
+  }
+
+  /**
+   *
+   *
+   * @param conn JDBC Connection
+   * @param bean ${beanName}
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def delete(conn: Connection, bean: ${beanName}): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/TODO/${deleteQuery}")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    //TODO stmt.setMethods
+    result = stmt.executeUpdate()
+
+    result
+  }
+
+  /**
+   *
+   * @param  conn JDBC Connection
+   * @param  bean ${beanName}
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def merge(conn: Connection,  bean: ${beanName}): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/TODO/${mergeQuery}")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    //TODO stmt.setMethods
+    result = stmt.executeUpdate()
+
+    result
+  }
+
+}

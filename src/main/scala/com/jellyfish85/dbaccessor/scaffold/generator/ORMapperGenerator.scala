@@ -81,12 +81,17 @@ class ORMapperGenerator extends CamelCase {
       engine.workingDirectory = new File("tmp")
 
       val bindings = Map(
-        "tableName" -> tableName,
-        "list"      -> list,
-        "beanName"  -> beanName(tableName),
-        "daoName"   -> daoName(tableName),
-        "cc"        -> cc,
-        "tm"        -> tm
+        "tableName"   -> tableName,
+        "list"        -> list,
+        "beanName"    -> beanName(tableName),
+        "daoName"     -> daoName(tableName),
+        "cc"          -> cc,
+        "tm"          -> tm,
+        "selectQuery" -> selectQuery(tableName),
+        "deleteQuery" -> deleteQuery(tableName),
+        "insertQuery" -> insertQuery(tableName),
+        "updateQuery" -> updateQuery(tableName),
+        "mergeQuery"  -> mergeQuery(tableName)
       )
 
       // bean, daoの生成
@@ -106,6 +111,42 @@ class ORMapperGenerator extends CamelCase {
       pw.close()
 
       //TODO sqlの生成
+
+      val selectStr = engine.layout("/template/scaffold/sql/select.ssp", bindings)
+      val updateStr = engine.layout("/template/scaffold/sql/update.ssp", bindings)
+      val mergeStr  = engine.layout("/template/scaffold/sql/merge.ssp",  bindings)
+      val insertStr = engine.layout("/template/scaffold/sql/insert.ssp", bindings)
+      val deleteStr = engine.layout("/template/scaffold/sql/delete.ssp",  bindings)
+
+      val selectFile = new File(queryDir.getPath, selectQuery(tableName))
+      pw = new PrintWriter(new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(selectFile),"UTF-8")))
+      pw.write(selectStr)
+      pw.close()
+
+      val updateFile = new File(queryDir.getPath, updateQuery(tableName))
+      pw = new PrintWriter(new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(updateFile),"UTF-8")))
+      pw.write(updateStr)
+      pw.close()
+
+      val mergeFile  = new File(queryDir.getPath, mergeQuery(tableName))
+      pw = new PrintWriter(new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(mergeFile),"UTF-8")))
+      pw.write(mergeStr)
+      pw.close()
+
+      val insertFile = new File(queryDir.getPath, insertQuery(tableName))
+      pw = new PrintWriter(new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(insertFile),"UTF-8")))
+      pw.write(insertStr)
+      pw.close()
+
+      val deleteFile = new File(queryDir.getPath, deleteQuery(tableName))
+      pw = new PrintWriter(new BufferedWriter(
+        new OutputStreamWriter(new FileOutputStream(deleteFile),"UTF-8")))
+      pw.write(deleteStr)
+      pw.close()
 
     } catch {
       case e: TemplateException =>
