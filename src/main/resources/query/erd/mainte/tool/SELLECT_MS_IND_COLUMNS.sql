@@ -15,5 +15,5 @@ SELECT
 FROM
   MS_IND_COLUMNS
 WHERE
-  1 = 1
-  --TODO
+    1 = 1
+AND INDEX_NAME = ?

@@ -24,7 +24,7 @@ class MsIndColumnsDao extends GeneralDao[MsIndColumnsBean] {
     val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_MS_IND_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.indexNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -64,6 +64,8 @@ class MsIndColumnsDao extends GeneralDao[MsIndColumnsBean] {
       stmt.setBigDecimal(4, bean.columnIdAttr.value)
       stmt.setString(5, bean.columnNameAttr.value)
       stmt.setBigDecimal(6, bean.columnPositionAttr.value)
+
+      stmt.addBatch()
     }
 
     result = stmt.executeBatch().size
