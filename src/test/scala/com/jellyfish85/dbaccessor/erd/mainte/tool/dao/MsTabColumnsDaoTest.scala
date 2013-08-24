@@ -8,12 +8,24 @@ import com.jellyfish85.dbaccessor.erd.mainte.tool.bean.MsTabColumnsBean
 
 
 class MsTabColumnsDaoTest extends Specification {
+  val db = new DatabaseManager
+  val dao: MsTabColumnsDao = new MsTabColumnsDao
 
   "return true" should {
-    val db = new DatabaseManager
-    val dao: MsTabColumnsDao = new MsTabColumnsDao
-
     db.connect
+
+    val bean00: MsTabColumnsBean = new MsTabColumnsBean
+    bean00.physicalTableNameAttr.value = "_T_KK_KOKYK_KHN"
+    bean00.tableIdAttr.value = new BigDecimal(1)
+
+    // 削除系処理テスト
+    dao.delete(db.conn, bean00)
+    db.jCommit
+
+    val list_del: List[MsTabColumnsBean] = dao.find(db.conn, bean00)
+    "return 0 for _T_KK_KOKYK_KHN Columns" in {
+      list_del.size must beEqualTo(0)
+    }
 
     val bean01: MsTabColumnsBean = new MsTabColumnsBean
     val bean02: MsTabColumnsBean = new MsTabColumnsBean
@@ -52,18 +64,14 @@ class MsTabColumnsDaoTest extends Specification {
     bean01.dataLengthAttr.value = "8"
 
     val list: List[MsTabColumnsBean] = List(bean01, bean02, bean03)
-    dao.delete(db.conn, bean01)
     dao.insert(db.conn, list)
 
     db.jCommit
-    db.jClose
 
     var bean: MsTabColumnsBean = new MsTabColumnsBean
     bean.physicalTableNameAttr.value = "_T_KK_KOKYK_KHN"
-
-    db.connect
+    bean.tableIdAttr.value           = new BigDecimal(1)
     bean = dao.find(db.conn, bean)(0)
-    db.jClose
 
     "return true for _T_KK_KOKYK_KHN.PK_KOKYK_ID" in {
       bean.physicalColumnNameAttr.value must beEqualTo("PK_KOKYK_ID")
@@ -72,24 +80,26 @@ class MsTabColumnsDaoTest extends Specification {
       bean.tableIdAttr.value            must beEqualTo(new BigDecimal(1))
     }
 
-    val bean00: MsTabColumnsBean = new MsTabColumnsBean
-    bean00.physicalTableNameAttr.value = "_T_KK_KOKYK_KHN"
-    bean00.tableIdAttr.value = new java.math.BigDecimal(1)
-
-    db.connect
+    // 登録系処理テスト
     val _list: List[MsTabColumnsBean] = dao.find(db.conn, bean00)
     "return 3 for _T_KK_KOKYK_KHN Columns" in {
       _list.size must beEqualTo(3)
     }
 
-    dao.delete(db.conn, bean00)
+
+    // 更新系処理テスト
+    bean.physicalColumnNameAttr.value = "PK_KOKYK_ID"
+    bean.logicalColumnNameAttr.value  = "あいうえお"
+    dao.update(db.conn, List(bean))
     db.jCommit
-
-    val __list: List[MsTabColumnsBean] = dao.find(db.conn, bean00)
-
+    val bean0x: MsTabColumnsBean = dao.find(db.conn, bean)(0)
     db.jClose
-    "return 0 for _T_KK_KOKYK_KHN Columns" in {
-      __list.size must beEqualTo(0)
+    "return true for updated _T_KK_KOKYK_KHN.PK_KOKYK_ID" in {
+      bean0x.physicalColumnNameAttr.value must beEqualTo("PK_KOKYK_ID")
+      bean0x.dataTypeAttr.value           must beEqualTo("CHAR")
+      bean0x.dataLengthAttr.value         must beEqualTo("8")
+      bean0x.tableIdAttr.value            must beEqualTo(new BigDecimal(1))
+      bean0x.logicalColumnNameAttr.value  must beEqualTo("あいうえお")
     }
   }
 }
