@@ -1,10 +1,10 @@
 package com.jellyfish85.dbaccessor
 
 import com.jellyfish85.dbaccessor.utils.GenerateQuery
-import erd.mainte.tool.bean.MsTablesBean
-import erd.mainte.tool.dao.MsTablesDao
 import manager.DatabaseManager
 import scaffold.generator.ORMapperGenerator
+import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsTablesBean
+import com.jellyfish85.dbaccessor.dao.erd.mainte.tool.MsTablesDao
 
 object Main extends GenerateQuery {
 

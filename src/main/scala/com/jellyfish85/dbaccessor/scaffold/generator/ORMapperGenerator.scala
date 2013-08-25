@@ -3,11 +3,11 @@ package com.jellyfish85.dbaccessor.scaffold.generator
 import java.io._
 import com.jellyfish85.dbaccessor.utils.{TypeMapper, CamelCase}
 import org.fusesource.scalate.{TemplateException, TemplateEngine}
-import com.jellyfish85.dbaccessor.scaffold.dao.AllTabColumnsDao
-import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
 import org.apache.commons.io.FileUtils
 import org.fusesource.scalate.support.ScalaCompiler
+import com.jellyfish85.dbaccessor.dao.scaffold.AllTabColumnsDao
+import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
 
 /**
  * == ORMapper Generator ==
@@ -21,7 +21,6 @@ class ORMapperGenerator extends CamelCase {
   val beanDir:   File = new File("output/scaffold/bean")
   val daoDir:    File = new File("output/scaffold/dao")
   val queryDir:  File = new File("output/scaffold/query")
-
 
   val db : DatabaseManager  = new DatabaseManager
   val dao: AllTabColumnsDao = new AllTabColumnsDao

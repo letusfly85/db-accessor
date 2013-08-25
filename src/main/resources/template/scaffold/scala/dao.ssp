@@ -1,8 +1,9 @@
 <%
 import com.jellyfish85.dbaccessor.bean.ColumnAttribute
-import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean
 import com.jellyfish85.dbaccessor.utils.CamelCase
 import com.jellyfish85.dbaccessor.utils.TypeMapper
+import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
+
 %>
 <%@ val tableName: String                 %>
 <%@ val list:     List[AllTabColumnsBean] %>
@@ -74,6 +75,8 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
     #for (l <- list)
   stmt.set${tm.convertOracleType2Java(l.dataTypeAttr.value)}(${l.columnIdAttr.value}, bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value)
     #end
+
+     stmt.addBatch()
     }
 
     result = stmt.executeBatch().size
@@ -100,6 +103,8 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
       #for (l <- list)
         stmt.set${tm.convertOracleType2Java(l.dataTypeAttr.value)}(${l.columnIdAttr.value}, bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value)
       #end
+
+      stmt.addBatch()
     }
 
     result = stmt.executeBatch().size

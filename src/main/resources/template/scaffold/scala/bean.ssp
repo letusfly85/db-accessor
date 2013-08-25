@@ -1,5 +1,8 @@
-<% import com.jellyfish85.dbaccessor.scaffold.bean.AllTabColumnsBean %>
-<% import com.jellyfish85.dbaccessor.utils.CamelCase                 %>
+<% %>
+<% import com.jellyfish85.dbaccessor.utils.CamelCase
+import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
+
+%>
 <% import com.jellyfish85.dbaccessor.utils.TypeMapper                %>
 <%@ val tableName: String                 %>
 <%@ val list:     List[AllTabColumnsBean] %>
