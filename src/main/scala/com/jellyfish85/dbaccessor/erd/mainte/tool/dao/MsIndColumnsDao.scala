@@ -95,6 +95,11 @@ class MsIndColumnsDao extends GeneralDao[MsIndColumnsBean] {
       stmt.setBigDecimal(4, bean.columnIdAttr.value)
       stmt.setString(5, bean.columnNameAttr.value)
       stmt.setBigDecimal(6, bean.columnPositionAttr.value)
+
+      stmt.setString(7, bean.indexNameAttr.value)
+      stmt.setBigDecimal(8, bean.columnPositionAttr.value)
+
+      stmt.addBatch()
     }
 
     result = stmt.executeBatch().size

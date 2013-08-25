@@ -5,6 +5,7 @@ import com.jellyfish85.dbaccessor.manager.DatabaseManager
 import com.jellyfish85.dbaccessor.erd.mainte.tool.bean.MsIndColumnsBean
 
 import java.math.BigDecimal
+import java.sql.SQLException
 
 /**
  * == MsIndColumnsDaoTest ==
@@ -42,6 +43,10 @@ class MsIndColumnsDaoTest extends Specification {
     // bean for find, delete, update
     val beanXX: MsIndColumnsBean = new MsIndColumnsBean
     beanXX.indexNameAttr.value      = "_IX01_T_KK_KOKYK_KHN"
+    beanXX.revisionAttr.value       = new BigDecimal(0)
+    beanXX.tableIdAttr.value        = new BigDecimal(0)
+    beanXX.columnIdAttr.value       = new BigDecimal(1)
+    beanXX.columnPositionAttr.value = new BigDecimal(1)
 
     dao.delete(db.conn, bean00)
     dao.insert(db.conn, List(bean00))
@@ -53,23 +58,37 @@ class MsIndColumnsDaoTest extends Specification {
        _bean.columnNameAttr.value must beEqualTo("KANRITEN_NO")
     }
 
+    //update
+    beanXX.columnNameAttr.value = "HOGE_NO"
+    dao.update(db.conn, List(beanXX))
+    db.jCommit
+    val __bean: MsIndColumnsBean = dao.find(db.conn, beanXX).head
+    "return HOGE_NO for after updating _IX01_T_KK_KOKYK_KHN" in {
+      __bean.columnNameAttr.value must beEqualTo("HOGE_NO")
+    }
+
     dao.delete(db.conn, beanXX)
     db.jCommit
-
     val _list: List[MsIndColumnsBean] = dao.find(db.conn, beanXX)
+    db.jClose
     "return empty for after deleting _IX01_T_KK_KOKYK_KHN" in {
       _list.size must beEqualTo(0)
     }
-
-
-  //TODO update
-
-  //TODO select
-
   }
 
+  //exception
+  "return error for MS_IND_COLUMNS.COLUMN_NAME IS NULL" should {
+    db.connect
 
-  //TODO exception
+    val bean00: MsIndColumnsBean = new MsIndColumnsBean
+    bean00.indexNameAttr.value      = "_IX01_T_KK_KOKYK_KHN"
+    bean00.revisionAttr.value       = new BigDecimal(0)
+    bean00.tableIdAttr.value        = new BigDecimal(0)
+    bean00.columnIdAttr.value       = new BigDecimal(1)
+    bean00.columnPositionAttr.value = new BigDecimal(1)
 
+    dao.delete(db.conn, bean00)
+    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
+  }
 
 }
