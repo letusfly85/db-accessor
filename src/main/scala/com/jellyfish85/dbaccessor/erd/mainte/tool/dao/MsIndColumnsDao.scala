@@ -134,6 +134,8 @@ class MsIndColumnsDao extends GeneralDao[MsIndColumnsBean] {
    * @param  bean MsIndColumnsBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
+   * @deprecated there is no necessary to use merge for this class.
+   *
    */
   @throws(classOf[SQLException])
   def merge(conn: Connection,  bean: MsIndColumnsBean): Int = {
