@@ -22,10 +22,10 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   def find(conn: Connection,   bean: KrTabDefRevisionBean): List[KrTabDefRevisionBean] = {
     var list: List[KrTabDefRevisionBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/TODO/SELLECT_KR_TAB_DEF_REVISION.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.tabDefNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -42,13 +42,6 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
       bean.svnPathAttr.value = result.getString("SVN_PATH")
       bean.existsFlgAttr.value = result.getString("EXISTS_FLG")
       bean.trkmStatusAttr.value = result.getString("TRKM_STATUS")
-      bean.torokuymdAttr.value = result.getString("TOROKUYMD")
-      bean.torokuhmsAttr.value = result.getString("TOROKUHMS")
-      bean.torokuuserAttr.value = result.getString("TOROKUUSER")
-      bean.kosinymdAttr.value = result.getString("KOSINYMD")
-      bean.kosinhmsAttr.value = result.getString("KOSINHMS")
-      bean.kosinuserAttr.value = result.getString("KOSINUSER")
-      bean.bikoAttr.value = result.getString("BIKO")
       
       list ::= bean
     }
@@ -67,7 +60,7 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   def insert(conn: Connection, list: List[KrTabDefRevisionBean]): Int  = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/INSERT_KR_TAB_DEF_REVISION.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: KrTabDefRevisionBean =>
@@ -103,7 +96,7 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   def update(conn: Connection, list: List[KrTabDefRevisionBean]): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/UPDATE_KR_TAB_DEF_REVISION.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/UPDATE_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: KrTabDefRevisionBean =>
@@ -118,6 +111,8 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
       stmt.setString(9, bean.svnPathAttr.value)
       stmt.setString(10, bean.existsFlgAttr.value)
       stmt.setString(11, bean.trkmStatusAttr.value)
+
+      stmt.setString(12, bean.tabDefNameAttr.value)
 
       stmt.addBatch()
     }
@@ -139,10 +134,11 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   def delete(conn: Connection, bean: KrTabDefRevisionBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/DELETE_KR_TAB_DEF_REVISION.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.tabDefNameAttr.value)
+
     result = stmt.executeUpdate()
 
     result
@@ -154,15 +150,17 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
    * @param  bean KrTabDefRevisionBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
+   * @deprecated there is no necessary to use merge for this class.
+   *
    */
   @throws(classOf[SQLException])
   def merge(conn: Connection,  bean: KrTabDefRevisionBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/MERGE_KR_TAB_DEF_REVISION.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    //stmt.setMethods
     result = stmt.executeUpdate()
 
     result
