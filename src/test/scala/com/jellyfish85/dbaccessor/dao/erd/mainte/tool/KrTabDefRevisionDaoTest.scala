@@ -5,6 +5,7 @@ import com.jellyfish85.dbaccessor.manager.DatabaseManager
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.KrTabDefRevisionBean
 
 import java.math.BigDecimal
+import java.sql.SQLException
 
 /**
  * == KrTabDefRevisionDaoTest ==
@@ -58,9 +59,44 @@ class KrTabDefRevisionDaoTest extends Specification {
     }
 
     val bean02: KrTabDefRevisionBean = dao.find(db.conn, bean00).head
-    db.jClose
     "return true for TABLE_DEFINE_X.xls" in {
       bean02.svnPathAttr.value          must beEqualTo("path2")
     }
+
+    bean00.svnPathAttr.value = "path3"
+    val result02: Int = dao.merge(db.conn, bean00)
+    db.jCommit
+
+    "return 1 for updagte one record to KR_TAB_DEF_REVISION" in {
+      result02 must beEqualTo(1)
+    }
+
+    val bean03: KrTabDefRevisionBean = dao.find(db.conn, bean00).head
+    "return true for TABLE_DEFINE_X.xls" in {
+      bean03.svnPathAttr.value          must beEqualTo("path3")
+    }
+
+  }
+
+  //exception
+  "return error for KR_TAB_DEF_REVISION.TAB_DEF_NAME IS NULL" should {
+    db.connect
+
+    /**
+     * TAB_DEF_ID		    NOT NULL,
+     * TAB_DEF_REVISION	NOT NULL
+     *
+     */
+    val bean00: KrTabDefRevisionBean = new KrTabDefRevisionBean
+    bean00.tabDefIdAttr.value         = new BigDecimal(0)
+    bean00.svnRevisionAttr.value      = new BigDecimal(0)
+    bean00.tabDefRevisionAttr.value   = new BigDecimal(0)
+    bean00.svnPathAttr.value          = "path"
+    bean00.lastUpdateYmdAttr.value    = "20130827"
+    bean00.lastUpdateHhmissAttr.value = "220000"
+
+    dao.delete(db.conn, bean00)
+    db.jCommit
+    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
   }
 }

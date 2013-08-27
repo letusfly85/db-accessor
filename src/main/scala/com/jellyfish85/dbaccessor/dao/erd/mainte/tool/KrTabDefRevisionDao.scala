@@ -145,12 +145,12 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   }
 
   /**
+   * == merge ==
    *
    * @param  conn JDBC Connection
    * @param  bean KrTabDefRevisionBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
-   * @deprecated there is no necessary to use merge for this class.
    *
    */
   @throws(classOf[SQLException])
@@ -160,7 +160,21 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //stmt.setMethods
+    stmt.setString(1,  bean.tabDefNameAttr.value)
+    stmt.setBigDecimal(2,  bean.svnRevisionAttr.value)
+    stmt.setString(3, bean.lastUpdateYmdAttr.value)
+    stmt.setString(4, bean.lastUpdateHhmissAttr.value)
+    stmt.setString(5, bean.svnPathAttr.value)
+    stmt.setBigDecimal(6, bean.tabDefRevisionAttr.value)
+
+    stmt.setBigDecimal(7, bean.tabDefIdAttr.value)
+    stmt.setBigDecimal(8, bean.tabDefRevisionAttr.value)
+    stmt.setString(9,  bean.tabDefNameAttr.value)
+    stmt.setString(10,  bean.lastUpdateYmdAttr.value)
+    stmt.setString(11, bean.lastUpdateHhmissAttr.value)
+    stmt.setBigDecimal(12, bean.tabDefRevisionAttr.value)
+    stmt.setString(13, bean.svnPathAttr.value)
+
     result = stmt.executeUpdate()
 
     result
