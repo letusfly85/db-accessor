@@ -1,10 +1,9 @@
-package scala.com.jellyfish85.dbaccessor.dao.scaffold
+package com.jellyfish85.dbaccessor.dao.scaffold
 
 import org.specs2.mutable.Specification
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
 
 import java.math.BigDecimal
-import com.jellyfish85.dbaccessor.dao.scaffold.AllTabColumnsDao
 import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
 
 /**
