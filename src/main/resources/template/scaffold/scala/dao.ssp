@@ -23,7 +23,7 @@ import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 
 /**
- *
+ * == ${daoName} ==
  *
  */
 class ${daoName} extends GeneralDao[${beanName}] {
@@ -58,7 +58,7 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
   }
 
   /**
-   *
+   * == insert ==
    *
    * @param conn JDBC Connection
    * @param list list of ${beanName}
@@ -85,7 +85,7 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
   }
 
   /**
-   *
+   * == update ==
    *
    * @param conn JDBC Connection
    * @param list list of ${beanName}
@@ -113,7 +113,7 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
   }
 
   /**
-   *
+   * == delete ==
    *
    * @param conn JDBC Connection
    * @param bean ${beanName}
@@ -134,11 +134,13 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
   }
 
   /**
+   * == merge ==
    *
    * @param  conn JDBC Connection
    * @param  bean ${beanName}
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
+   * @deprecated there is no necessary to use merge for this class.
    */
   @throws(classOf[SQLException])
   def merge(conn: Connection,  bean: ${beanName}): Int = {
@@ -152,5 +154,4 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
 
     result
   }
-
 }
