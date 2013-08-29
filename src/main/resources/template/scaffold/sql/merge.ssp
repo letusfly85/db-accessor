@@ -1,6 +1,4 @@
-import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
-
-<% %>
+<% import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean %>
 <%@ val tableName: String                 %>
 <%@ val list:     List[AllTabColumnsBean] %>
 <%  var idx: Int = 0 %>
