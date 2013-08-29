@@ -33,12 +33,5 @@ class RrTabDefInfoBean extends GeneralBean {
   var segoseiCheckStatusAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var segoseiCheckLogIdAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var existsFlgAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var torokuymdAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var torokuhmsAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var torokuuserAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var kosinymdAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var kosinhmsAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var kosinuserAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var bikoAttr:	ColumnAttribute[String] = new ColumnAttribute()
 
 }
