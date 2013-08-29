@@ -8,12 +8,12 @@ package com.jellyfish85.dbaccessor.utils
 trait CamelCase {
 
   /**
-   * == CamelCase変換（先頭小文字） ==
+   * == lowerCamelCase ==
    *
-   * 先頭小文字始まりにしてCamelCase変換をした文字列を返却する
+   * convert separated by underscore string to lower camel case.
    *
-   * @param  str 対象文字列
-   * @return 置換後文字列
+   * @param  str target
+   * @return string
    */
   def lowerCamelCase(str: String): String = {
     val buf: StringBuffer = new StringBuffer()
@@ -39,12 +39,13 @@ trait CamelCase {
   }
 
   /**
-   * == CamelCase変換（先頭小文字） ==
+   * == upperCamelCase ==
    *
-   * 先頭大文字始まりにしてCamelCase変換をした文字列を返却する
+   * convert separated by underscore string to lower camel case.
    *
-   * @param str
-   * @return
+   * @param  str target
+   * @return string
+   *
    */
   def upperCamelCase(str: String): String = {
     lowerCamelCase(str).capitalize
