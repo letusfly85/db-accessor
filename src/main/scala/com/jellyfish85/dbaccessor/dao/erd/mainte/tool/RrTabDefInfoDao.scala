@@ -10,6 +10,7 @@ import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.RrTabDefInfoBean
  */
 class RrTabDefInfoDao extends GeneralDao[RrTabDefInfoBean] {
   /**
+   * == find ==
    *
    * @param conn JDBC Connection
    * @param bean RrTabDefInfoBean
@@ -23,7 +24,8 @@ class RrTabDefInfoDao extends GeneralDao[RrTabDefInfoBean] {
     val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_RR_TAB_DEF_INFO.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setBigDecimal(1, bean.tabDefRevisionAfAttr.value)
+    stmt.setString(2, bean.tabDefNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -175,7 +177,9 @@ class RrTabDefInfoDao extends GeneralDao[RrTabDefInfoBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_RR_TAB_DEF_INFO.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setBigDecimal(1, bean.tabDefRevisionAfAttr.value)
+    stmt.setString(2, bean.tabDefNameAttr.value)
+
     result = stmt.executeUpdate()
 
     result
