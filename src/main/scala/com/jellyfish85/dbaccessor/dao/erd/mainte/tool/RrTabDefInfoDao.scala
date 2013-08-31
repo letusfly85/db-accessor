@@ -153,6 +153,10 @@ class RrTabDefInfoDao extends GeneralDao[RrTabDefInfoBean] {
       stmt.setString(23, bean.segoseiCheckStatusAttr.value)
       stmt.setBigDecimal(24, bean.segoseiCheckLogIdAttr.value)
       stmt.setString(25, bean.existsFlgAttr.value)
+
+      stmt.setString(26, bean.tabDefNameAttr.value)
+      stmt.setBigDecimal(27, bean.tabDefRevisionAfAttr.value)
+      stmt.setBigDecimal(28, bean.columnIdAttr.value)
       
       stmt.addBatch()
     }
