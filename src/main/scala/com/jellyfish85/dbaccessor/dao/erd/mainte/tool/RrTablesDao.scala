@@ -21,10 +21,11 @@ class RrTablesDao extends GeneralDao[RrTablesBean] {
   def find(conn: Connection,   bean: RrTablesBean): List[RrTablesBean] = {
     var list: List[RrTablesBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/TODO/SELLECT_RR_TABLES.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_RR_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setBigDecimal(1, bean.revisionAfAttr.value)
+    stmt.setString(2, bean.physicalTableNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -61,7 +62,7 @@ class RrTablesDao extends GeneralDao[RrTablesBean] {
   def insert(conn: Connection, list: List[RrTablesBean]): Int  = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/INSERT_RR_TABLES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_RR_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RrTablesBean =>
@@ -99,23 +100,26 @@ class RrTablesDao extends GeneralDao[RrTablesBean] {
   def update(conn: Connection, list: List[RrTablesBean]): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/UPDATE_RR_TABLES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/UPDATE_RR_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RrTablesBean =>
-              stmt.setBigDecimal(1, bean.trkmIdAttr.value)
-              stmt.setBigDecimal(2, bean.tabDefIdAttr.value)
-              stmt.setBigDecimal(3, bean.tableIdAttr.value)
-              stmt.setBigDecimal(4, bean.revisionAfAttr.value)
-              stmt.setBigDecimal(5, bean.revisionBfAttr.value)
-              stmt.setString(6, bean.logicalTableTagAttr.value)
-              stmt.setString(7, bean.logicalTableNameAttr.value)
-              stmt.setString(8, bean.physicalTableNameAttr.value)
-              stmt.setString(9, bean.trkmStatusAttr.value)
-              stmt.setString(10, bean.tableCommentAttr.value)
-              stmt.setString(11, bean.segoseiCheckStatusAttr.value)
-              stmt.setBigDecimal(12, bean.ticketNumberAttr.value)
-              stmt.setString(13, bean.existsFlgAttr.value)
+      stmt.setBigDecimal(1, bean.trkmIdAttr.value)
+      stmt.setBigDecimal(2, bean.tabDefIdAttr.value)
+      stmt.setBigDecimal(3, bean.tableIdAttr.value)
+      stmt.setBigDecimal(4, bean.revisionAfAttr.value)
+      stmt.setBigDecimal(5, bean.revisionBfAttr.value)
+      stmt.setString(6, bean.logicalTableTagAttr.value)
+      stmt.setString(7, bean.logicalTableNameAttr.value)
+      stmt.setString(8, bean.physicalTableNameAttr.value)
+      stmt.setString(9, bean.trkmStatusAttr.value)
+      stmt.setString(10, bean.tableCommentAttr.value)
+      stmt.setString(11, bean.segoseiCheckStatusAttr.value)
+      stmt.setBigDecimal(12, bean.ticketNumberAttr.value)
+      stmt.setString(13, bean.existsFlgAttr.value)
+
+      stmt.setBigDecimal(14, bean.revisionAfAttr.value)
+      stmt.setString(15, bean.physicalTableNameAttr.value)
       
       stmt.addBatch()
     }
@@ -137,10 +141,12 @@ class RrTablesDao extends GeneralDao[RrTablesBean] {
   def delete(conn: Connection, bean: RrTablesBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/DELETE_RR_TABLES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_RR_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setBigDecimal(1, bean.revisionAfAttr.value)
+    stmt.setString(2, bean.physicalTableNameAttr.value)
+
     result = stmt.executeUpdate()
 
     result
@@ -159,7 +165,7 @@ class RrTablesDao extends GeneralDao[RrTablesBean] {
   def merge(conn: Connection,  bean: RrTablesBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/MERGE_RR_TABLES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_RR_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     //TODO stmt.setMethods
