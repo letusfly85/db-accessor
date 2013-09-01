@@ -28,6 +28,10 @@ import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
  */
 class ${daoName} extends GeneralDao[${beanName}] {
   /**
+   * == find ==
+   *
+   * it searches ${tableName} by primary keys, and returns list of ${beanName}
+   *
    *
    * @param conn JDBC Connection
    * @param bean ${beanName}
@@ -60,6 +64,8 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
   /**
    * == insert ==
    *
+   * it inserts to ${tableName} using list of ${beanName}, and returns a number of inserted records.
+   *
    * @param conn JDBC Connection
    * @param list list of ${beanName}
    * @return result which is the number of executed records
@@ -87,6 +93,8 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
   /**
    * == update ==
    *
+   * it updates ${tableName} using list of ${beanName}, and returns a number of updated records.
+   *
    * @param conn JDBC Connection
    * @param list list of ${beanName}
    * @throws java.sql.SQLException, which will be caught outside of itself.
@@ -101,7 +109,7 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
 
     list.foreach {bean: ${beanName} =>
       #for (l <- list)
-        stmt.set${tm.convertOracleType2Java(l.dataTypeAttr.value)}(${l.columnIdAttr.value}, bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value)
+  stmt.set${tm.convertOracleType2Java(l.dataTypeAttr.value)}(${l.columnIdAttr.value}, bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value)
       #end
 
       stmt.addBatch()
@@ -114,6 +122,8 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
 
   /**
    * == delete ==
+   *
+   * it deletes ${tableName} by primary keys, and returns a number of deleted records.
    *
    * @param conn JDBC Connection
    * @param bean ${beanName}
@@ -135,6 +145,8 @@ bean.${cc.lowerCamelCase(l.columnNameAttr.value)}Attr.value = result.get${tm.con
 
   /**
    * == merge ==
+   *
+   * it merge to ${tableName} using a ${beanName}, and returns a number of merged records.
    *
    * @param  conn JDBC Connection
    * @param  bean ${beanName}
