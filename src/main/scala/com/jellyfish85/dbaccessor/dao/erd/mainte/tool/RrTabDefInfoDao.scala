@@ -21,7 +21,7 @@ class RrTabDefInfoDao extends GeneralDao[RrTabDefInfoBean] {
   def find(conn: Connection,   bean: RrTabDefInfoBean): List[RrTabDefInfoBean] = {
     var list: List[RrTabDefInfoBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_RR_TAB_DEF_INFO.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_RR_TAB_DEF_INFO.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setBigDecimal(1, bean.tabDefRevisionAfAttr.value)

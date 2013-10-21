@@ -24,7 +24,7 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
   def find(conn: Connection,   bean: RrTabColumnsBean): List[RrTabColumnsBean] = {
     var list: List[RrTabColumnsBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_RR_TAB_COLUMNS.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     //erd/mainte/tool stmt.setMethods

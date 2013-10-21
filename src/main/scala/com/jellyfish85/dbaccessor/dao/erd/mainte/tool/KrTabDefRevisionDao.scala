@@ -22,7 +22,7 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   def find(conn: Connection,   bean: KrTabDefRevisionBean): List[KrTabDefRevisionBean] = {
     var list: List[KrTabDefRevisionBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_KR_TAB_DEF_REVISION.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_KR_TAB_DEF_REVISION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setString(1, bean.tabDefNameAttr.value)

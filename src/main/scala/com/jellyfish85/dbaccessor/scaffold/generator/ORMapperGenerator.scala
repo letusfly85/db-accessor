@@ -31,7 +31,7 @@ class ORMapperGenerator extends CamelCase {
   val daoName       = (tableName: String) => upperCamelCase(tableName) + "Dao"
   val daoFileName   = (tableName: String) => daoName(tableName)   + ".scala"
 
-  val selectQuery = (tableName: String) => "SELLECT_" + tableName + ".sql"
+  val selectQuery = (tableName: String) => "SELECT_" + tableName + ".sql"
   val deleteQuery = (tableName: String) => "DELETE_" + tableName + ".sql"
   val insertQuery = (tableName: String) => "INSERT_" + tableName + ".sql"
   val updateQuery = (tableName: String) => "UPDATE_" + tableName + ".sql"

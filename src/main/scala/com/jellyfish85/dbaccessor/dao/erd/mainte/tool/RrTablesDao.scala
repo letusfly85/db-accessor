@@ -21,7 +21,7 @@ class RrTablesDao extends GeneralDao[RrTablesBean] {
   def find(conn: Connection,   bean: RrTablesBean): List[RrTablesBean] = {
     var list: List[RrTablesBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_RR_TABLES.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_RR_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setBigDecimal(1, bean.revisionAfAttr.value)

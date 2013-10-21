@@ -20,7 +20,7 @@ class MsIndColumnsDao extends GeneralDao[MsIndColumnsBean] {
   def find(conn: Connection,   bean: MsIndColumnsBean): List[MsIndColumnsBean] = {
     var list: List[MsIndColumnsBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_MS_IND_COLUMNS.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_IND_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setString(1, bean.indexNameAttr.value)
