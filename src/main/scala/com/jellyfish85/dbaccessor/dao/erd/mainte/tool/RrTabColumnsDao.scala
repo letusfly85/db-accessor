@@ -24,10 +24,10 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
   def find(conn: Connection,   bean: RrTabColumnsBean): List[RrTabColumnsBean] = {
     var list: List[RrTabColumnsBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/TODO/SELLECT_RR_TAB_COLUMNS.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELLECT_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    //erd/mainte/tool stmt.setMethods
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -80,7 +80,7 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
   def insert(conn: Connection, list: List[RrTabColumnsBean]): Int  = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/INSERT_RR_TAB_COLUMNS.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RrTabColumnsBean =>
@@ -134,7 +134,7 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
   def update(conn: Connection, list: List[RrTabColumnsBean]): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/UPDATE_RR_TAB_COLUMNS.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/UPDATE_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RrTabColumnsBean =>
@@ -188,10 +188,14 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
   def delete(conn: Connection, bean: RrTabColumnsBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/DELETE_RR_TAB_COLUMNS.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    //erd/mainte/tool stmt.setMethods
+    stmt.setBigDecimal(1, bean.tableIdAttr.value)
+    stmt.setString(2, bean.physicalTableNameAttr.value)
+    stmt.setBigDecimal(3, bean.revisionAfAttr.value)
+
     result = stmt.executeUpdate()
 
     result
@@ -212,10 +216,10 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
   def merge(conn: Connection,  bean: RrTabColumnsBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/MERGE_RR_TAB_COLUMNS.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    //erd/mainte/tool stmt.setMethods
     result = stmt.executeUpdate()
 
     result
