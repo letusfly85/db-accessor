@@ -18,7 +18,7 @@ class RrTabColumnsDaoTest extends Specification {
     bean00.tableIdAttr.value = new BigDecimal(1)
     bean00.revisionAfAttr.value = new BigDecimal(1)
 
-    // 削除系処理テスト
+    //test case:delete
     dao.delete(db.conn, bean00)
     db.jCommit
 
@@ -27,6 +27,7 @@ class RrTabColumnsDaoTest extends Specification {
       list_del.size must beEqualTo(0)
     }
 
+    //test case:insert
     val bean01: RrTabColumnsBean = new RrTabColumnsBean
     val bean02: RrTabColumnsBean = new RrTabColumnsBean
     val bean03: RrTabColumnsBean = new RrTabColumnsBean
@@ -77,11 +78,6 @@ class RrTabColumnsDaoTest extends Specification {
     bean.physicalTableNameAttr.value = "_T_KK_KOKYK_KHN"
     bean.revisionAfAttr.value        = new BigDecimal(1)
     bean.tableIdAttr.value           = new BigDecimal(1)
-    /*
-    println("=====================================")
-    println(dao.find(db.conn, bean).size)
-    println("=====================================")
-    */
 
     bean = dao.find(db.conn, bean).head
     "return true for _T_KK_KOKYK_KHN.PK_KOKYK_ID" in {
@@ -91,6 +87,25 @@ class RrTabColumnsDaoTest extends Specification {
       bean.tableIdAttr.value            must beEqualTo(new BigDecimal(1))
     }
 
+    val _list: List[RrTabColumnsBean] = dao.find(db.conn, bean00)
+    "return 3 for _T_KK_KOKYK_KHN Columns" in {
+      _list.size must beEqualTo(3)
+    }
 
+
+    // 更新系処理テスト
+    bean.physicalColumnNameAttr.value = "PK_KOKYK_ID"
+    bean.logicalColumnNameAttr.value  = "あいうえお"
+    dao.update(db.conn, List(bean))
+    db.jCommit
+    val bean0x: RrTabColumnsBean = dao.find(db.conn, bean).head
+    db.jClose
+    "return true for updated _T_KK_KOKYK_KHN.PK_KOKYK_ID" in {
+      bean0x.physicalColumnNameAttr.value must beEqualTo("PK_KOKYK_ID")
+      bean0x.dataTypeAttr.value           must beEqualTo("CHAR")
+      bean0x.dataLengthAttr.value         must beEqualTo("8")
+      bean0x.tableIdAttr.value            must beEqualTo(new BigDecimal(1))
+      bean0x.logicalColumnNameAttr.value  must beEqualTo("あいうえお")
+    }
   }
 }

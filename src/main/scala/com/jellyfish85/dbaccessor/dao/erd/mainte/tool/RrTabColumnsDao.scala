@@ -166,6 +166,11 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
       stmt.setBigDecimal(25, bean.segoseiCheckLogIdAttr.value)
       stmt.setBigDecimal(26, bean.ticketNumberAttr.value)
       stmt.setString(27, bean.existsFlgAttr.value)
+
+      stmt.setString(28, bean.physicalTableNameAttr.value)
+      stmt.setBigDecimal(29, bean.revisionAfAttr.value)
+      stmt.setString(30, bean.physicalColumnNameAttr.value)
+
       
       stmt.addBatch()
     }
