@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 import java.math.BigDecimal
 
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
-import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.{RrTabColumnsBean}
+import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.{MsTabColumnsBean, RrTabColumnsBean}
 
 class RrTabColumnsDaoTest extends Specification {
   val db = new DatabaseManager
@@ -16,6 +16,7 @@ class RrTabColumnsDaoTest extends Specification {
     val bean00: RrTabColumnsBean = new RrTabColumnsBean
     bean00.physicalTableNameAttr.value = "_T_KK_KOKYK_KHN"
     bean00.tableIdAttr.value = new BigDecimal(1)
+    bean00.revisionAfAttr.value = new BigDecimal(1)
 
     // 削除系処理テスト
     dao.delete(db.conn, bean00)
@@ -26,7 +27,6 @@ class RrTabColumnsDaoTest extends Specification {
       list_del.size must beEqualTo(0)
     }
 
-    /*
     val bean01: RrTabColumnsBean = new RrTabColumnsBean
     val bean02: RrTabColumnsBean = new RrTabColumnsBean
     val bean03: RrTabColumnsBean = new RrTabColumnsBean
@@ -68,11 +68,29 @@ class RrTabColumnsDaoTest extends Specification {
     bean01.dataLengthAttr.value = "8"
 
     val list: List[RrTabColumnsBean] = List(bean01, bean02, bean03)
+    dao.delete(db.conn, bean00)
     dao.insert(db.conn, list)
 
     db.jCommit
+
+    var bean: RrTabColumnsBean = new RrTabColumnsBean
+    bean.physicalTableNameAttr.value = "_T_KK_KOKYK_KHN"
+    bean.revisionAfAttr.value        = new BigDecimal(1)
+    bean.tableIdAttr.value           = new BigDecimal(1)
+    /*
+    println("=====================================")
+    println(dao.find(db.conn, bean).size)
+    println("=====================================")
     */
 
-  }
+    bean = dao.find(db.conn, bean).head
+    "return true for _T_KK_KOKYK_KHN.PK_KOKYK_ID" in {
+      bean.physicalColumnNameAttr.value must beEqualTo("PK_KOKYK_ID")
+      bean.dataTypeAttr.value           must beEqualTo("CHAR")
+      bean.dataLengthAttr.value         must beEqualTo("8")
+      bean.tableIdAttr.value            must beEqualTo(new BigDecimal(1))
+    }
 
+
+  }
 }

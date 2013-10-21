@@ -27,7 +27,8 @@ class RrTabColumnsDao extends GeneralDao[RrTabColumnsBean] {
     val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_RR_TAB_COLUMNS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //erd/mainte/tool stmt.setMethods
+    stmt.setString(1, bean.physicalTableNameAttr.value)
+    stmt.setBigDecimal(2, bean.revisionAfAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
