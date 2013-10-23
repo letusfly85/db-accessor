@@ -1,6 +1,6 @@
 UPDATE RR_TAB_COLUMNS
 SET
-  TAB_DEF_ID            = ?            /* 1, TAB_DEF_ID */
+   TAB_DEF_ID           = ?            /* 1, TAB_DEF_ID */
   ,TABLE_ID             = ?            /* 2, TABLE_ID */
   ,REVISION_AF          = ?            /* 3, REVISION_AF */
   ,REVISION_BF          = ?            /* 4, REVISION_BF */

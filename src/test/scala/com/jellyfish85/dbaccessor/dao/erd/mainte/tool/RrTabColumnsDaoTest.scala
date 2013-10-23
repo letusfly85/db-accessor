@@ -4,7 +4,8 @@ import org.specs2.mutable.Specification
 import java.math.BigDecimal
 
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
-import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.{MsTabColumnsBean, RrTabColumnsBean}
+import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.{RrTabDefInfoBean, RrTabColumnsBean}
+import java.sql.SQLException
 
 class RrTabColumnsDaoTest extends Specification {
   val db = new DatabaseManager
@@ -107,5 +108,18 @@ class RrTabColumnsDaoTest extends Specification {
       bean0x.tableIdAttr.value            must beEqualTo(new BigDecimal(1))
       bean0x.logicalColumnNameAttr.value  must beEqualTo("あいうえお")
     }
+  }
+
+  "return error" should {
+    db.connect
+
+    val bean00: RrTabColumnsBean = new RrTabColumnsBean
+    bean00.tabDefIdAttr.value          = new BigDecimal(1)
+    bean00.columnIdAttr.value          = new BigDecimal(1)
+    bean00.logicalColumnNameAttr.value = "SAMPLE_COLUMN"
+
+    dao.delete(db.conn, bean00)
+    db.jCommit
+    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
   }
 }
