@@ -161,7 +161,8 @@ class RrIndexesDao extends GeneralDao[RrIndexesBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_RR_INDEXES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //erd.mainte.tool stmt.setMethods
+    stmt.setString(1, bean.indexNameAttr.value)
+
     result = stmt.executeUpdate()
 
     result
