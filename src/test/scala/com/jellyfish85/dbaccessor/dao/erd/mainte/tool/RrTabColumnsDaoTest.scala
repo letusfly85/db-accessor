@@ -94,7 +94,7 @@ class RrTabColumnsDaoTest extends Specification {
     }
 
 
-    // 更新系処理テスト
+    //test case:update
     bean.physicalColumnNameAttr.value = "PK_KOKYK_ID"
     bean.logicalColumnNameAttr.value  = "あいうえお"
     dao.update(db.conn, List(bean))
