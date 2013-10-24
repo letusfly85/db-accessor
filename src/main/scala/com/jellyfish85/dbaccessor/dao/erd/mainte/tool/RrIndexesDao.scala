@@ -1,4 +1,4 @@
-package com.jellyfish85.dbaccessor.TODO.dao
+package com.jellyfish85.dbaccessor.dao.erd.mainte.tool
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
@@ -24,10 +24,10 @@ class RrIndexesDao extends GeneralDao[RrIndexesBean] {
   def find(conn: Connection,   bean: RrIndexesBean): List[RrIndexesBean] = {
     var list: List[RrIndexesBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/TODO/SELECT_RR_INDEXES.sql")
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_RR_INDEXES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.indexNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -70,7 +70,7 @@ class RrIndexesDao extends GeneralDao[RrIndexesBean] {
   def insert(conn: Connection, list: List[RrIndexesBean]): Int  = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/INSERT_RR_INDEXES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_RR_INDEXES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RrIndexesBean =>
@@ -114,7 +114,7 @@ class RrIndexesDao extends GeneralDao[RrIndexesBean] {
   def update(conn: Connection, list: List[RrIndexesBean]): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/UPDATE_RR_INDEXES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/UPDATE_RR_INDEXES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RrIndexesBean =>
@@ -158,10 +158,10 @@ class RrIndexesDao extends GeneralDao[RrIndexesBean] {
   def delete(conn: Connection, bean: RrIndexesBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/DELETE_RR_INDEXES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_RR_INDEXES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    //erd.mainte.tool stmt.setMethods
     result = stmt.executeUpdate()
 
     result
@@ -182,10 +182,10 @@ class RrIndexesDao extends GeneralDao[RrIndexesBean] {
   def merge(conn: Connection,  bean: RrIndexesBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/MERGE_RR_INDEXES.sql")
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_RR_INDEXES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    //erd.mainte.tool stmt.setMethods
     result = stmt.executeUpdate()
 
     result

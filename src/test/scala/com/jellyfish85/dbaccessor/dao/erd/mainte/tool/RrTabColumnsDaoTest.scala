@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 import java.math.BigDecimal
 
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
-import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.{RrTabDefInfoBean, RrTabColumnsBean}
+import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.RrTabColumnsBean
 import java.sql.SQLException
 
 class RrTabColumnsDaoTest extends Specification {
