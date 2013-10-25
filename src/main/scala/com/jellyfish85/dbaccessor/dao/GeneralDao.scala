@@ -1,10 +1,10 @@
 package com.jellyfish85.dbaccessor.dao
 
-import com.jellyfish85.dbaccessor.utils.GenerateQuery
+import com.jellyfish85.dbaccessor.utils.{JavaConverter, GenerateQuery}
 
 import java.sql.Connection
 
-abstract class GeneralDao[A] extends GenerateQuery {
+abstract class GeneralDao[A] extends GenerateQuery with JavaConverter[A] {
 
   def find(conn: Connection,   bean: A): List[A]
 
