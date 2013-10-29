@@ -17,7 +17,7 @@ import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
 <%@ val updateQuery: String               %>
 <%@ val mergeQuery: String                %>
 
-package com.jellyfish85.dbaccessor.TODO.dao
+package com.jellyfish85.dbaccessor.dao.TODO
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
