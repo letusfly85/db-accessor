@@ -22,12 +22,19 @@ class RsSvnSrcInfoDaoTest extends Specification {
     bean00.headRevisionAttr.value = new BigDecimal(0)
 
     dao.deleteAll(db.conn, bean00)
-    val list: List[RsSvnSrcInfoBean] = dao.find(db.conn, bean00)
+    val list01: List[RsSvnSrcInfoBean] = dao.find(db.conn, bean00)
     db.jCommit
 
     "return 0 for insert one record to RS_SVN_SRC_INFO" in {
-      list.size must beEqualTo(0)
+      list01.size must beEqualTo(0)
     }
-    //dao.insert(db.conn, List(bean00))
+
+    dao.insert(db.conn, List(bean00))
+    db.jCommit
+
+    val bean01: RsSvnSrcInfoBean = dao.find(db.conn, bean00).head
+    "return 1 for insert one record to RS_SVN_SRC_INFO" in {
+      bean01.fileNameAttr.value must beEqualTo("sample.java")
+    }
   }
 }
