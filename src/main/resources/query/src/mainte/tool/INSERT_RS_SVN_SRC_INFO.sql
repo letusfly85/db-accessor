@@ -1,6 +1,7 @@
 INSERT INTO RS_SVN_SRC_INFO
 (
    HEAD_REVISION
+  ,PROJECT_NAME
   ,FILE_NAME
   ,PATH
   ,REVISION
@@ -14,23 +15,22 @@ INSERT INTO RS_SVN_SRC_INFO
   ,KOSINYMD
   ,KOSINHMS
   ,KOSINUSER
-  ,BIKO
 )
 VALUES
 (
    ? /* 1, HEAD_REVISION */
-  ,? /* 2, FILE_NAME */
-  ,? /* 3, PATH */
-  ,? /* 4, REVISION */
-  ,? /* 5, AUTHOR */
-  ,? /* 6, COMMIT_DATE */
-  ,? /* 7, COMMIT_HMS */
-  ,? /* 8, EXTENSION */
-  ,? /* 9, TOROKUYMD */
-  ,? /* 10, TOROKUHMS */
-  ,? /* 11, TOROKUUSER */
-  ,? /* 12, KOSINYMD */
-  ,? /* 13, KOSINHMS */
-  ,? /* 14, KOSINUSER */
-  ,? /* 15, BIKO */
+  ,? /* 2, PROJECT_NAME */
+  ,? /* 3, FILE_NAME */
+  ,? /* 4, PATH */
+  ,? /* 5, REVISION */
+  ,? /* 6, AUTHOR */
+  ,? /* 7, COMMIT_DATE */
+  ,? /* 8, COMMIT_HMS */
+  ,? /* 9, EXTENSION */
+  ,TO_CHAR(SYSDATE,'YYYYMMDD')
+  ,TO_CHAR(SYSDATE,'HH24MISS')
+  ,SYS_CONTEXT('USERENV','MODULE')
+  ,TO_CHAR(SYSDATE,'YYYYMMDD')
+  ,TO_CHAR(SYSDATE,'HH24MISS')
+  ,SYS_CONTEXT('USERENV','MODULE')
 )

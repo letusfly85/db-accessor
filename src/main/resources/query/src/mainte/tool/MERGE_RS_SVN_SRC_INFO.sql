@@ -7,24 +7,26 @@ USING DUAL
 WHEN MATCHED THEN
 UPDATE SET
   HEAD_REVISION = ?             /* 1, HEAD_REVISION */
-  ,FILE_NAME = ?            /* 2, FILE_NAME */
-  ,PATH = ?            /* 3, PATH */
-  ,REVISION = ?            /* 4, REVISION */
-  ,AUTHOR = ?            /* 5, AUTHOR */
-  ,COMMIT_DATE = ?            /* 6, COMMIT_DATE */
-  ,COMMIT_HMS = ?            /* 7, COMMIT_HMS */
-  ,EXTENSION = ?            /* 8, EXTENSION */
-  ,TOROKUYMD = ?            /* 9, TOROKUYMD */
-  ,TOROKUHMS = ?            /* 10, TOROKUHMS */
-  ,TOROKUUSER = ?            /* 11, TOROKUUSER */
-  ,KOSINYMD = ?            /* 12, KOSINYMD */
-  ,KOSINHMS = ?            /* 13, KOSINHMS */
-  ,KOSINUSER = ?            /* 14, KOSINUSER */
-  ,BIKO = ?            /* 15, BIKO */
+  ,PROJECT_NAME = ?            /* 2, PROJECT_NAME */
+  ,FILE_NAME = ?            /* 3, FILE_NAME */
+  ,PATH = ?            /* 4, PATH */
+  ,REVISION = ?            /* 5, REVISION */
+  ,AUTHOR = ?            /* 6, AUTHOR */
+  ,COMMIT_DATE = ?            /* 7, COMMIT_DATE */
+  ,COMMIT_HMS = ?            /* 8, COMMIT_HMS */
+  ,EXTENSION = ?            /* 9, EXTENSION */
+  ,TOROKUYMD = ?            /* 10, TOROKUYMD */
+  ,TOROKUHMS = ?            /* 11, TOROKUHMS */
+  ,TOROKUUSER = ?            /* 12, TOROKUUSER */
+  ,KOSINYMD = ?            /* 13, KOSINYMD */
+  ,KOSINHMS = ?            /* 14, KOSINHMS */
+  ,KOSINUSER = ?            /* 15, KOSINUSER */
+  ,BIKO = ?            /* 16, BIKO */
 -- 新規レコードの作成
 WHEN NOT MATCHED THEN
 INSERT (
   HEAD_REVISION
+  ,PROJECT_NAME
   ,FILE_NAME
   ,PATH
   ,REVISION
@@ -38,23 +40,22 @@ INSERT (
   ,KOSINYMD
   ,KOSINHMS
   ,KOSINUSER
-  ,BIKO
 )
 VALUES
 (
   ?   /* 1, HEAD_REVISION */
-  ,?  /* 2, FILE_NAME */
-  ,?  /* 3, PATH */
-  ,?  /* 4, REVISION */
-  ,?  /* 5, AUTHOR */
-  ,?  /* 6, COMMIT_DATE */
-  ,?  /* 7, COMMIT_HMS */
-  ,?  /* 8, EXTENSION */
-  ,?  /* 9, TOROKUYMD */
-  ,?  /* 10, TOROKUHMS */
-  ,?  /* 11, TOROKUUSER */
-  ,?  /* 12, KOSINYMD */
-  ,?  /* 13, KOSINHMS */
-  ,?  /* 14, KOSINUSER */
-  ,?  /* 15, BIKO */
+  ,?  /* 2, PROJECT_NAME */
+  ,?  /* 3, FILE_NAME */
+  ,?  /* 4, PATH */
+  ,?  /* 5, REVISION */
+  ,?  /* 6, AUTHOR */
+  ,?  /* 7, COMMIT_DATE */
+  ,?  /* 8, COMMIT_HMS */
+  ,?  /* 9, EXTENSION */
+  ,TO_CHAR(SYSDATE,'YYYYMMDD')
+  ,TO_CHAR(SYSDATE,'HH24MISS')
+  ,SYS_CONTEXT('USERENV','MODULE')
+  ,TO_CHAR(SYSDATE,'YYYYMMDD')
+  ,TO_CHAR(SYSDATE,'HH24MISS')
+  ,SYS_CONTEXT('USERENV','MODULE')
 )

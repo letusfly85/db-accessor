@@ -1,3 +1,3 @@
 DELETE FROM RS_SVN_SRC_INFO
 WHERE
-  PATH_ = ?
+  1 = 1

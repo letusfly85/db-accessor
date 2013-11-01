@@ -1,4 +1,4 @@
-package com.jellyfish85.dbaccessor.bean.src.mainte.tool
+package com.jellyfish85.dbaccessor.src.mainte.tool
 
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
 import java.math.BigDecimal
@@ -9,6 +9,7 @@ class RsSvnSrcInfoBean extends GeneralBean {
   val physicalTableName: String =  "RS_SVN_SRC_INFO"
 
   var headRevisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
+  var projectNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var fileNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var pathAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var revisionAttr:	ColumnAttribute[String] = new ColumnAttribute()
