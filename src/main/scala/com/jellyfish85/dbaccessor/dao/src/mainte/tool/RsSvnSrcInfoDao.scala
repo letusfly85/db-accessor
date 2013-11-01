@@ -27,7 +27,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SVN_SRC_INFO.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -178,6 +178,28 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     //TODO stmt.setMethods
+    result = stmt.executeUpdate()
+
+    result
+  }
+
+  /**
+   * == delete ==
+   *
+   * it deletes RS_SVN_SRC_INFO by primary keys, and returns a number of deleted records.
+   *
+   * @param conn JDBC Connection
+   * @param bean RsSvnSrcInfoBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def deleteAll(conn: Connection, bean: RsSvnSrcInfoBean): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SVN_SRC_INFO_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
     result = stmt.executeUpdate()
 
     result
