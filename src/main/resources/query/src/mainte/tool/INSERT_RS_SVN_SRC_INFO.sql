@@ -1,0 +1,36 @@
+INSERT INTO RS_SVN_SRC_INFO
+(
+   HEAD_REVISION
+  ,FILE_NAME
+  ,PATH
+  ,REVISION
+  ,AUTHOR
+  ,COMMIT_DATE
+  ,COMMIT_HMS
+  ,EXTENSION
+  ,TOROKUYMD
+  ,TOROKUHMS
+  ,TOROKUUSER
+  ,KOSINYMD
+  ,KOSINHMS
+  ,KOSINUSER
+  ,BIKO
+)
+VALUES
+(
+   ? /* 1, HEAD_REVISION */
+  ,? /* 2, FILE_NAME */
+  ,? /* 3, PATH */
+  ,? /* 4, REVISION */
+  ,? /* 5, AUTHOR */
+  ,? /* 6, COMMIT_DATE */
+  ,? /* 7, COMMIT_HMS */
+  ,? /* 8, EXTENSION */
+  ,? /* 9, TOROKUYMD */
+  ,? /* 10, TOROKUHMS */
+  ,? /* 11, TOROKUUSER */
+  ,? /* 12, KOSINYMD */
+  ,? /* 13, KOSINHMS */
+  ,? /* 14, KOSINUSER */
+  ,? /* 15, BIKO */
+)
