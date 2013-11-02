@@ -12,7 +12,7 @@ class RsSvnSrcInfoBean extends GeneralBean {
   var projectNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var fileNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var pathAttr:	ColumnAttribute[String] = new ColumnAttribute()
-  var revisionAttr:	ColumnAttribute[String] = new ColumnAttribute()
+  var revisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var authorAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var commitDateAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var commitHmsAttr:	ColumnAttribute[String] = new ColumnAttribute()
