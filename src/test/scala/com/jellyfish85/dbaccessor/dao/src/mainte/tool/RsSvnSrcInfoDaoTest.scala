@@ -21,7 +21,7 @@ class RsSvnSrcInfoDaoTest extends Specification {
     bean00.projectNameAttr.value  = "com.jellyfish85"
     bean00.headRevisionAttr.value = new BigDecimal(0)
 
-    dao.deleteAll(db.conn, bean00)
+    dao.deleteAll(db.conn)
     val list01: List[RsSvnSrcInfoBean] = dao.find(db.conn, bean00)
     db.jCommit
 
