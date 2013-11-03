@@ -6,7 +6,7 @@ INSERT INTO RS_SVN_SRC_INFO
   ,PATH
   ,REVISION
   ,AUTHOR
-  ,COMMIT_DATE
+  ,COMMIT_YMD
   ,COMMIT_HMS
   ,EXTENSION
   ,TOROKUYMD
@@ -24,7 +24,7 @@ VALUES
   ,? /* 4, PATH */
   ,? /* 5, REVISION */
   ,? /* 6, AUTHOR */
-  ,? /* 7, COMMIT_DATE */
+  ,? /* 7, COMMIT_YMD */
   ,? /* 8, COMMIT_HMS */
   ,? /* 9, EXTENSION */
   ,TO_CHAR(SYSDATE,'YYYYMMDD')

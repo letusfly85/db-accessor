@@ -5,7 +5,7 @@ CREATE TABLE RS_SVN_SRC_INFO (
 	PATH				    VARCHAR2(2000),
 	REVISION    			NUMBER(38,0),
 	AUTHOR      			VARCHAR2(30),
-	COMMIT_DATE             CHAR(8),
+	COMMIT_YMD              CHAR(8),
 	COMMIT_HMS              CHAR(6),
 	EXTENSION               VARCHAR2(30),
 	TOROKUYMD				VARCHAR2(8),

@@ -39,7 +39,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
       bean.pathAttr.value = result.getString("PATH")
       bean.revisionAttr.value = result.getBigDecimal("REVISION")
       bean.authorAttr.value = result.getString("AUTHOR")
-      bean.commitDateAttr.value = result.getString("COMMIT_DATE")
+      bean.commitYmdAttr.value = result.getString("COMMIT_YMD")
       bean.commitHmsAttr.value = result.getString("COMMIT_HMS")
       bean.extensionAttr.value = result.getString("EXTENSION")
 
@@ -79,7 +79,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
       bean.pathAttr.value = result.getString("PATH")
       bean.revisionAttr.value = result.getBigDecimal("REVISION")
       bean.authorAttr.value = result.getString("AUTHOR")
-      bean.commitDateAttr.value = result.getString("COMMIT_DATE")
+      bean.commitYmdAttr.value = result.getString("COMMIT_YMD")
       bean.commitHmsAttr.value = result.getString("COMMIT_HMS")
       bean.extensionAttr.value = result.getString("EXTENSION")
 
@@ -112,7 +112,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
       stmt.setString(4, bean.pathAttr.value)
       stmt.setBigDecimal(5, bean.revisionAttr.value)
       stmt.setString(6, bean.authorAttr.value)
-      stmt.setString(7, bean.commitDateAttr.value)
+      stmt.setString(7, bean.commitYmdAttr.value)
       stmt.setString(8, bean.commitHmsAttr.value)
       stmt.setString(9, bean.extensionAttr.value)
 
@@ -148,7 +148,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
       stmt.setString(4, bean.pathAttr.value)
       stmt.setBigDecimal(5, bean.revisionAttr.value)
       stmt.setString(6, bean.authorAttr.value)
-      stmt.setString(7, bean.commitDateAttr.value)
+      stmt.setString(7, bean.commitYmdAttr.value)
       stmt.setString(8, bean.commitHmsAttr.value)
       stmt.setString(9, bean.extensionAttr.value)
 

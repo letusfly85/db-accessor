@@ -6,7 +6,7 @@ SET
   ,PATH = ?          /* 4, PATH */
   ,REVISION = ?      /* 5, REVISION */
   ,AUTHOR = ?        /* 6, AUTHOR */
-  ,COMMIT_DATE = ?   /* 7, COMMIT_DATE */
+  ,COMMIT_DATE = ?   /* 7, COMMIT_YMD */
   ,COMMIT_HMS = ?    /* 8, COMMIT_HMS */
   ,EXTENSION = ?     /* 9, EXTENSION */
   ,KOSINYMD	    =	 TO_CHAR(SYSDATE,'YYYYMMDD')

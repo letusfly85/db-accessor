@@ -12,7 +12,7 @@ UPDATE SET
   ,PATH = ?            /* 4, PATH */
   ,REVISION = ?            /* 5, REVISION */
   ,AUTHOR = ?            /* 6, AUTHOR */
-  ,COMMIT_DATE = ?            /* 7, COMMIT_DATE */
+  ,COMMIT_YMD = ?            /* 7, COMMIT_YMD */
   ,COMMIT_HMS = ?            /* 8, COMMIT_HMS */
   ,EXTENSION = ?            /* 9, EXTENSION */
   ,TOROKUYMD = ?            /* 10, TOROKUYMD */
@@ -31,7 +31,7 @@ INSERT (
   ,PATH
   ,REVISION
   ,AUTHOR
-  ,COMMIT_DATE
+  ,COMMIT_YMD
   ,COMMIT_HMS
   ,EXTENSION
   ,TOROKUYMD
@@ -49,7 +49,7 @@ VALUES
   ,?  /* 4, PATH */
   ,?  /* 5, REVISION */
   ,?  /* 6, AUTHOR */
-  ,?  /* 7, COMMIT_DATE */
+  ,?  /* 7, COMMIT_YMD */
   ,?  /* 8, COMMIT_HMS */
   ,?  /* 9, EXTENSION */
   ,TO_CHAR(SYSDATE,'YYYYMMDD')
