@@ -189,12 +189,11 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
    * it deletes RS_SVN_SRC_INFO by primary keys, and returns a number of deleted records.
    *
    * @param conn JDBC Connection
-   * @param bean RsSvnSrcInfoBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
    */
   @throws(classOf[SQLException])
-  def deleteAll(conn: Connection, bean: RsSvnSrcInfoBean): Int = {
+  def deleteAll(conn: Connection): Int = {
     var result: Int = 0
 
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SVN_SRC_INFO_ALL.sql")
