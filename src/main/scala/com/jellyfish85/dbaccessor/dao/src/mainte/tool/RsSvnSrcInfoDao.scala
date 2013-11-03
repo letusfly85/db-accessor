@@ -4,6 +4,8 @@ import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.src.mainte.tool.RsSvnSrcInfoBean
 
+import java.math.BigDecimal
+
 /**
  * == RsSvnSrcInfoDao ==
  *
@@ -67,7 +69,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SVN_SRC_INFO_BY_PROJECT_NAME.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.projectNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -87,6 +89,29 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     }
 
     list
+  }
+
+  /**
+   * == findHeadRevision ==
+   *
+   * it inserts to RS_SVN_SRC_INFO head revision number.
+   *
+   * @param conn JDBC Connection
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def findHeadRevision(conn: Connection): BigDecimal = {
+    var headRevision: BigDecimal = new BigDecimal(0)
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SVN_SRC_INFO_OF_HEAD_REVISION.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      headRevision = result.getBigDecimal("HEAD_REVISION")
+    }
+
+    headRevision
   }
 
   /**
