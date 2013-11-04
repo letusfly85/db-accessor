@@ -9,12 +9,11 @@ UPDATE SET
    HEAD_REVISION    = ?     /* 2, HEAD_REVISION */
   ,PROJECT_NAME     = ?     /* 3, PROJECT_NAME */
   ,FILE_NAME        = ?     /* 4, FILE_NAME */
-  ,PATH             = ?     /* 5, PATH */
-  ,REVISION         = ?     /* 6, REVISION */
-  ,AUTHOR           = ?     /* 7, AUTHOR */
-  ,COMMIT_YMD       = ?     /* 8, COMMIT_YMD */
-  ,COMMIT_HMS       = ?     /* 9, COMMIT_HMS */
-  ,EXTENSION        = ?     /* 10, EXTENSION */
+  ,REVISION         = ?     /* 5, REVISION */
+  ,AUTHOR           = ?     /* 6, AUTHOR */
+  ,COMMIT_YMD       = ?     /* 7, COMMIT_YMD */
+  ,COMMIT_HMS       = ?     /* 8, COMMIT_HMS */
+  ,EXTENSION        = ?     /* 9, EXTENSION */
   ,KOSINYMD         = TO_CHAR(SYSDATE,'YYYYMMDD')
   ,KOSINHMS         = TO_CHAR(SYSDATE,'HH24MISS')
   ,KOSINUSER        = SYS_CONTEXT('USERENV','MODULE')
@@ -39,15 +38,15 @@ INSERT (
 )
 VALUES
 (
-   ?  /* 11, HEAD_REVISION */
-  ,?  /* 12, PROJECT_NAME */
-  ,?  /* 13, FILE_NAME */
-  ,?  /* 14, PATH */
-  ,?  /* 15, REVISION */
-  ,?  /* 16, AUTHOR */
-  ,?  /* 17, COMMIT_YMD */
-  ,?  /* 18, COMMIT_HMS */
-  ,?  /* 19, EXTENSION */
+   ?  /* 10, HEAD_REVISION */
+  ,?  /* 11, PROJECT_NAME */
+  ,?  /* 12, FILE_NAME */
+  ,?  /* 13, PATH */
+  ,?  /* 14, REVISION */
+  ,?  /* 15, AUTHOR */
+  ,?  /* 16, COMMIT_YMD */
+  ,?  /* 17, COMMIT_HMS */
+  ,?  /* 18, EXTENSION */
   ,TO_CHAR(SYSDATE,'YYYYMMDD')
   ,TO_CHAR(SYSDATE,'HH24MISS')
   ,SYS_CONTEXT('USERENV','MODULE')
