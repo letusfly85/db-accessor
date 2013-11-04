@@ -238,7 +238,6 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
    * @param  bean RsSvnSrcInfoBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
-   * @deprecated there is no necessary to use merge for this class.
    */
   @throws(classOf[SQLException])
   def merge(conn: Connection,  bean: RsSvnSrcInfoBean): Int = {
@@ -247,7 +246,27 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_RS_SVN_SRC_INFO.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+
+    stmt.setBigDecimal(2, bean.headRevisionAttr.value)
+    stmt.setString(3, bean.projectNameAttr.value)
+    stmt.setString(4, bean.fileNameAttr.value)
+    stmt.setBigDecimal(5, bean.revisionAttr.value)
+    stmt.setString(6, bean.authorAttr.value)
+    stmt.setString(7, bean.commitYmdAttr.value)
+    stmt.setString(8, bean.commitHmsAttr.value)
+    stmt.setString(9, bean.extensionAttr.value)
+
+    stmt.setBigDecimal(11, bean.headRevisionAttr.value)
+    stmt.setString(12, bean.projectNameAttr.value)
+    stmt.setString(13, bean.fileNameAttr.value)
+    stmt.setString(14, bean.pathAttr.value)
+    stmt.setBigDecimal(15, bean.revisionAttr.value)
+    stmt.setString(16, bean.authorAttr.value)
+    stmt.setString(17, bean.commitYmdAttr.value)
+    stmt.setString(18, bean.commitHmsAttr.value)
+    stmt.setString(19, bean.extensionAttr.value)
+
     result = stmt.executeUpdate()
 
     result

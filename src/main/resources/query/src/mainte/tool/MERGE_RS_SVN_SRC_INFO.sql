@@ -1,31 +1,27 @@
 MERGE INTO RS_SVN_SRC_INFO
 USING DUAL
   ON (
-    /* TODO */
+    RS_SVN_SRC_INFO.PATH = ?    /* 1, PATH */
   )
 -- 既存レコードの更新
 WHEN MATCHED THEN
 UPDATE SET
-  HEAD_REVISION = ?             /* 1, HEAD_REVISION */
-  ,PROJECT_NAME = ?            /* 2, PROJECT_NAME */
-  ,FILE_NAME = ?            /* 3, FILE_NAME */
-  ,PATH = ?            /* 4, PATH */
-  ,REVISION = ?            /* 5, REVISION */
-  ,AUTHOR = ?            /* 6, AUTHOR */
-  ,COMMIT_YMD = ?            /* 7, COMMIT_YMD */
-  ,COMMIT_HMS = ?            /* 8, COMMIT_HMS */
-  ,EXTENSION = ?            /* 9, EXTENSION */
-  ,TOROKUYMD = ?            /* 10, TOROKUYMD */
-  ,TOROKUHMS = ?            /* 11, TOROKUHMS */
-  ,TOROKUUSER = ?            /* 12, TOROKUUSER */
-  ,KOSINYMD = ?            /* 13, KOSINYMD */
-  ,KOSINHMS = ?            /* 14, KOSINHMS */
-  ,KOSINUSER = ?            /* 15, KOSINUSER */
-  ,BIKO = ?            /* 16, BIKO */
+   HEAD_REVISION    = ?     /* 2, HEAD_REVISION */
+  ,PROJECT_NAME     = ?     /* 3, PROJECT_NAME */
+  ,FILE_NAME        = ?     /* 4, FILE_NAME */
+  ,PATH             = ?     /* 5, PATH */
+  ,REVISION         = ?     /* 6, REVISION */
+  ,AUTHOR           = ?     /* 7, AUTHOR */
+  ,COMMIT_YMD       = ?     /* 8, COMMIT_YMD */
+  ,COMMIT_HMS       = ?     /* 9, COMMIT_HMS */
+  ,EXTENSION        = ?     /* 10, EXTENSION */
+  ,KOSINYMD         = TO_CHAR(SYSDATE,'YYYYMMDD')
+  ,KOSINHMS         = TO_CHAR(SYSDATE,'HH24MISS')
+  ,KOSINUSER        = SYS_CONTEXT('USERENV','MODULE')
 -- 新規レコードの作成
 WHEN NOT MATCHED THEN
 INSERT (
-  HEAD_REVISION
+   HEAD_REVISION
   ,PROJECT_NAME
   ,FILE_NAME
   ,PATH
@@ -43,15 +39,15 @@ INSERT (
 )
 VALUES
 (
-  ?   /* 1, HEAD_REVISION */
-  ,?  /* 2, PROJECT_NAME */
-  ,?  /* 3, FILE_NAME */
-  ,?  /* 4, PATH */
-  ,?  /* 5, REVISION */
-  ,?  /* 6, AUTHOR */
-  ,?  /* 7, COMMIT_YMD */
-  ,?  /* 8, COMMIT_HMS */
-  ,?  /* 9, EXTENSION */
+   ?  /* 11, HEAD_REVISION */
+  ,?  /* 12, PROJECT_NAME */
+  ,?  /* 13, FILE_NAME */
+  ,?  /* 14, PATH */
+  ,?  /* 15, REVISION */
+  ,?  /* 16, AUTHOR */
+  ,?  /* 17, COMMIT_YMD */
+  ,?  /* 18, COMMIT_HMS */
+  ,?  /* 19, EXTENSION */
   ,TO_CHAR(SYSDATE,'YYYYMMDD')
   ,TO_CHAR(SYSDATE,'HH24MISS')
   ,SYS_CONTEXT('USERENV','MODULE')
