@@ -251,7 +251,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     stmt.setBigDecimal(2, bean.headRevisionAttr.value)
     stmt.setString(3, bean.projectNameAttr.value)
     stmt.setString(4, bean.fileNameAttr.value)
-    stmt.setBigDecimal(5, bean.path.value)
+    stmt.setString(5, bean.pathAttr.value)
     stmt.setBigDecimal(6, bean.revisionAttr.value)
     stmt.setString(7, bean.authorAttr.value)
     stmt.setString(8, bean.commitYmdAttr.value)
