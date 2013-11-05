@@ -92,6 +92,46 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
   }
 
   /**
+   * == findByProjectName ==
+   *
+   * it searches RS_SVN_SRC_INFO by primary keys, and returns list of RsSvnSrcInfoBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param bean RsSvnSrcInfoBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of RS_SVN_SRC_INFO
+   */
+  @throws(classOf[SQLException])
+  def findByExtension(conn: Connection,   bean: RsSvnSrcInfoBean): List[RsSvnSrcInfoBean] = {
+    var list: List[RsSvnSrcInfoBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SVN_SRC_INFO_BY_EXTENSION.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, bean.extensionAttr.value)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: RsSvnSrcInfoBean = new RsSvnSrcInfoBean
+
+      bean.headRevisionAttr.value = result.getBigDecimal("HEAD_REVISION")
+      bean.projectNameAttr.value = result.getString("PROJECT_NAME")
+      bean.fileNameAttr.value = result.getString("FILE_NAME")
+      bean.pathAttr.value = result.getString("PATH")
+      bean.revisionAttr.value = result.getBigDecimal("REVISION")
+      bean.authorAttr.value = result.getString("AUTHOR")
+      bean.commitYmdAttr.value = result.getString("COMMIT_YMD")
+      bean.commitHmsAttr.value = result.getString("COMMIT_HMS")
+      bean.extensionAttr.value = result.getString("EXTENSION")
+
+      list ::= bean
+    }
+
+    list
+  }
+
+  /**
    * == findHeadRevision ==
    *
    * it inserts to RS_SVN_SRC_INFO head revision number.
