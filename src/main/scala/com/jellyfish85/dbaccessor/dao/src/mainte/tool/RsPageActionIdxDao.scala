@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsPageActionIdxBean
+import java.util
 
 /**
  * == RsPageActionIdxDao ==
@@ -89,6 +90,26 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
   }
 
   /**
+   * == insert ==
+   *
+   * it inserts to RS_PAGE_ACTION_IDX using list of RsPageActionIdxBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of RsPageActionIdxBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[RsPageActionIdxBean]): Int  = {
+    var targetList: List[RsPageActionIdxBean] = List()
+
+    for (i <- 0 to list.size() -1) {
+      targetList ::= list.get(i)
+    }
+
+    insert(conn, targetList)
+  }
+
+  /**
    * == update ==
    *
    * it updates RS_PAGE_ACTION_IDX using list of RsPageActionIdxBean, and returns a number of updated records.
@@ -144,6 +165,27 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setString(1, bean.pathAttr.value)
+    result = stmt.executeUpdate()
+
+    result
+  }
+
+  /**
+   * == delete ==
+   *
+   * it deletes RS_PAGE_ACTION_IDX by primary keys, and returns a number of deleted records.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def deleteAll(conn: Connection): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_PAGE_ACTION_IDX_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
     result = stmt.executeUpdate()
 
     result

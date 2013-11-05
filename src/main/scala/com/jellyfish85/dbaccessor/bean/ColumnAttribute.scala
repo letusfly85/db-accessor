@@ -16,4 +16,8 @@ class ColumnAttribute[A] {
   var isUpdateKey: Boolean = _
   var isTargetKey: Boolean = _
 
+  def setValue(_value: A) {
+    this.value = _value
+  }
+
 }
