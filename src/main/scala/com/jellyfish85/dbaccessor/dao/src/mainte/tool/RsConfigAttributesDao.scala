@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsConfigAttributesBean
+import java.util
 
 /**
  * == RsConfigAttributesDao ==
@@ -92,6 +93,26 @@ class RsConfigAttributesDao extends GeneralDao[RsConfigAttributesBean] {
     result = stmt.executeBatch().size
 
     result
+  }
+
+  /**
+   * == insert ==
+   *
+   * it inserts to RS_CONFIG_ATTRIBUTES using list of RsConfigAttributesBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of RsConfigAttributesBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[RsConfigAttributesBean]): Int  = {
+    var targetList: List[RsConfigAttributesBean] = List()
+
+    for (i <- 0 to list.size() -1) {
+      targetList ::= list.get(i)
+    }
+
+    insert(conn, targetList)
   }
 
   /**
