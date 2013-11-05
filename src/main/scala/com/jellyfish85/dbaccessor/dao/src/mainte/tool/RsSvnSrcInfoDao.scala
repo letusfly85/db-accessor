@@ -98,18 +98,18 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
    *
    *
    * @param conn JDBC Connection
-   * @param bean RsSvnSrcInfoBean
+   * @param extension file's extension
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return list of RS_SVN_SRC_INFO
    */
   @throws(classOf[SQLException])
-  def findByExtension(conn: Connection,   bean: RsSvnSrcInfoBean): List[RsSvnSrcInfoBean] = {
+  def findByExtension(conn: Connection,   extension: String): List[RsSvnSrcInfoBean] = {
     var list: List[RsSvnSrcInfoBean] = List()
 
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SVN_SRC_INFO_BY_EXTENSION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    stmt.setString(1, bean.extensionAttr.value)
+    stmt.setString(1, extension)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
