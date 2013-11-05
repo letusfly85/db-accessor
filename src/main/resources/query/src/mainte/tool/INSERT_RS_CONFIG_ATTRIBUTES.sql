@@ -1,0 +1,48 @@
+INSERT INTO RS_CONFIG_ATTRIBUTES
+(
+   HEAD_REVISION
+  ,PROJECT_NAME
+  ,FILE_NAME
+  ,PATH
+  ,REVISION
+  ,AUTHOR
+  ,COMMIT_YMD
+  ,COMMIT_HMS
+  ,ACTION_NAME
+  ,SUBJECT_ID
+  ,FROM_ID
+  ,TO_ID
+  ,NEXT_ACTION_NAME
+  ,EXTENSION
+  ,TOROKUYMD
+  ,TOROKUHMS
+  ,TOROKUUSER
+  ,KOSINYMD
+  ,KOSINHMS
+  ,KOSINUSER
+  ,BIKO
+)
+VALUES
+(
+   ? /* 1, HEAD_REVISION */
+  ,? /* 2, PROJECT_NAME */
+  ,? /* 3, FILE_NAME */
+  ,? /* 4, PATH */
+  ,? /* 5, REVISION */
+  ,? /* 6, AUTHOR */
+  ,? /* 7, COMMIT_YMD */
+  ,? /* 8, COMMIT_HMS */
+  ,? /* 9, ACTION_NAME */
+  ,? /* 10, SUBJECT_ID */
+  ,? /* 11, FROM_ID */
+  ,? /* 12, TO_ID */
+  ,? /* 13, NEXT_ACTION_NAME */
+  ,? /* 14, EXTENSION */
+  ,? /* 15, TOROKUYMD */
+  ,? /* 16, TOROKUHMS */
+  ,? /* 17, TOROKUUSER */
+  ,? /* 18, KOSINYMD */
+  ,? /* 19, KOSINHMS */
+  ,? /* 20, KOSINUSER */
+  ,? /* 21, BIKO */
+)
