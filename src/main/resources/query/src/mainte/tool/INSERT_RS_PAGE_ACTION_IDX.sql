@@ -1,0 +1,42 @@
+INSERT INTO RS_PAGE_ACTION_IDX
+(
+   HEAD_REVISION
+  ,PROJECT_NAME
+  ,FILE_NAME
+  ,PATH
+  ,REVISION
+  ,AUTHOR
+  ,COMMIT_YMD
+  ,COMMIT_HMS
+  ,PAGE_NAME
+  ,ACTION_NAME
+  ,EXTENSION
+  ,TOROKUYMD
+  ,TOROKUHMS
+  ,TOROKUUSER
+  ,KOSINYMD
+  ,KOSINHMS
+  ,KOSINUSER
+  ,BIKO
+)
+VALUES
+(
+   ? /* 1, HEAD_REVISION */
+  ,? /* 2, PROJECT_NAME */
+  ,? /* 3, FILE_NAME */
+  ,? /* 4, PATH */
+  ,? /* 5, REVISION */
+  ,? /* 6, AUTHOR */
+  ,? /* 7, COMMIT_YMD */
+  ,? /* 8, COMMIT_HMS */
+  ,? /* 9, PAGE_NAME */
+  ,? /* 10, ACTION_NAME */
+  ,? /* 11, EXTENSION */
+  ,? /* 12, TOROKUYMD */
+  ,? /* 13, TOROKUHMS */
+  ,? /* 14, TOROKUUSER */
+  ,? /* 15, KOSINYMD */
+  ,? /* 16, KOSINHMS */
+  ,? /* 17, KOSINUSER */
+  ,? /* 18, BIKO */
+)
