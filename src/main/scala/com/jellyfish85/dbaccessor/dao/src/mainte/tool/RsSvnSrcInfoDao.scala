@@ -177,6 +177,8 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
       stmt.setString(8, bean.commitHmsAttr.value)
       stmt.setString(9, bean.extensionAttr.value)
 
+      stmt.setString(10, bean.pathAttr.value)
+
       stmt.addBatch()
     }
 
@@ -202,7 +204,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SVN_SRC_INFO.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
     result = stmt.executeUpdate()
 
     result

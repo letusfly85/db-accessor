@@ -6,11 +6,11 @@ SET
   ,PATH = ?          /* 4, PATH */
   ,REVISION = ?      /* 5, REVISION */
   ,AUTHOR = ?        /* 6, AUTHOR */
-  ,COMMIT_DATE = ?   /* 7, COMMIT_YMD */
+  ,COMMIT_YMD = ?    /* 7, COMMIT_YMD */
   ,COMMIT_HMS = ?    /* 8, COMMIT_HMS */
   ,EXTENSION = ?     /* 9, EXTENSION */
   ,KOSINYMD	    =	 TO_CHAR(SYSDATE,'YYYYMMDD')
   ,KOSINHMS	    =	 TO_CHAR(SYSDATE,'HH24MISS')
   ,KOSINUSER	=	 SYS_CONTEXT('USERENV','MODULE')
 WHERE
-  PATH = ?
+  PATH = ?           /* 10, PATH */

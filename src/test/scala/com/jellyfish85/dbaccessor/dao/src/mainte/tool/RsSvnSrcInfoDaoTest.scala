@@ -21,6 +21,7 @@ class RsSvnSrcInfoDaoTest extends Specification {
     bean00.projectNameAttr.value  = "com.jellyfish85"
     bean00.headRevisionAttr.value = new BigDecimal(0)
 
+    //delete
     dao.deleteAll(db.conn)
     val list01: List[RsSvnSrcInfoBean] = dao.find(db.conn, bean00)
     db.jCommit
@@ -29,12 +30,45 @@ class RsSvnSrcInfoDaoTest extends Specification {
       list01.size must beEqualTo(0)
     }
 
+    //insert
     dao.insert(db.conn, List(bean00))
     db.jCommit
 
     val bean01: RsSvnSrcInfoBean = dao.find(db.conn, bean00).head
     "return 1 for insert one record to RS_SVN_SRC_INFO" in {
       bean01.fileNameAttr.value must beEqualTo("sample.java")
+    }
+
+    val bean02: RsSvnSrcInfoBean = new RsSvnSrcInfoBean
+    bean02.pathAttr.value         = "sample/sample.java"
+    bean02.fileNameAttr.value     = "hoge.java"
+    bean02.projectNameAttr.value  = "com.jellyfish85"
+    bean02.headRevisionAttr.value = new BigDecimal(1)
+
+    //update
+    dao.update(db.conn, List(bean02))
+    db.jCommit
+
+    val bean03: RsSvnSrcInfoBean = dao.find(db.conn, bean00).head
+    "return true for update  RS_SVN_SRC_INFO" in {
+      bean03.fileNameAttr.value must beEqualTo("hoge.java")
+      bean03.headRevisionAttr.value must beEqualTo(new BigDecimal(1))
+    }
+
+    //merge
+    val bean04: RsSvnSrcInfoBean = new RsSvnSrcInfoBean
+    bean04.pathAttr.value         = "sample/sample.java"
+    bean04.fileNameAttr.value     = "fuga.java"
+    bean04.projectNameAttr.value  = "com.jellyfish85"
+    bean04.headRevisionAttr.value = new BigDecimal(2)
+
+    dao.update(db.conn, List(bean04))
+    db.jCommit
+
+    val bean05: RsSvnSrcInfoBean = dao.find(db.conn, bean00).head
+    "return true for merge  RS_SVN_SRC_INFO" in {
+      bean05.fileNameAttr.value must beEqualTo("fuga.java")
+      bean05.headRevisionAttr.value must beEqualTo(new BigDecimal(2))
     }
   }
 }
