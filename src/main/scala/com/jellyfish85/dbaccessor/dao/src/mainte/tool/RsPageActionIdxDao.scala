@@ -24,7 +24,7 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
   def find(conn: Connection,   bean: RsPageActionIdxBean): List[RsPageActionIdxBean] = {
     var list: List[RsPageActionIdxBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/TODO/SELECT_RS_PAGE_ACTION_IDX.sql")
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_PAGE_ACTION_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     //TODO stmt.setMethods
@@ -64,7 +64,7 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
   def insert(conn: Connection, list: List[RsPageActionIdxBean]): Int  = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/INSERT_RS_PAGE_ACTION_IDX.sql")
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/INSERT_RS_PAGE_ACTION_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RsPageActionIdxBean =>
@@ -102,7 +102,7 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
   def update(conn: Connection, list: List[RsPageActionIdxBean]): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/UPDATE_RS_PAGE_ACTION_IDX.sql")
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/UPDATE_RS_PAGE_ACTION_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RsPageActionIdxBean =>
@@ -140,10 +140,10 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
   def delete(conn: Connection, bean: RsPageActionIdxBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/DELETE_RS_PAGE_ACTION_IDX.sql")
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_PAGE_ACTION_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
     result = stmt.executeUpdate()
 
     result
@@ -164,7 +164,7 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
   def merge(conn: Connection,  bean: RsPageActionIdxBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/TODO/MERGE_RS_PAGE_ACTION_IDX.sql")
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_RS_PAGE_ACTION_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     //TODO stmt.setMethods
