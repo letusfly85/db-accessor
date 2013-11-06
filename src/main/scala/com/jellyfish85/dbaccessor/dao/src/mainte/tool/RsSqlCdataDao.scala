@@ -153,6 +153,24 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
   }
 
   /**
+   * == truncate ==
+   *
+   * it deletes RS_SQL_CDATA by primary keys, and returns a number of deleted records.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   *
+   */
+  @throws(classOf[SQLException])
+  def truncate(conn: Connection)  {
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/TRUNCATE_RS_SQL_CDATA.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.execute()
+  }
+
+  /**
    * == merge ==
    *
    * it merge to RS_SQL_CDATA using a RsSqlCdataBean, and returns a number of merged records.
