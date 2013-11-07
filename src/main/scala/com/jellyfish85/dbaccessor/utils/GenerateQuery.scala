@@ -3,12 +3,18 @@ package com.jellyfish85.dbaccessor.utils
 import java.io.{InputStreamReader, BufferedReader, InputStream}
 
 trait GenerateQuery {
+
+  /**
+   * parameter called from PreparedStatement
+   */
   var query: String = _
 
   /**
-   * in句などの中身のないqueryを生成する
+   * == generateSimpleQuery ==
    *
-   * @param path sqlのresourcesフォルダからのファイルパス
+   * generate simple query by reading from a SQL file
+   *
+   * @param path the path from the project resources folder
    * @return query
    */
   def generateSimpleQuery(path: String): String = {
