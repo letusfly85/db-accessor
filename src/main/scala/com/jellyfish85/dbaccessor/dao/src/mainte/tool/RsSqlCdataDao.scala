@@ -28,7 +28,8 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_CDATA.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.persisterNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
