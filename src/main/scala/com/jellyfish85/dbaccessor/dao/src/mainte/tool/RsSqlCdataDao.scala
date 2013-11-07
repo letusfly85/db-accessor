@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsSqlCdataBean
+import java.util
 
 /**
  * == RsSqlCdataDao ==
@@ -88,6 +89,26 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     result = stmt.executeBatch().size
 
     result
+  }
+
+  /**
+   * == insert ==
+   *
+   * it inserts to RS_SQL_CDATA using list of RsSqlCdataBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of RsSqlCdataBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[RsSqlCdataBean]): Int  = {
+    var targetList: List[RsSqlCdataBean] = List()
+
+    for (i <- 0 to list.size()-1) {
+      targetList ::= list.get(i)
+    }
+
+    insert(conn, targetList)
   }
 
   /**
