@@ -49,6 +49,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
       
       list ::= bean
     }
+    stmt.close()
 
     list
   }
@@ -87,6 +88,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -146,6 +148,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -169,6 +172,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
 
     //TODO stmt.setMethods
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }
@@ -189,6 +193,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.execute()
+    stmt.close()
   }
 
   /**
@@ -211,6 +216,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
 
     //TODO stmt.setMethods
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }
