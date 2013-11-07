@@ -87,6 +87,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
 
       list ::= bean
     }
+    stmt.close()
 
     list
   }
@@ -127,6 +128,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
 
       list ::= bean
     }
+    stmt.close()
 
     list
   }
@@ -150,6 +152,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     while (result.next()) {
       headRevision = result.getBigDecimal("HEAD_REVISION")
     }
+    stmt.close()
 
     headRevision
   }
@@ -185,6 +188,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -223,6 +227,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -246,6 +251,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
 
     stmt.setString(1, bean.pathAttr.value)
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }
@@ -310,6 +316,7 @@ class RsSvnSrcInfoDao extends GeneralDao[RsSvnSrcInfoBean] {
     stmt.setString(18, bean.extensionAttr.value)
 
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }
