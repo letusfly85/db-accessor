@@ -127,17 +127,20 @@ class RsPageActionIdxDao extends GeneralDao[RsPageActionIdxBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: RsPageActionIdxBean =>
-        stmt.setBigDecimal(1, bean.headRevisionAttr.value)
-        stmt.setString(2, bean.projectNameAttr.value)
-        stmt.setString(3, bean.fileNameAttr.value)
-        stmt.setString(4, bean.pathAttr.value)
-        stmt.setBigDecimal(5, bean.revisionAttr.value)
-        stmt.setString(6, bean.authorAttr.value)
-        stmt.setString(7, bean.commitYmdAttr.value)
-        stmt.setString(8, bean.commitHmsAttr.value)
-        stmt.setString(9, bean.pageNameAttr.value)
-        stmt.setString(10, bean.actionNameAttr.value)
-        stmt.setString(11, bean.extensionAttr.value)
+      stmt.setBigDecimal(1, bean.headRevisionAttr.value)
+      stmt.setString(2, bean.projectNameAttr.value)
+      stmt.setString(3, bean.fileNameAttr.value)
+      stmt.setString(4, bean.pathAttr.value)
+      stmt.setBigDecimal(5, bean.revisionAttr.value)
+      stmt.setString(6, bean.authorAttr.value)
+      stmt.setString(7, bean.commitYmdAttr.value)
+      stmt.setString(8, bean.commitHmsAttr.value)
+      stmt.setString(9, bean.pageNameAttr.value)
+      stmt.setString(10, bean.actionNameAttr.value)
+      stmt.setString(11, bean.extensionAttr.value)
+
+      stmt.setString(12, bean.pathAttr.value)
+      stmt.setString(13, bean.actionNameAttr.value)
       
       stmt.addBatch()
     }
