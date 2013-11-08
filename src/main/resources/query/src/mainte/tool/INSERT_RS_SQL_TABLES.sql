@@ -1,0 +1,50 @@
+INSERT INTO RS_SQL_TABLES
+(
+   HEAD_REVISION
+  ,PROJECT_NAME
+  ,FILE_NAME
+  ,PATH
+  ,PERSISTER_NAME
+  ,TABLE_NAME
+  ,TABLE_ALIAS
+  ,CALL_TYPE
+  ,CRUD_TYPE
+  ,DEPTH
+  ,REVISION
+  ,AUTHOR
+  ,COMMIT_YMD
+  ,COMMIT_HMS
+  ,EXTENSION
+  ,TOROKUYMD
+  ,TOROKUHMS
+  ,TOROKUUSER
+  ,KOSINYMD
+  ,KOSINHMS
+  ,KOSINUSER
+  ,BIKO
+)
+VALUES
+(
+   ? /* 1, HEAD_REVISION */
+  ,? /* 2, PROJECT_NAME */
+  ,? /* 3, FILE_NAME */
+  ,? /* 4, PATH */
+  ,? /* 5, PERSISTER_NAME */
+  ,? /* 6, TABLE_NAME */
+  ,? /* 7, TABLE_ALIAS */
+  ,? /* 8, CALL_TYPE */
+  ,? /* 9, CRUD_TYPE */
+  ,? /* 10, DEPTH */
+  ,? /* 11, REVISION */
+  ,? /* 12, AUTHOR */
+  ,? /* 13, COMMIT_YMD */
+  ,? /* 14, COMMIT_HMS */
+  ,? /* 15, EXTENSION */
+  ,? /* 16, TOROKUYMD */
+  ,? /* 17, TOROKUHMS */
+  ,? /* 18, TOROKUUSER */
+  ,? /* 19, KOSINYMD */
+  ,? /* 20, KOSINHMS */
+  ,? /* 21, KOSINUSER */
+  ,? /* 22, BIKO */
+)
