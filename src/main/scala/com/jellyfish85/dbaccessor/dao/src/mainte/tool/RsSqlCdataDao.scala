@@ -116,7 +116,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
       stmt.setString(10, bean.commitYmdAttr.value)
       stmt.setString(11, bean.commitHmsAttr.value)
       stmt.setString(12, bean.extensionAttr.value)
-    
+
       stmt.addBatch()
     }
 
@@ -176,6 +176,9 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
       stmt.setString(10, bean.commitYmdAttr.value)
       stmt.setString(11, bean.commitHmsAttr.value)
       stmt.setString(12, bean.extensionAttr.value)
+
+      stmt.setString(13, bean.pathAttr.value)
+      stmt.setString(14, bean.persisterNameAttr.value)
       
       stmt.addBatch()
     }
