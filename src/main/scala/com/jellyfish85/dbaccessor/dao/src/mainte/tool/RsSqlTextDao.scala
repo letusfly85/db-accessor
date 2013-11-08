@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsSqlTextBean
+import java.util
 
 /**
  * == RsSqlTextDao ==
@@ -86,8 +87,30 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
+  }
+
+
+  /**
+   * == insert ==
+   *
+   * it inserts to RS_SQL_CDATA using list of RsSqlCdataBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of RsSqlCdataBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[RsSqlTextBean]): Int  = {
+    var targetList: List[RsSqlTextBean] = List()
+
+    for (i <- 0 to list.size()-1) {
+      targetList ::= list.get(i)
+    }
+
+    insert(conn, targetList)
   }
 
   /**
@@ -125,6 +148,7 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -146,9 +170,12 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SQL_TEXT.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.persisterNameAttr.value)
+
     result = stmt.executeUpdate()
 
+    stmt.close()
     result
   }
 

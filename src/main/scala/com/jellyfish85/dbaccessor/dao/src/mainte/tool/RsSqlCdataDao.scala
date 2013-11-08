@@ -10,6 +10,7 @@ import java.util
  *
  */
 class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
+
   /**
    * == find ==
    *
@@ -48,6 +49,37 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
       bean.commitHmsAttr.value = result.getString("COMMIT_HMS")
       bean.extensionAttr.value = result.getString("EXTENSION")
       
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
+   * == findSummary ==
+   *
+   * it searches RS_SQL_CDATA by primary keys, and returns list of RsSqlCdataBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of RS_SQL_CDATA
+   */
+  @throws(classOf[SQLException])
+  def findSummary(conn: Connection): List[RsSqlCdataBean] = {
+    var list: List[RsSqlCdataBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_CDATA_SUMMARY.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: RsSqlCdataBean = new RsSqlCdataBean
+
+      bean.pathAttr.value = result.getString("PATH")
+      bean.persisterNameAttr.value = result.getString("PERSISTER_NAME")
+
       list ::= bean
     }
     stmt.close()
