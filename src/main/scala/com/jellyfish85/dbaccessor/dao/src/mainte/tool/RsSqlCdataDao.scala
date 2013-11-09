@@ -206,7 +206,9 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SQL_CDATA.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.persisterNameAttr.value)
+
     result = stmt.executeUpdate()
     stmt.close()
 
@@ -250,7 +252,6 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_RS_SQL_CDATA.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
     stmt.close()
 

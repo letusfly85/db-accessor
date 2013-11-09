@@ -66,5 +66,25 @@ class RsSqlCdataDaoTest extends  Specification {
       bean03.projectNameAttr.value     must beEqualTo("com.jellyfish85")
       bean03.headRevisionAttr.value    must beEqualTo(new BigDecimal(1))
     }
+
+    val bean04: RsSqlCdataBean  = new RsSqlCdataBean
+    bean04.pathAttr.value          = "sample/sample.java"
+    bean04.fileNameAttr.value      = "sample.java"
+    bean04.projectNameAttr.value   = "com.jellyfish85"
+    bean04.persisterNameAttr.value = "sample.persister"
+    bean04.lineAttr.value          = new BigDecimal(2)
+    bean04.textAttr.value          = "hoeg.text"
+    bean04.headRevisionAttr.value  = new BigDecimal(2)
+
+    dao.delete(db.conn, bean00)
+    dao.insert(db.conn, List(bean03, bean04))
+    db.jCommit
+
+    val bean05: RsSqlCdataBean = dao.findSummary(db.conn).head
+    "return true for find summary record of RS_SQL_CDATA" in {
+      bean05.pathAttr.value            must beEqualTo("sample/sample.java")
+      bean05.persisterNameAttr.value   must beEqualTo("sample.persister")
+    }
+
   }
 }
