@@ -28,7 +28,8 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_TEXT.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.persisterNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -49,6 +50,37 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
       
       list ::= bean
     }
+
+    list
+  }
+
+  /**
+   * == findSummary ==
+   *
+   * it searches RS_SQL_TEXT by primary keys, and returns list of RsSqlTextBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of RS_SQL_TEXT
+   */
+  @throws(classOf[SQLException])
+  def findSummary(conn: Connection): List[RsSqlTextBean] = {
+    var list: List[RsSqlTextBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_TEXT_SUMMARY.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: RsSqlTextBean = new RsSqlTextBean
+
+      bean.pathAttr.value = result.getString("PATH")
+      bean.persisterNameAttr.value = result.getString("PERSISTER_NAME")
+
+      list ::= bean
+    }
+    stmt.close()
 
     list
   }
@@ -143,6 +175,9 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
       stmt.setString(10, bean.commitYmdAttr.value)
       stmt.setString(11, bean.commitHmsAttr.value)
       stmt.setString(12, bean.extensionAttr.value)
+
+      stmt.setString(13, bean.pathAttr.value)
+      stmt.setString(14, bean.persisterNameAttr.value)
       
       stmt.addBatch()
     }
@@ -197,7 +232,6 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_RS_SQL_TEXT.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
 
     result
