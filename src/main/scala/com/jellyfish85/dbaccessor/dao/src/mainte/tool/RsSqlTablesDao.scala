@@ -92,6 +92,7 @@ class RsSqlTablesDao extends GeneralDao[RsSqlTablesBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -155,8 +156,11 @@ class RsSqlTablesDao extends GeneralDao[RsSqlTablesBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SQL_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.persisterNameAttr.value)
+
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }
