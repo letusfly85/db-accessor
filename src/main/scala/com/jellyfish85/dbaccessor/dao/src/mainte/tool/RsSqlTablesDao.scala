@@ -51,6 +51,7 @@ class RsSqlTablesDao extends GeneralDao[RsSqlTablesBean] {
       
       list ::= bean
     }
+    stmt.close()
 
     list
   }

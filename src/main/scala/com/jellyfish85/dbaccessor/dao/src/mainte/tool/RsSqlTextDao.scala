@@ -50,6 +50,7 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
       
       list ::= bean
     }
+    stmt.close()
 
     list
   }
@@ -233,6 +234,7 @@ class RsSqlTextDao extends GeneralDao[RsSqlTextBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }
