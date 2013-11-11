@@ -1,0 +1,26 @@
+CREATE TABLE RS_SQL_TABLES_EXP (
+	    HEAD_REVISION           NUMBER(38,0),
+        PROJECT_NAME            VARCHAR2(30),
+    	FILE_NAME				VARCHAR2(500)	NOT NULL,
+    	PATH				    VARCHAR2(2000),
+        SUB_LINE                NUMBER(38,0),
+        TABLE_NAME				VARCHAR2(60),
+        TABLE_ALIAS				VARCHAR2(60),
+        CALL_TYPE				VARCHAR2(60),
+        CRUD_TYPE				VARCHAR2(10),
+        DEPTH					NUMBER(38,0),
+	    REVISION    			NUMBER(38,0),
+    	AUTHOR      			VARCHAR2(30),
+    	COMMIT_YMD              CHAR(8),
+    	COMMIT_HMS              CHAR(6),
+    	EXTENSION               VARCHAR2(30),
+    	TOROKUYMD				VARCHAR2(8),
+    	TOROKUHMS				VARCHAR2(6),
+    	TOROKUUSER				VARCHAR2(50),
+    	KOSINYMD				VARCHAR2(8),
+    	KOSINHMS				VARCHAR2(6),
+    	KOSINUSER				VARCHAR2(50),
+    	BIKO					VARCHAR2(250)
+)
+;
+

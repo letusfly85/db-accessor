@@ -55,6 +55,37 @@ class RsSqlTextExpDao extends GeneralDao[RsSqlTextExpBean] {
   }
 
   /**
+   * == findSummary ==
+   *
+   * it searches RS_SQL_TEXT by primary keys, and returns list of RsSqlTextBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of RS_SQL_TEXT
+   */
+  @throws(classOf[SQLException])
+  def findSummary(conn: Connection): List[RsSqlTextExpBean] = {
+    var list: List[RsSqlTextExpBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_TEXT_EXP_SUMMARY.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: RsSqlTextExpBean = new RsSqlTextExpBean
+
+      bean.pathAttr.value = result.getString("PATH")
+      bean.subLineAttr.value = result.getBigDecimal("SUB_LINE")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
    * == insert ==
    *
    * it inserts to RS_SQL_TEXT_EXP using list of RsSqlTextExpBean, and returns a number of inserted records.
