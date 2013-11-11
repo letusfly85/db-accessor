@@ -21,6 +21,7 @@ class RsSqlCdataDaoTest extends  Specification {
     bean00.fileNameAttr.value      = "sample.java"
     bean00.projectNameAttr.value   = "com.jellyfish85"
     bean00.persisterNameAttr.value = "sample.persister"
+    bean00.extensionAttr.value     = "java"
     bean00.lineAttr.value          = new BigDecimal(1)
     bean00.textAttr.value          = "sample.text"
     bean00.headRevisionAttr.value  = new BigDecimal(0)
@@ -74,6 +75,7 @@ class RsSqlCdataDaoTest extends  Specification {
     bean04.persisterNameAttr.value = "sample.persister"
     bean04.lineAttr.value          = new BigDecimal(2)
     bean04.textAttr.value          = "hoeg.text"
+    bean04.extensionAttr.value     = "java"
     bean04.headRevisionAttr.value  = new BigDecimal(2)
 
     dao.delete(db.conn, bean00)
