@@ -13,6 +13,7 @@ class RsSqlTextExpBean extends GeneralBean {
   var fileNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var pathAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var lineAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
+  var subLineAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var textAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var revisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var authorAttr:	ColumnAttribute[String] = new ColumnAttribute()

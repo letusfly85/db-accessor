@@ -57,7 +57,7 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
   }
 
   /**
-   * == findSummary ==
+   * == findSummaryByExtension ==
    *
    * it searches RS_SQL_CDATA by primary keys, and returns list of RsSqlCdataBean
    *
@@ -67,11 +67,13 @@ class RsSqlCdataDao extends GeneralDao[RsSqlCdataBean] {
    * @return list of RS_SQL_CDATA
    */
   @throws(classOf[SQLException])
-  def findSummary(conn: Connection): List[RsSqlCdataBean] = {
+  def findSummaryByExtension(conn: Connection, extension: String): List[RsSqlCdataBean] = {
     var list: List[RsSqlCdataBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_CDATA_SUMMARY.sql")
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_CDATA_SUMMARY_BY_EXTENSION.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, extension)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {

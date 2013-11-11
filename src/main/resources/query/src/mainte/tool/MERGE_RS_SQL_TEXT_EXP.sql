@@ -11,19 +11,20 @@ UPDATE SET
   ,FILE_NAME = ?            /* 3, FILE_NAME */
   ,PATH = ?            /* 4, PATH */
   ,LINE = ?            /* 5, LINE */
-  ,TEXT = ?            /* 6, TEXT */
-  ,REVISION = ?            /* 7, REVISION */
-  ,AUTHOR = ?            /* 8, AUTHOR */
-  ,COMMIT_YMD = ?            /* 9, COMMIT_YMD */
-  ,COMMIT_HMS = ?            /* 10, COMMIT_HMS */
-  ,EXTENSION = ?            /* 11, EXTENSION */
-  ,TOROKUYMD = ?            /* 12, TOROKUYMD */
-  ,TOROKUHMS = ?            /* 13, TOROKUHMS */
-  ,TOROKUUSER = ?            /* 14, TOROKUUSER */
-  ,KOSINYMD = ?            /* 15, KOSINYMD */
-  ,KOSINHMS = ?            /* 16, KOSINHMS */
-  ,KOSINUSER = ?            /* 17, KOSINUSER */
-  ,BIKO = ?            /* 18, BIKO */
+  ,SUB_LINE = ?            /* 6, SUB_LINE */
+  ,TEXT = ?            /* 7, TEXT */
+  ,REVISION = ?            /* 8, REVISION */
+  ,AUTHOR = ?            /* 9, AUTHOR */
+  ,COMMIT_YMD = ?            /* 10, COMMIT_YMD */
+  ,COMMIT_HMS = ?            /* 11, COMMIT_HMS */
+  ,EXTENSION = ?            /* 12, EXTENSION */
+  ,TOROKUYMD = ?            /* 13, TOROKUYMD */
+  ,TOROKUHMS = ?            /* 14, TOROKUHMS */
+  ,TOROKUUSER = ?            /* 15, TOROKUUSER */
+  ,KOSINYMD = ?            /* 16, KOSINYMD */
+  ,KOSINHMS = ?            /* 17, KOSINHMS */
+  ,KOSINUSER = ?            /* 18, KOSINUSER */
+  ,BIKO = ?            /* 19, BIKO */
 -- 新規レコードの作成
 WHEN NOT MATCHED THEN
 INSERT (
@@ -32,6 +33,7 @@ INSERT (
   ,FILE_NAME
   ,PATH
   ,LINE
+  ,SUB_LINE
   ,TEXT
   ,REVISION
   ,AUTHOR
@@ -53,17 +55,18 @@ VALUES
   ,?  /* 3, FILE_NAME */
   ,?  /* 4, PATH */
   ,?  /* 5, LINE */
-  ,?  /* 6, TEXT */
-  ,?  /* 7, REVISION */
-  ,?  /* 8, AUTHOR */
-  ,?  /* 9, COMMIT_YMD */
-  ,?  /* 10, COMMIT_HMS */
-  ,?  /* 11, EXTENSION */
-  ,?  /* 12, TOROKUYMD */
-  ,?  /* 13, TOROKUHMS */
-  ,?  /* 14, TOROKUUSER */
-  ,?  /* 15, KOSINYMD */
-  ,?  /* 16, KOSINHMS */
-  ,?  /* 17, KOSINUSER */
-  ,?  /* 18, BIKO */
+  ,?  /* 6, SUB_LINE */
+  ,?  /* 7, TEXT */
+  ,?  /* 8, REVISION */
+  ,?  /* 9, AUTHOR */
+  ,?  /* 10, COMMIT_YMD */
+  ,?  /* 11, COMMIT_HMS */
+  ,?  /* 12, EXTENSION */
+  ,?  /* 13, TOROKUYMD */
+  ,?  /* 14, TOROKUHMS */
+  ,?  /* 15, TOROKUUSER */
+  ,?  /* 16, KOSINYMD */
+  ,?  /* 17, KOSINHMS */
+  ,?  /* 18, KOSINUSER */
+  ,?  /* 19, BIKO */
 )

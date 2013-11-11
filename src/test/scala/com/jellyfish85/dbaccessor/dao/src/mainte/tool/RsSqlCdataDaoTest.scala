@@ -80,7 +80,7 @@ class RsSqlCdataDaoTest extends  Specification {
     dao.insert(db.conn, List(bean03, bean04))
     db.jCommit
 
-    val bean05: RsSqlCdataBean = dao.findSummary(db.conn).head
+    val bean05: RsSqlCdataBean = dao.findSummaryByExtension(db.conn, "java").head
     "return true for find summary record of RS_SQL_CDATA" in {
       bean05.pathAttr.value            must beEqualTo("sample/sample.java")
       bean05.persisterNameAttr.value   must beEqualTo("sample.persister")
