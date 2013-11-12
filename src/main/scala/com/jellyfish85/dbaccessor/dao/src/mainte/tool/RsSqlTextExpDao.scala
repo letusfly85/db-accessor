@@ -29,6 +29,7 @@ class RsSqlTextExpDao extends GeneralDao[RsSqlTextExpBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setString(1, bean.pathAttr.value)
+    stmt.setBigDecimal(2, bean.subLineAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -176,6 +177,7 @@ class RsSqlTextExpDao extends GeneralDao[RsSqlTextExpBean] {
       stmt.setString(12, bean.extensionAttr.value)
 
       stmt.setString(13, bean.pathAttr.value)
+      stmt.setBigDecimal(14, bean.subLineAttr.value)
       
       stmt.addBatch()
     }
