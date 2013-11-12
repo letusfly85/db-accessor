@@ -3,10 +3,7 @@ package com.jellyfish85.dbaccessor.bean.src.mainte.tool
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
 import java.math.BigDecimal
 
-class RsSqlTablesBean extends GeneralBean {
-
-  val logicalTableName:  String =  ""
-  val physicalTableName: String =  "RS_SQL_TABLES"
+trait RsSqlTablesBeanTrait {
 
   var headRevisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var projectNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
@@ -23,5 +20,12 @@ class RsSqlTablesBean extends GeneralBean {
   var commitYmdAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var commitHmsAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var extensionAttr:	ColumnAttribute[String] = new ColumnAttribute()
+
+}
+
+class RsSqlTablesBean  extends GeneralBean with RsSqlTablesBeanTrait {
+
+  val logicalTableName:  String =  ""
+  val physicalTableName: String =  "RS_SQL_TABLES"
 
 }
