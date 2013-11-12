@@ -131,11 +131,15 @@ class RsSqlTablesDao extends GeneralDao[RsSqlTablesBean] {
       stmt.setString(13, bean.commitYmdAttr.value)
       stmt.setString(14, bean.commitHmsAttr.value)
       stmt.setString(15, bean.extensionAttr.value)
+
+      stmt.setString(16, bean.pathAttr.value)
+      stmt.setString(17, bean.persisterNameAttr.value)
       
       stmt.addBatch()
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -184,7 +188,6 @@ class RsSqlTablesDao extends GeneralDao[RsSqlTablesBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_RS_SQL_TABLES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
 
     result
