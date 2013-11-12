@@ -8,5 +8,6 @@ class RsSqlTablesExpBean extends GeneralBean with RsSqlTablesBeanTrait {
   val logicalTableName:  String =  ""
   val physicalTableName: String =  "RS_SQL_TABLES_EXP"
 
+  // unique field
   var subLineAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
 }
