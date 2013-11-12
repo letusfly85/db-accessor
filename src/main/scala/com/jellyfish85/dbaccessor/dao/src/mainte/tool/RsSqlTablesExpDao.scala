@@ -27,7 +27,8 @@ class RsSqlTablesExpDao extends GeneralDao[RsSqlTablesExpBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SQL_TABLES_EXP.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setBigDecimal(2, bean.subLineAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -131,6 +132,9 @@ class RsSqlTablesExpDao extends GeneralDao[RsSqlTablesExpBean] {
       stmt.setString(13, bean.commitYmdAttr.value)
       stmt.setString(14, bean.commitHmsAttr.value)
       stmt.setString(15, bean.extensionAttr.value)
+
+      stmt.setString(16, bean.pathAttr.value)
+      stmt.setBigDecimal(17, bean.subLineAttr.value)
       
       stmt.addBatch()
     }
@@ -158,7 +162,31 @@ class RsSqlTablesExpDao extends GeneralDao[RsSqlTablesExpBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SQL_TABLES_EXP.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setBigDecimal(2, bean.subLineAttr.value)
+
+    result = stmt.executeUpdate()
+    stmt.close()
+
+    result
+  }
+
+  /**
+   * == truncate ==
+   *
+   * it truncates RS_SQL_TABLES_EXP.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def truncate(conn: Connection): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/TRUNCATE_RS_SQL_TABLES_EXP.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
     result = stmt.executeUpdate()
     stmt.close()
 

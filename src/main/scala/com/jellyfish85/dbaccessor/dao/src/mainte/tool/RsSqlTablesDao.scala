@@ -172,6 +172,28 @@ class RsSqlTablesDao extends GeneralDao[RsSqlTablesBean] {
   }
 
   /**
+   * == truncate ==
+   *
+   * it truncates RS_SQL_TABLES_EXP.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def truncate(conn: Connection): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/TRUNCATE_RS_SQL_TABLES.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    result = stmt.executeUpdate()
+    stmt.close()
+
+    result
+  }
+
+  /**
    * == merge ==
    *
    * it merge to RS_SQL_TABLES using a RsSqlTablesBean, and returns a number of merged records.
