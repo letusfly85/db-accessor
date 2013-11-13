@@ -11,7 +11,7 @@ import com.jellyfish85.dbaccessor.bean.src.mainte.tool.VChangesetsBean
 class VChangesetsDaoTest extends Specification {
 
   val db  = new DatabaseManager
-  val dao = new RsSvnSrcInfoDao
+  val dao = new VChangesetsDao
 
   "return true" should {
     db.connect
@@ -19,6 +19,11 @@ class VChangesetsDaoTest extends Specification {
     val bean00: VChangesetsBean  = new VChangesetsBean
     bean00.pathAttr.value         = "sample/sample.java"
     bean00.fileNameAttr.value     = "sample.java"
+    bean00.committerAttr.value    = "com.jellyfish85"
+    bean00.commitDateAttr.value   = "19851221"
+    bean00.commitHmsAttr.value    = "093000"
+    bean00.actionAttr.value       = "A"
+    bean00.revisionAttr.value     = new BigDecimal(10)
 
     //delete
     dao.delete(db.conn, bean00)
@@ -40,6 +45,7 @@ class VChangesetsDaoTest extends Specification {
 
     val bean02: VChangesetsBean = new VChangesetsBean
     bean02.pathAttr.value         = "sample/sample.java"
+    bean02.revisionAttr.value     = new BigDecimal(10)
     bean02.fileNameAttr.value     = "hoge.java"
 
     //update
@@ -50,29 +56,5 @@ class VChangesetsDaoTest extends Specification {
     "return true for update  V_CHANGESETS" in {
       bean03.fileNameAttr.value must beEqualTo("hoge.java")
     }
-
-    //merge
-    val bean04: VChangesetsBean = new VChangesetsBean
-    bean04.pathAttr.value         = "sample/sample.java"
-    bean04.fileNameAttr.value     = "fuga.java"
-
-    dao.merge(db.conn, bean04)
-    db.jCommit
-
-    val bean05: VChangesetsBean = dao.find(db.conn, bean00).head
-    "return true for merge  V_CHANGESETS" in {
-      bean05.fileNameAttr.value must beEqualTo("fuga.java")
-    }
   }
-
-  "return SQLException for V_CHANGESETS.PATH IS NULL" should {
-    db.connect
-
-    val bean00: VChangesetsBean    = new VChangesetsBean
-    bean00.authorAttr.value = "Mr.hoge"
-
-    dao.deleteAll(db.conn)
-    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
-  }
-
 }

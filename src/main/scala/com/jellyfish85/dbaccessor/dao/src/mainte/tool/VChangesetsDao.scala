@@ -47,6 +47,7 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
 
       list ::= bean
     }
+    stmt.close()
 
     list
   }
@@ -86,6 +87,7 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
       
       list ::= bean
     }
+    stmt.close()
 
     list
   }
@@ -120,6 +122,7 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -142,19 +145,23 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: VChangesetsBean =>
-        stmt.setBigDecimal(1, bean.revisionAttr.value)
-        stmt.setString(2, bean.committerAttr.value)
-        stmt.setString(3, bean.commentsAttr.value)
-        stmt.setString(4, bean.actionAttr.value)
-        stmt.setString(5, bean.pathAttr.value)
-        stmt.setString(6, bean.fileNameAttr.value)
-        stmt.setString(7, bean.commitDateAttr.value)
-        stmt.setString(8, bean.commitHmsAttr.value)
-      
+      stmt.setBigDecimal(1, bean.revisionAttr.value)
+      stmt.setString(2, bean.committerAttr.value)
+      stmt.setString(3, bean.commentsAttr.value)
+      stmt.setString(4, bean.actionAttr.value)
+      stmt.setString(5, bean.pathAttr.value)
+      stmt.setString(6, bean.fileNameAttr.value)
+      stmt.setString(7, bean.commitDateAttr.value)
+      stmt.setString(8, bean.commitHmsAttr.value)
+
+      stmt.setString(9, bean.pathAttr.value)
+      stmt.setBigDecimal(10, bean.revisionAttr.value)
+
       stmt.addBatch()
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
@@ -176,8 +183,11 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_V_CHANGESETS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setBigDecimal(2, bean.revisionAttr.value)
+
     result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }

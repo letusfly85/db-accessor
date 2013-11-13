@@ -3,9 +3,15 @@ package com.jellyfish85.dbaccessor.bean.src.mainte.tool
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
 import java.math.BigDecimal
 
+/**
+ * == VChangesetsBean ==
+ *
+ * store history of subversion changes through a Redmine project
+ *
+ */
 class VChangesetsBean extends GeneralBean {
 
-  val logicalTableName:  String =  "変更履歴ビュー"
+  val logicalTableName:  String =  "history of changes in redmine"
   val physicalTableName: String =  "V_CHANGESETS"
 
   var revisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
