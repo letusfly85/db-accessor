@@ -1,4 +1,4 @@
-package com.jellyfish85.dbaccessor.dao.src.mainte.tool
+package com.jellyfish85.dbaccessor.dao.erd.mainte.tool
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
@@ -27,7 +27,7 @@ class MsColumnDictionaryDao extends GeneralDao[MsColumnDictionaryBean] {
     val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_COLUMN_DICTIONARY.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.physicalColumnNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -110,6 +110,8 @@ class MsColumnDictionaryDao extends GeneralDao[MsColumnDictionaryBean] {
       stmt.setString(6, bean.dataDefaultAttr.value)
       stmt.setString(7, bean.entityFieldNameAttr.value)
       stmt.setString(8, bean.entityFieldTypeAttr.value)
+
+      stmt.setString(9, bean.physicalColumnNameAttr.value)
       
       stmt.addBatch()
     }
@@ -137,7 +139,7 @@ class MsColumnDictionaryDao extends GeneralDao[MsColumnDictionaryBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_COLUMN_DICTIONARY.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.physicalColumnNameAttr.value)
     result = stmt.executeUpdate()
     stmt.close()
 
@@ -153,7 +155,7 @@ class MsColumnDictionaryDao extends GeneralDao[MsColumnDictionaryBean] {
    * @param  bean MsColumnDictionaryBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
-   * @deprecated there is no necessary to use merge for this class.
+   *
    */
   @throws(classOf[SQLException])
   def merge(conn: Connection,  bean: MsColumnDictionaryBean): Int = {
@@ -161,6 +163,25 @@ class MsColumnDictionaryDao extends GeneralDao[MsColumnDictionaryBean] {
 
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_MS_COLUMN_DICTIONARY.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, bean.physicalColumnNameAttr.value)
+
+    stmt.setBigDecimal(2, bean.dictColumnIdAttr.value)
+    stmt.setString(3, bean.dataTypeAttr.value)
+    stmt.setString(4, bean.dataLengthAttr.value)
+    stmt.setString(5, bean.dataPrecisionAttr.value)
+    stmt.setString(6, bean.dataDefaultAttr.value)
+    stmt.setString(7, bean.entityFieldNameAttr.value)
+    stmt.setString(8, bean.entityFieldTypeAttr.value)
+
+    stmt.setBigDecimal(9, bean.dictColumnIdAttr.value)
+    stmt.setString(10, bean.physicalColumnNameAttr.value)
+    stmt.setString(11, bean.dataTypeAttr.value)
+    stmt.setString(12, bean.dataLengthAttr.value)
+    stmt.setString(13, bean.dataPrecisionAttr.value)
+    stmt.setString(14, bean.dataDefaultAttr.value)
+    stmt.setString(15, bean.entityFieldNameAttr.value)
+    stmt.setString(16, bean.entityFieldTypeAttr.value)
 
     result = stmt.executeUpdate()
     stmt.close()
