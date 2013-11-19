@@ -16,5 +16,6 @@ SELECT
 FROM
   RS_SUBJECTID_BLPATH_IDX
 WHERE
-  1 = 1
-  --TODO
+    1 = 1
+AND PATH        = ?
+AND SUBJECT_ID  = ?

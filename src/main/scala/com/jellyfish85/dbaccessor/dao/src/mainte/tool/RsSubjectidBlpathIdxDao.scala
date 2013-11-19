@@ -27,7 +27,8 @@ class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SUBJECTID_BLPATH_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.subjectIdAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -134,7 +135,8 @@ class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SUBJECTID_BLPATH_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.pathAttr.value)
+    stmt.setString(2, bean.subjectIdAttr.value)
     result = stmt.executeUpdate()
     stmt.close()
 
