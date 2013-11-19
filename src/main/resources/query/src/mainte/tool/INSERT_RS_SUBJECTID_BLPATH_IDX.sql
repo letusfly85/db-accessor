@@ -1,0 +1,34 @@
+INSERT INTO RS_SUBJECTID_BLPATH_IDX
+(
+   SUBJECT_GROUP_ID
+  ,SUBJECT_ID
+  ,PATH
+  ,REVISION
+  ,UPDATE_FLG
+  ,NEW_FLG
+  ,FILE_NAME
+  ,TOROKUYMD
+  ,TOROKUHMS
+  ,TOROKUUSER
+  ,KOSINYMD
+  ,KOSINHMS
+  ,KOSINUSER
+  ,BIKO
+)
+VALUES
+(
+   ? /* 1, SUBJECT_GROUP_ID */
+  ,? /* 2, SUBJECT_ID */
+  ,? /* 3, PATH */
+  ,? /* 4, REVISION */
+  ,? /* 5, UPDATE_FLG */
+  ,? /* 6, NEW_FLG */
+  ,? /* 7, FILE_NAME */
+  ,? /* 8, TOROKUYMD */
+  ,? /* 9, TOROKUHMS */
+  ,? /* 10, TOROKUUSER */
+  ,? /* 11, KOSINYMD */
+  ,? /* 12, KOSINHMS */
+  ,? /* 13, KOSINUSER */
+  ,? /* 14, BIKO */
+)
