@@ -28,7 +28,7 @@ class RsSubjectidBlpathIdxDaoTest extends Specification {
     dao.delete(db.conn, bean00)
 
     val list01: List[RsSubjectidBlpathIdxBean] = dao.find(db.conn, bean00)
-    "return 0 for delete table RS_SQL_TEXT_EXP" in {
+    "return 0 for delete table RS_SUBJECTID_BLPATH_IDX" in {
       list01.size must beEqualTo(0)
     }
 
@@ -37,7 +37,7 @@ class RsSubjectidBlpathIdxDaoTest extends Specification {
     db.jCommit
 
     val bean01: RsSubjectidBlpathIdxBean = dao.find(db.conn, bean00).head
-    "return true for insert one record to RS_SQL_TEXT_EXP" in {
+    "return true for insert one record to RS_SUBJECTID_BLPATH_IDX" in {
       bean01.pathAttr.value               must beEqualTo("sample/sample.java")
       bean01.subjectIdAttr.value          must beEqualTo("my.subjectId")
       bean01.fileNameAttr.value           must beEqualTo("sample.java")
@@ -57,11 +57,42 @@ class RsSubjectidBlpathIdxDaoTest extends Specification {
     db.jCommit
 
     val bean03: RsSubjectidBlpathIdxBean = dao.find(db.conn, bean00).head
-    "return true for insert one record to RS_SQL_TEXT_EXP" in {
+    "return true for insert one record to RS_SUBJECTID_BLPATH_IDX" in {
       bean03.pathAttr.value               must beEqualTo("sample/sample.java")
       bean03.subjectIdAttr.value          must beEqualTo("my.subjectId")
       bean03.fileNameAttr.value           must beEqualTo("hoge.java")
     }
 
+  }
+
+  "return SQLException for RS_SUBJECTID_BLPATH_IDX.SUBJECTID IS NULL" should {
+    db.connect
+
+    val bean00: RsSubjectidBlpathIdxBean  = new RsSubjectidBlpathIdxBean
+    bean00.pathAttr.value             = "sample/sample.java"
+    bean00.fileNameAttr.value         = "sample.java"
+    bean00.updateFlgAttr.value        = "0"
+    bean00.newFlgAttr.value           = "0"
+
+    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
+
+
+    val bean01: RsSubjectidBlpathIdxBean  = new RsSubjectidBlpathIdxBean
+    bean01.pathAttr.value             = "sample/sample.java"
+    bean01.subjectIdAttr.value        = "my.subjectId"
+    bean01.subjectGroupIdAttr.value   = "my.subjectGroupId"
+    bean01.fileNameAttr.value         = "hoge.java"
+    bean01.updateFlgAttr.value        = "0"
+    bean01.newFlgAttr.value           = "0"
+
+    val bean02: RsSubjectidBlpathIdxBean  = new RsSubjectidBlpathIdxBean
+    bean02.pathAttr.value             = "sample/sample.java"
+    bean02.subjectIdAttr.value        = "my.subjectId"
+    bean02.subjectGroupIdAttr.value   = "my.subjectGroupId"
+    bean02.fileNameAttr.value         = "hoge.java"
+    bean02.updateFlgAttr.value        = "0"
+    bean02.newFlgAttr.value           = "0"
+
+    (dao.insert(db.conn, List(bean01, bean02))) must throwA[SQLException]
   }
 }
