@@ -17,8 +17,12 @@ class RsSubjectidBlpathIdxDaoTest extends Specification {
     db.connect
 
     val bean00: RsSubjectidBlpathIdxBean  = new RsSubjectidBlpathIdxBean
-    bean00.pathAttr.value          = "sample/sample.java"
-    bean00.fileNameAttr.value      = "sample.java"
+    bean00.pathAttr.value             = "sample/sample.java"
+    bean00.subjectIdAttr.value        = "my.subjectId"
+    bean00.subjectGroupIdAttr.value   = "my.subjectGroupId"
+    bean00.fileNameAttr.value         = "sample.java"
+    bean00.updateFlgAttr.value        = "0"
+    bean00.newFlgAttr.value           = "0"
 
     //delete
     dao.delete(db.conn, bean00)
@@ -28,19 +32,25 @@ class RsSubjectidBlpathIdxDaoTest extends Specification {
       list01.size must beEqualTo(0)
     }
 
-    /*
     //insert
     dao.insert(db.conn, List(bean00))
     db.jCommit
 
     val bean01: RsSubjectidBlpathIdxBean = dao.find(db.conn, bean00).head
     "return true for insert one record to RS_SQL_TEXT_EXP" in {
-      bean01.pathAttr.value            must beEqualTo("sample/sample.java")
+      bean01.pathAttr.value               must beEqualTo("sample/sample.java")
+      bean01.subjectIdAttr.value          must beEqualTo("my.subjectId")
+      bean01.fileNameAttr.value           must beEqualTo("sample.java")
     }
 
+
     val bean02: RsSubjectidBlpathIdxBean  = new RsSubjectidBlpathIdxBean
-    bean02.pathAttr.value          = "sample/sample.java"
-    bean02.fileNameAttr.value      = "sample.java"
+    bean02.pathAttr.value             = "sample/sample.java"
+    bean02.subjectIdAttr.value        = "my.subjectId"
+    bean02.subjectGroupIdAttr.value   = "my.subjectGroupId"
+    bean02.fileNameAttr.value         = "hoge.java"
+    bean02.updateFlgAttr.value        = "0"
+    bean02.newFlgAttr.value           = "0"
 
     //update
     dao.update(db.conn, List(bean02))
@@ -48,21 +58,10 @@ class RsSubjectidBlpathIdxDaoTest extends Specification {
 
     val bean03: RsSubjectidBlpathIdxBean = dao.find(db.conn, bean00).head
     "return true for insert one record to RS_SQL_TEXT_EXP" in {
-      bean03.pathAttr.value            must beEqualTo("sample/sample.java")
+      bean03.pathAttr.value               must beEqualTo("sample/sample.java")
+      bean03.subjectIdAttr.value          must beEqualTo("my.subjectId")
+      bean03.fileNameAttr.value           must beEqualTo("hoge.java")
     }
 
-    val bean04: RsSubjectidBlpathIdxBean  = new RsSubjectidBlpathIdxBean
-    bean04.pathAttr.value          = "sample/sample.java"
-    bean04.fileNameAttr.value      = "sample.java"
-
-    dao.delete(db.conn, bean00)
-    dao.insert(db.conn, List(bean03, bean04))
-    db.jCommit
-
-    val bean05: RsSubjectidBlpathIdxBean = dao.findSummary(db.conn).head
-    "return true for find summary record of RS_SQL_TEXT_EXP" in {
-      bean05.pathAttr.value            must beEqualTo("sample/sample.java")
-    }
-    */
   }
 }

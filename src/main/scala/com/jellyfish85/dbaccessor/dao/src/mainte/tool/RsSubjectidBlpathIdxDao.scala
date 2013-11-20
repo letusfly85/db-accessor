@@ -108,6 +108,9 @@ class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
       stmt.setString(5, bean.updateFlgAttr.value)
       stmt.setString(6, bean.newFlgAttr.value)
       stmt.setString(7, bean.fileNameAttr.value)
+
+      stmt.setString(8, bean.pathAttr.value)
+      stmt.setString(9, bean.subjectIdAttr.value)
       
       stmt.addBatch()
     }
@@ -161,7 +164,6 @@ class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_RS_SUBJECTID_BLPATH_IDX.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
     stmt.close()
 
