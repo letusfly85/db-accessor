@@ -173,12 +173,11 @@ class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
    * it deletes all records RS_SUBJECTID_BLPATH_IDX by primary keys, and returns a number of deleted records.
    *
    * @param conn JDBC Connection
-   * @param bean RsSubjectidBlpathIdxBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
    */
   @throws(classOf[SQLException])
-  def deleteAll(conn: Connection, bean: RsSubjectidBlpathIdxBean): Int = {
+  def deleteAll(conn: Connection): Int = {
     var result: Int = 0
 
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SUBJECTID_BLPATH_IDX_ALL.sql")
