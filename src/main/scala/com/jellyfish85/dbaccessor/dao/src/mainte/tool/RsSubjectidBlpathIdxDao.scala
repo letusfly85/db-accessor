@@ -10,6 +10,43 @@ import java.util
  *
  */
 class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
+
+  /**
+   * == findAll ==
+   *
+   * it searches RS_SUBJECTID_BLPATH_IDX by primary keys, and returns list of RsSubjectidBlpathIdxBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of RS_SUBJECTID_BLPATH_IDX
+   */
+  @throws(classOf[SQLException])
+  def findAll(conn: Connection): List[RsSubjectidBlpathIdxBean] = {
+    var list: List[RsSubjectidBlpathIdxBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_RS_SUBJECTID_BLPATH_IDX_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: RsSubjectidBlpathIdxBean = new RsSubjectidBlpathIdxBean
+
+      bean.subjectGroupIdAttr.value = result.getString("SUBJECT_GROUP_ID")
+      bean.subjectIdAttr.value = result.getString("SUBJECT_ID")
+      bean.pathAttr.value = result.getString("PATH")
+      bean.revisionAttr.value = result.getBigDecimal("REVISION")
+      bean.updateFlgAttr.value = result.getString("UPDATE_FLG")
+      bean.newFlgAttr.value = result.getString("NEW_FLG")
+      bean.fileNameAttr.value = result.getString("FILE_NAME")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
   /**
    * == find ==
    *
