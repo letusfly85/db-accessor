@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsSubjectidBlpathIdxBean
+import java.util
 
 /**
  * == RsSubjectidBlpathIdxDao ==
@@ -81,6 +82,26 @@ class RsSubjectidBlpathIdxDao extends GeneralDao[RsSubjectidBlpathIdxBean] {
     stmt.close()
 
     result
+  }
+
+  /**
+   * == insert ==
+   *
+   * it inserts to RS_SUBJECTID_BLPATH_IDX using list of RsSubjectidBlpathIdxBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of RsSubjectidBlpathIdxBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[RsSubjectidBlpathIdxBean]): Int  = {
+    var _list: List[RsSubjectidBlpathIdxBean] = List()
+
+    for (i <-0 until list.size()) {
+      _list ::= list.get(i)
+    }
+
+    insert(conn, _list)
   }
 
   /**
