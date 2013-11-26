@@ -148,6 +148,28 @@ class RsSubjectidXqlpathIdxDao extends GeneralDao[RsSubjectidXqlpathIdxBean] {
   }
 
   /**
+   * == deleteAll ==
+   *
+   * it deletes RS_SUBJECTID_XQLPATH_IDX by primary keys, and returns a number of deleted records.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def deleteAll(conn: Connection): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_RS_SUBJECTID_XQLPATH_IDX_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    result = stmt.executeUpdate()
+    stmt.close()
+
+    result
+  }
+
+  /**
    * == merge ==
    *
    * it merge to RS_SUBJECTID_XQLPATH_IDX using a RsSubjectidXqlpathIdxBean, and returns a number of merged records.

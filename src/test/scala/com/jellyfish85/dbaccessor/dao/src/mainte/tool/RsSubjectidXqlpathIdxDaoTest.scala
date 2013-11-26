@@ -31,7 +31,7 @@ class RsSubjectidXqlpathIdxDaoTest extends Specification {
     bean00.newFlgAttr.value           = "0"
 
     //delete
-    dao.delete(db.conn, bean00)
+    dao.deleteAll(db.conn)
 
     val list01: List[RsSubjectidXqlpathIdxBean] = dao.find(db.conn, bean00)
     "return 0 for delete table RS_SUBJECTID_BLPATH_IDX" in {
