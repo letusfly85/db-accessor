@@ -22,6 +22,7 @@ class KrObjectDependenciesDaoTest extends Specification {
   val db  = new DatabaseManager
   val dao = new KrObjectDependenciesDao
 
+  //todo
   "return true" should {
     assert(1 == 1)
   }
