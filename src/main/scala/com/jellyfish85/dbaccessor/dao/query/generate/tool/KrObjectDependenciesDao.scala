@@ -27,7 +27,8 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
     val sql:  String = generateSimpleQuery("/query/query/generate/tool/SELECT_KR_OBJECT_DEPENDENCIES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.dependentGrpCdAttr.value)
+    stmt.setString(2, bean.dependentCdAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -73,7 +74,7 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
       stmt.setString(6, bean.ifFlgAttr.value)
       stmt.setString(7, bean.masterDataCheckFlgAttr.value)
     
-     stmt.addBatch()
+      stmt.addBatch()
     }
 
     result = stmt.executeBatch().size
@@ -107,6 +108,9 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
       stmt.setString(5, bean.backupOwnerAttr.value)
       stmt.setString(6, bean.ifFlgAttr.value)
       stmt.setString(7, bean.masterDataCheckFlgAttr.value)
+
+      stmt.setString(8, bean.dependentGrpCdAttr.value)
+      stmt.setString(9, bean.dependentCdAttr.value)
       
       stmt.addBatch()
     }
@@ -134,7 +138,9 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
     val sql: String = generateSimpleQuery("/query/query/generate/tool/DELETE_KR_OBJECT_DEPENDENCIES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.dependentGrpCdAttr.value)
+    stmt.setString(2, bean.dependentCdAttr.value)
+
     result = stmt.executeUpdate()
     stmt.close()
 
