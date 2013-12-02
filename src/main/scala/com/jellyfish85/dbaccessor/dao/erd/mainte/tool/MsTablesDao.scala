@@ -7,7 +7,7 @@ import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsTablesBean
 class MsTablesDao extends GeneralDao[MsTablesBean] {
 
   /**
-   * テーブルマスタ検索
+   * == find ==
    *
    * @param conn
    * @param bean テーブル名（物理）を検索キーとする
@@ -54,6 +54,18 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
     }
 
     list
+  }
+
+  /**
+   * == findOne ==
+   *
+   * @param conn
+   * @param bean
+   * @return
+   */
+  @throws(classOf[SQLException])
+  def findOne(conn: Connection,   bean: MsTablesBean): MsTablesBean = {
+    find(conn, bean).head
   }
 
   def insert(conn: Connection, list: List[MsTablesBean]): Int = {
