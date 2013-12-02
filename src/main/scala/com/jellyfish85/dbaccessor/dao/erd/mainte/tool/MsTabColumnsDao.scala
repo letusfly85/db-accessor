@@ -79,7 +79,7 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
   @throws(classOf[SQLException])
   def find(conn: Connection,   bean: MsTablesBean): List[MsTabColumnsBean] = {
     val _bean: MsTabColumnsBean = new MsTabColumnsBean
-    _bean.physicalColumnNameAttr.setValue(bean.physicalTableNameAttr.value)
+    _bean.physicalTableNameAttr.setValue(bean.physicalTableNameAttr.value)
 
     return find(conn, _bean)
   }
