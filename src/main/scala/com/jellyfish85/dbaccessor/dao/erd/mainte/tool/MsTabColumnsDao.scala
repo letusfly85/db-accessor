@@ -1,7 +1,7 @@
 package com.jellyfish85.dbaccessor.dao.erd.mainte.tool
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
-import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsTabColumnsBean
+import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.{MsTablesBean, MsTabColumnsBean}
 import java.sql.{Connection, SQLException, ResultSet, PreparedStatement}
 
 class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
@@ -67,6 +67,21 @@ class MsTabColumnsDao extends GeneralDao[MsTabColumnsBean] {
     }
 
     list
+  }
+
+  /**
+   * == find ==
+   *
+   * @param conn
+   * @param bean
+   * @return
+   */
+  @throws(classOf[SQLException])
+  def find(conn: Connection,   bean: MsTablesBean): List[MsTabColumnsBean] = {
+    val _bean: MsTabColumnsBean = new MsTabColumnsBean
+    _bean.physicalColumnNameAttr.setValue(bean.physicalTableNameAttr.value)
+
+    return find(conn, _bean)
   }
 
   /**
