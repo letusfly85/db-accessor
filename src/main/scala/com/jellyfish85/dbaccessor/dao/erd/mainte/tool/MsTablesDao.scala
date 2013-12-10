@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.erd.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{Connection, SQLException, ResultSet, PreparedStatement}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsTablesBean
+import java.util
 
 class MsTablesDao extends GeneralDao[MsTablesBean] {
 
@@ -120,6 +121,30 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
     }
 
     list
+  }
+
+  /**
+   * == findByTableNames ==
+   *
+   * it searches MS_TABLES by primary keys, and returns list of MsTablesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param tableNames table name list
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
+   */
+  @throws(classOf[SQLException])
+  def findByTableNames(conn: Connection,   tableNames: util.ArrayList[String]): List[MsTablesBean] = {
+    var _tableNames: List[String] = List()
+
+    for (i <- 0 until tableNames.size()) {
+      val tableName: String = tableNames.get(i)
+
+      _tableNames ::= tableName
+    }
+
+    findByTableNames(conn, _tableNames)
   }
 
   /**
