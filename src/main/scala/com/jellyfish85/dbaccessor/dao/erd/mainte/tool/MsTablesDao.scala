@@ -9,10 +9,15 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
   /**
    * == find ==
    *
-   * @param conn
-   * @param bean テーブル名（物理）を検索キーとする
-   * @return テーブルマスタ明細を返却する
+   * it searches MS_TABLES by primary keys, and returns list of MsTablesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param bean MsTablesBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
    */
+  @throws(classOf[SQLException])
   def find(conn: Connection,   bean: MsTablesBean): List[MsTablesBean] = {
     var list: List[MsTablesBean] = List()
 
@@ -51,6 +56,67 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
 
     } finally {
         stmt.close()
+    }
+
+    list
+  }
+
+  /**
+   * == findByTableNames ==
+   *
+   * it searches MS_TABLES by primary keys, and returns list of MsTablesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param tableNames table name list
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
+   */
+  @throws(classOf[SQLException])
+  def findByTableNames(conn: Connection,   tableNames: List[String]): List[MsTablesBean] = {
+    var list: List[MsTablesBean] = List()
+
+    val map: Map[String, List[String]] = Map("tableNames" -> tableNames)
+    val sql: String = generateSQLIncludesList("/query/erd/mainte/tool/SELECT_MS_TABLES_BY_TABLE_NAMES.sql", map)
+
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+    try {
+      var i: Int = 1
+      tableNames.foreach {v =>
+        stmt.setString(i, v)
+        i += 1
+      }
+      val result: ResultSet = stmt.executeQuery()
+
+      while (result.next()) {
+        val bean: MsTablesBean = new MsTablesBean()
+
+        bean.trkmIdAttr.value             = result.getBigDecimal("TRKM_ID")
+        bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
+        bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
+        bean.revisionAttr.value           = result.getBigDecimal("REVISION")
+        bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
+        bean.logicalTableNameAttr.value   = result.getString("LOGICAL_TABLE_NAME")
+        bean.physicalTableNameAttr.value  = result.getString("PHYSICAL_TABLE_NAME")
+        bean.trkmStatusAttr.value         = result.getString("TRKM_STATUS")
+        bean.tableCommentAttr.value       = result.getString("TABLE_COMMENT")
+        bean.segoseiCheckStatusAttr.value = result.getString("SEGOSEI_CHECK_STATUS")
+        bean.ticketNumberAttr.value       = result.getBigDecimal("TICKET_NUMBER")
+        bean.existsFlgAttr.value          = result.getString("EXISTS_FLG")
+
+        list ::= bean
+
+      }
+
+    } catch {
+      case e: SQLException =>
+        println(sql)
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException
+
+    } finally {
+      stmt.close()
     }
 
     list
