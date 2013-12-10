@@ -50,6 +50,45 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
   }
 
   /**
+   * == findByDependencyCd ==
+   *
+   * it searches KR_OBJECT_DEPENDENCIES by primary keys, and returns list of KrObjectDependenciesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param dependentGrpCd dependentGrpCd
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of KR_OBJECT_DEPENDENCIES
+   */
+  @throws(classOf[SQLException])
+  def findByDependencyGrpCd(conn: Connection,   dependentGrpCd: String): List[KrObjectDependenciesBean] = {
+    var list: List[KrObjectDependenciesBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/query/generate/tool/SELECT_KR_OBJECT_DEPENDENCIES_BY_DEPENDENCY_GRP_CD.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, dependentGrpCd)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: KrObjectDependenciesBean = new KrObjectDependenciesBean
+
+      bean.dependentGrpCdAttr.value = result.getString("DEPENDENT_GRP_CD")
+      bean.dependentCdAttr.value = result.getString("DEPENDENT_CD")
+      bean.refferedOwnerAttr.value = result.getString("REFFERED_OWNER")
+      bean.objectOwnerAttr.value = result.getString("OBJECT_OWNER")
+      bean.backupOwnerAttr.value = result.getString("BACKUP_OWNER")
+      bean.ifFlgAttr.value = result.getString("IF_FLG")
+      bean.masterDataCheckFlgAttr.value = result.getString("MASTER_DATA_CHECK_FLG")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
    * == insert ==
    *
    * it inserts to KR_OBJECT_DEPENDENCIES using list of KrObjectDependenciesBean, and returns a number of inserted records.

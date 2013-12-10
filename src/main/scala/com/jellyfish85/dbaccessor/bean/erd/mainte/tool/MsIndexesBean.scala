@@ -5,9 +5,10 @@ import java.math.BigDecimal
 
 class MsIndexesBean extends GeneralBean {
 
-  val logicalTableName:  String =  "インデックスマスタ"
+  val logicalTableName:  String =  ""
   val physicalTableName: String =  "MS_INDEXES"
 
+  var	physicalTableNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var	indexNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var	revisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var	tableIdAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
