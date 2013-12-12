@@ -4,6 +4,8 @@ import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsIndexesBean
 
+import java.math.BigDecimal
+
 class MsIndexesDao extends GeneralDao[MsIndexesBean] {
 
   /**
@@ -25,6 +27,55 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setString(1, bean.indexNameAttr.value)
+    try {
+      val result = stmt.executeQuery()
+      while (result.next()) {
+        val bean: MsIndexesBean = new MsIndexesBean()
+
+        bean.indexNameAttr.value = result.getString("INDEX_NAME")
+        bean.revisionAttr.value = result.getBigDecimal("REVISION")
+        bean.tableIdAttr.value = result.getBigDecimal("TABLE_ID")
+        bean.tabDefIdAttr.value = result.getBigDecimal("TAB_DEF_ID")
+        bean.ticketNumberAttr.value = result.getBigDecimal("TICKET_NUMBER")
+        bean.uniquenessAttr.value = result.getString("UNIQUENESS")
+        bean.functionAttr.value = result.getString("FUNCTION")
+        bean.bitmapAttr.value = result.getString("BITMAP")
+        bean.reverseAttr.value = result.getString("REVERSE")
+        bean.keyCompressAttr.value = result.getString("KEY_COMPRESS")
+        bean.commitFlgAttr.value = result.getString("COMMIT_FLG")
+        bean.functionFomulaAttr.value = result.getString("FUNCTION_FOMULA")
+        bean.localityAttr.value = result.getString("LOCALITY")
+        bean.partitionedAttr.value = result.getString("PARTITIONED")
+        bean.statusAttr.value = result.getString("STATUS")
+        bean.pkIndexFlgAttr.value = result.getString("PK_INDEX_FLG")
+
+        list ::= bean
+      }
+    }
+
+    stmt.close()
+    list
+  }
+
+  /**
+   * == findByTableId ==
+   *
+   * it searches MS_INDEXES by primary keys, and returns list of TrErdTabColumnsBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param tableId tableId
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of TR_ERD_TAB_COLUMNS
+   */
+  @throws(classOf[SQLException])
+  def findByTableId(conn: Connection,   tableId: BigDecimal ): List[MsIndexesBean] = {
+    var list: List[MsIndexesBean] = List()
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_INDEXES_BY_TABLE_ID.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setBigDecimal(1, tableId)
     try {
       val result = stmt.executeQuery()
       while (result.next()) {
