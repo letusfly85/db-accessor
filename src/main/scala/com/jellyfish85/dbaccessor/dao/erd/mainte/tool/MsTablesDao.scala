@@ -5,6 +5,8 @@ import java.sql.{Connection, SQLException, ResultSet, PreparedStatement}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsTablesBean
 import java.util
 
+import java.math.BigDecimal
+
 class MsTablesDao extends GeneralDao[MsTablesBean] {
 
   /**
@@ -87,6 +89,62 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
         stmt.setString(i, v)
         i += 1
       }
+      val result: ResultSet = stmt.executeQuery()
+
+      while (result.next()) {
+        val bean: MsTablesBean = new MsTablesBean()
+
+        bean.trkmIdAttr.value             = result.getBigDecimal("TRKM_ID")
+        bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
+        bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
+        bean.revisionAttr.value           = result.getBigDecimal("REVISION")
+        bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
+        bean.logicalTableNameAttr.value   = result.getString("LOGICAL_TABLE_NAME")
+        bean.physicalTableNameAttr.value  = result.getString("PHYSICAL_TABLE_NAME")
+        bean.trkmStatusAttr.value         = result.getString("TRKM_STATUS")
+        bean.tableCommentAttr.value       = result.getString("TABLE_COMMENT")
+        bean.segoseiCheckStatusAttr.value = result.getString("SEGOSEI_CHECK_STATUS")
+        bean.ticketNumberAttr.value       = result.getBigDecimal("TICKET_NUMBER")
+        bean.existsFlgAttr.value          = result.getString("EXISTS_FLG")
+
+        list ::= bean
+
+      }
+
+    } catch {
+      case e: SQLException =>
+        println(sql)
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException
+
+    } finally {
+      stmt.close()
+    }
+
+    list
+  }
+
+  /**
+   * == findByReleaseId ==
+   *
+   * it searches MS_TABLES by primary keys, and returns list of MsTablesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param releaseId
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
+   */
+  @throws(classOf[SQLException])
+  def findByReleaseId(conn: Connection,   releaseId: BigDecimal): List[MsTablesBean] = {
+    var list: List[MsTablesBean] = List()
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_TABLES_RELEASE.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+    try {
+      stmt.setBigDecimal(1, releaseId)
+
       val result: ResultSet = stmt.executeQuery()
 
       while (result.next()) {
