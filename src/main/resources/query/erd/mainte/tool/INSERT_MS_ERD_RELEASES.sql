@@ -1,0 +1,32 @@
+INSERT INTO MS_ERD_RELEASES
+(
+   RELEASE_ID
+  ,OBJECT_TYPE
+  ,OBJECT_ID
+  ,REVISION
+  ,OBJECT_NAME
+  ,DIFF_TYPE
+  ,TOROKUYMD
+  ,TOROKUHMS
+  ,TOROKUUSER
+  ,KOSINYMD
+  ,KOSINHMS
+  ,KOSINUSER
+  ,BIKO
+)
+VALUES
+(
+   ? /* 1, RELEASE_ID */
+  ,? /* 2, OBJECT_TYPE */
+  ,? /* 3, OBJECT_ID */
+  ,? /* 4, REVISION */
+  ,? /* 5, OBJECT_NAME */
+  ,? /* 6, DIFF_TYPE */
+  ,? /* 7, TOROKUYMD */
+  ,? /* 8, TOROKUHMS */
+  ,? /* 9, TOROKUUSER */
+  ,? /* 10, KOSINYMD */
+  ,? /* 11, KOSINHMS */
+  ,? /* 12, KOSINUSER */
+  ,? /* 13, BIKO */
+)
