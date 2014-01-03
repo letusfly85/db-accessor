@@ -27,7 +27,7 @@ class MsErdReleasesDao extends GeneralDao[MsErdReleasesBean] {
     val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_ERD_RELEASES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.objectNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -104,6 +104,8 @@ class MsErdReleasesDao extends GeneralDao[MsErdReleasesBean] {
       stmt.setBigDecimal(4, bean.revisionAttr.value)
       stmt.setString(5, bean.objectNameAttr.value)
       stmt.setString(6, bean.diffTypeAttr.value)
+
+      stmt.setString(7, bean.objectNameAttr.value)
       
       stmt.addBatch()
     }
@@ -131,7 +133,8 @@ class MsErdReleasesDao extends GeneralDao[MsErdReleasesBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_ERD_RELEASES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.objectNameAttr.value)
+
     result = stmt.executeUpdate()
     stmt.close()
 
@@ -156,7 +159,6 @@ class MsErdReleasesDao extends GeneralDao[MsErdReleasesBean] {
     val sql: String = generateSimpleQuery("/query/erd/mainte/tool/MERGE_MS_ERD_RELEASES.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
     stmt.close()
 
