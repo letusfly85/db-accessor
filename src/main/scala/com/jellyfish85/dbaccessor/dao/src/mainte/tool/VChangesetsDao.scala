@@ -13,7 +13,7 @@ import java.math.BigDecimal
 class VChangesetsDao extends GeneralDao[VChangesetsBean] {
 
   /**
-   * == find ==
+   * == findByTicketNumber ==
    *
    * it searches V_CHANGESETS by primary keys, and returns list of VChangesetsBean
    *
@@ -31,6 +31,48 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     stmt.setBigDecimal(1, ticketNumber)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: VChangesetsBean = new VChangesetsBean
+
+      bean.revisionAttr.value = result.getBigDecimal("REVISION")
+      bean.committerAttr.value = result.getString("COMMITTER")
+      bean.commentsAttr.value = result.getString("COMMENTS")
+      bean.actionAttr.value = result.getString("ACTION")
+      bean.pathAttr.value = result.getString("PATH")
+      bean.fileNameAttr.value = result.getString("FILE_NAME")
+      bean.commitDateAttr.value = result.getString("COMMIT_DATE")
+      bean.commitHmsAttr.value = result.getString("COMMIT_HMS")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
+   * == findByCommitDateAndPath ==
+   *
+   * it searches V_CHANGESETS by primary keys, and returns list of VChangesetsBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param commitDate
+   * @param path
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of V_CHANGESETS
+   */
+  @throws(classOf[SQLException])
+  def findByCommitDateAndPath(conn: Connection,  commitDate: String, path: String): List[VChangesetsBean] = {
+    var list: List[VChangesetsBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_V_CHANGESETS_BY_COMMIT_DATE_AND_PATH.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, commitDate)
+    stmt.setString(2, path)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
