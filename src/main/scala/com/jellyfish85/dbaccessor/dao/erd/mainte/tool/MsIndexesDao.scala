@@ -1,7 +1,7 @@
 package com.jellyfish85.dbaccessor.dao.erd.mainte.tool
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
-import java.sql.{SQLException, PreparedStatement, Connection}
+import java.sql.{ResultSet, SQLException, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsIndexesBean
 
 import java.math.BigDecimal
@@ -151,6 +151,71 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
     }
 
     stmt.close()
+    list
+  }
+
+  /**
+   * == findByTableNames ==
+   *
+   * it searches MS_TABLES by primary keys, and returns list of MsTablesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param indexNames table name list
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
+   */
+  @throws(classOf[SQLException])
+  def findByTableNames(conn: Connection,   indexNames: List[String]): List[MsIndexesBean] = {
+    var list: List[MsIndexesBean] = List()
+
+    val map: Map[String, List[String]] = Map("indexNames" -> indexNames)
+    val sql: String = generateSQLIncludesList("/query/erd/mainte/tool/SELECT_MS_INDEXES_BY_INDEX_NAMES.sql", map)
+
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+    try {
+      var i: Int = 1
+      indexNames.foreach {v =>
+        stmt.setString(i, v)
+        i += 1
+      }
+      val result: ResultSet = stmt.executeQuery()
+
+      while (result.next()) {
+        val bean: MsIndexesBean = new MsIndexesBean()
+
+        bean.physicalTableNameAttr.value = result.getString("PHYSICAL_TABLE_NAME")
+        bean.indexNameAttr.value = result.getString("INDEX_NAME")
+        bean.revisionAttr.value = result.getBigDecimal("REVISION")
+        bean.tableIdAttr.value = result.getBigDecimal("TABLE_ID")
+        bean.tabDefIdAttr.value = result.getBigDecimal("TAB_DEF_ID")
+        bean.ticketNumberAttr.value = result.getBigDecimal("TICKET_NUMBER")
+        bean.uniquenessAttr.value = result.getString("UNIQUENESS")
+        bean.functionAttr.value = result.getString("FUNCTION")
+        bean.bitmapAttr.value = result.getString("BITMAP")
+        bean.reverseAttr.value = result.getString("REVERSE")
+        bean.keyCompressAttr.value = result.getString("KEY_COMPRESS")
+        bean.commitFlgAttr.value = result.getString("COMMIT_FLG")
+        bean.functionFomulaAttr.value = result.getString("FUNCTION_FOMULA")
+        bean.localityAttr.value = result.getString("LOCALITY")
+        bean.partitionedAttr.value = result.getString("PARTITIONED")
+        bean.statusAttr.value = result.getString("STATUS")
+        bean.pkIndexFlgAttr.value = result.getString("PK_INDEX_FLG")
+
+        list ::= bean
+      }
+
+    } catch {
+      case e: SQLException =>
+        println(sql)
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException
+
+    } finally {
+      stmt.close()
+    }
+
     list
   }
 

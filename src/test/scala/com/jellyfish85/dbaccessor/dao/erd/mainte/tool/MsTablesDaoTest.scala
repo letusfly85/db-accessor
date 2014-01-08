@@ -75,7 +75,7 @@ class MsTablesDaoTest extends Specification {
     val list02: List[MsTablesBean] = dao.findByTableNames(db.conn, tableNames)
 
     db.jClose
-    "return true for tableNames" in {
+    "return true for indexNames" in {
       list02.size must beEqualTo(3)
     }
   }
