@@ -155,18 +155,18 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
   }
 
   /**
-   * == findByTableNames ==
+   * == findByIndexNames ==
    *
-   * it searches MS_TABLES by primary keys, and returns list of MsTablesBean
+   * it searches MS_INDEXES by primary keys, and returns list of MsIndexesBean
    *
    *
    * @param conn JDBC Connection
    * @param indexNames table name list
    * @throws java.sql.SQLException, which will be caught outside of itself.
-   * @return list of MS_TABLES
+   * @return list of MS_INDEXES
    */
   @throws(classOf[SQLException])
-  def findByTableNames(conn: Connection,   indexNames: List[String]): List[MsIndexesBean] = {
+  def findByIndexNames(conn: Connection,   indexNames: List[String]): List[MsIndexesBean] = {
     var list: List[MsIndexesBean] = List()
 
     val map: Map[String, List[String]] = Map("indexNames" -> indexNames)
