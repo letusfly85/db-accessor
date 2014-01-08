@@ -5,6 +5,7 @@ import java.sql.{ResultSet, SQLException, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsIndexesBean
 
 import java.math.BigDecimal
+import java.util
 
 class MsIndexesDao extends GeneralDao[MsIndexesBean] {
 
@@ -217,6 +218,28 @@ class MsIndexesDao extends GeneralDao[MsIndexesBean] {
     }
 
     list
+  }
+
+  /**
+   * == findByIndexNames ==
+   *
+   * it searches MS_INDEXES by primary keys, and returns list of MsIndexesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param _indexNames table name list
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_INDEXES
+   */
+  @throws(classOf[SQLException])
+  def findByIndexNames(conn: Connection,   _indexNames: util.ArrayList[String]): List[MsIndexesBean] = {
+    var indexNames: List[String] = List()
+    for (i <- 0 until _indexNames.size()){
+      val indexName: String = _indexNames.get(i)
+      indexNames ::= indexName
+    }
+
+    return findByIndexNames(conn, indexNames)
   }
 
   def insert(conn: Connection, list: List[MsIndexesBean]): Int = {
