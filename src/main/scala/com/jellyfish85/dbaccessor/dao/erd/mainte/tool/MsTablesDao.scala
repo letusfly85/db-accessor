@@ -79,7 +79,7 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
   def findByTableNames(conn: Connection,   tableNames: List[String]): List[MsTablesBean] = {
     var list: List[MsTablesBean] = List()
 
-    val map: Map[String, List[String]] = Map("indexNames" -> tableNames)
+    val map: Map[String, List[String]] = Map("tableNames" -> tableNames)
     val sql: String = generateSQLIncludesList("/query/erd/mainte/tool/SELECT_MS_TABLES_BY_TABLE_NAMES.sql", map)
 
     val stmt: PreparedStatement = conn.prepareStatement(sql)
