@@ -25,7 +25,7 @@ trait GenerateQuery {
          new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))
 
        Stream.continually(br.readLine()).takeWhile(_ != null).foreach {str: String =>
-         query += str
+         query += str + "\n"
        }
      }
 
