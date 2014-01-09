@@ -1,6 +1,7 @@
 package com.jellyfish85.dbaccessor.utils
 
 import java.io.{InputStreamReader, BufferedReader, InputStream}
+import scala.collection.JavaConversions._
 
 trait GenerateQuery {
 
@@ -18,28 +19,14 @@ trait GenerateQuery {
    * @return query
    */
   def generateSimpleQuery(path: String): String = {
-
      try {
        val inputStream: InputStream = getClass().getResourceAsStream(path)
-
-       val reader: BufferedReader =
+       val br: BufferedReader =
          new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))
 
-       val buf: StringBuffer = new StringBuffer()
-       var switch: Boolean = true
-       var content: String = ""
-       while (switch) {
-         content = reader.readLine()
-         if (content.eq(null)) {
-           switch = false
-
-         } else {
-           buf.append(content)
-           buf.append("\n")
-         }
+       Stream.continually(br.readLine()).takeWhile(_ != null).foreach {str: String =>
+         query += str
        }
-
-       query = buf.toString()
        query
      }
   }
@@ -92,5 +79,11 @@ trait GenerateQuery {
 
     query += buf.toString
     query
+  }
+
+  def generateSQLIncludesList(path: String, map: java.util.Map[String, String]): String = {
+    val _map: Map[String, String] = map.toMap
+
+    return generateSQLIncludesList(path, _map)
   }
 }
