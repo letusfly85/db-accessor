@@ -81,8 +81,11 @@ trait GenerateQuery {
     query
   }
 
-  def generateSQLIncludesList(path: String, map: java.util.Map[String, String]): String = {
-    val _map: Map[String, String] = map.toMap
+  def generateSQLIncludesList(path: String, map: java.util.Map[String, java.util.ArrayList[String]]): String = {
+    var _map: Map[String, List[String]] = Map()
+    map.foreach{ case(key, value) =>
+      _map = Map(key -> value.toList )
+    }
 
     return generateSQLIncludesList(path, _map)
   }
