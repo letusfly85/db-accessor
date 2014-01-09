@@ -27,8 +27,9 @@ trait GenerateQuery {
        Stream.continually(br.readLine()).takeWhile(_ != null).foreach {str: String =>
          query += str
        }
-       query
      }
+
+    query
   }
 
   /**
