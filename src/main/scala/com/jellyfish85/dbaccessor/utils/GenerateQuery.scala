@@ -19,6 +19,7 @@ trait GenerateQuery {
    * @return query
    */
   def generateSimpleQuery(path: String): String = {
+    query = ""
      try {
        val inputStream: InputStream = getClass().getResourceAsStream(path)
        val br: BufferedReader =
@@ -29,7 +30,7 @@ trait GenerateQuery {
        }
      }
 
-    query
+    return query
   }
 
   /**
