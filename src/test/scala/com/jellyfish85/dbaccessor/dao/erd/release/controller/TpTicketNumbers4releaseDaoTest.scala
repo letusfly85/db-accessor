@@ -29,8 +29,6 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     val partialDataSet: IDataSet = new XlsDataSet(inputStream)
 
     DatabaseOperation.CLEAN_INSERT.execute(iConn, partialDataSet)
-    //iConn.close()
-    //inputStream.close()
 
     val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean00.releaseIdAttr.setValue(new BigDecimal(207))
@@ -52,6 +50,11 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     val bean11: TpTicketNumbers4releaseBean = dao.find(db.conn, bean01).head
     "return ticket number:100 for TP_TICKET_NUMBERS4RELEASE" in {
       bean11.ticketNumberAttr.value must beEqualTo(new BigDecimal(100))
+    }
+
+    val maxTrkmId: BigDecimal = dao.findMaxTrkmId(db.conn)
+    "return 2696 for TP_TICKET_NUMBERS4RELEASE" in {
+      maxTrkmId must beEqualTo(new BigDecimal(2696))
     }
 
     dao.delete(db.conn, bean01)

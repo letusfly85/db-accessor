@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.erd.release.controller
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.release.controller.TpTicketNumbers4releaseBean
+import java.math.BigDecimal
 
 /**
  * == TpTicketNumbers4releaseDao ==
@@ -43,6 +44,32 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
     stmt.close()
 
     list
+  }
+
+  /**
+   * == findMaxTrkmId ==
+   *
+   * it searches max trkm id of TP_TICKET_NUMBERS4RELEASE by primary keys, and returns BigDecimal
+   *
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of TP_TICKET_NUMBERS4RELEASE
+   */
+  @throws(classOf[SQLException])
+  def findMaxTrkmId(conn: Connection): BigDecimal = {
+    val sql:  String = generateSimpleQuery("/query/erd/release/controller/SELECT_TP_TICKET_NUMBERS4RELEASE_MAX_TRKM_ID.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    var maxTrkmId: BigDecimal = null
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      maxTrkmId = result.getBigDecimal("TRKM_ID")
+    }
+    stmt.close()
+
+    maxTrkmId
   }
 
   /**
