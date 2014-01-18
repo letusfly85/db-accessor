@@ -11,6 +11,10 @@ This is a module to maintenance com.jellyfish85's ERD.
 java -Dsbt.log.noformat=true -Xms512M -Xmx512M  -Dhttp.proxyHost=$HTTP_PROXY_HOST -Dhttp.proxyPort=$HTTP_PROXY_PORT -Dapp.env.name=development -jar $SBT_HOME/sbt-launch.jar 
 
 
+## Test Option
+
+java -Dsbt.log.noformat=true -Xms256m -Xmx256m -XX:MaxPermSize=256m -Xss2M -XX:+CMSClassUnloadingEnabled -Dapp.env.name=development -Dhttp.proxyHost=$HTTP_PROXY_HOST -Dhttp.proxyPort=$HTTP_PROXY_PORT
+
 ## properties
 
 app.properties
