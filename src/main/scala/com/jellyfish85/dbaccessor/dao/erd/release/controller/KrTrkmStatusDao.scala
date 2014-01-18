@@ -3,6 +3,9 @@ package com.jellyfish85.dbaccessor.dao.erd.release.controller
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.release.controller.KrTrkmStatusBean
+import java.util
+
+import scala.collection.JavaConversions._
 
 /**
  * == KrTrkmStatusDao ==
@@ -121,6 +124,20 @@ class KrTrkmStatusDao extends GeneralDao[KrTrkmStatusBean] {
   }
 
   /**
+   * == insert ==
+   *
+   * it inserts to KR_TRKM_STATUS using list of KrTrkmStatusBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of KrTrkmStatusBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[KrTrkmStatusBean]): Int  = {
+    insert(conn, list.toList)
+  }
+
+  /**
    * == update ==
    *
    * it updates KR_TRKM_STATUS using list of KrTrkmStatusBean, and returns a number of updated records.
@@ -151,6 +168,21 @@ class KrTrkmStatusDao extends GeneralDao[KrTrkmStatusBean] {
     stmt.close()
 
     result
+  }
+
+  /**
+   * == update ==
+   *
+   * it updates KR_TRKM_STATUS using list of KrTrkmStatusBean, and returns a number of updated records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of KrTrkmStatusBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def update(conn: Connection, list: util.ArrayList[KrTrkmStatusBean]): Int = {
+    update(conn, list.toList)
   }
 
   /**
