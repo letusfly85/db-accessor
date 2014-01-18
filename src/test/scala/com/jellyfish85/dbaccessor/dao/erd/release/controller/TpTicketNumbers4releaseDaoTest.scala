@@ -19,7 +19,6 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
 
   val db:  DatabaseManager            = new DatabaseManager
   val dao: TpTicketNumbers4releaseDao = new TpTicketNumbers4releaseDao
-  /*
   "return true" should {
     db.connect
 
@@ -41,7 +40,9 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     "return ticket number:31521 for TP_TICKET_NUMBERS4RELEASE" in {
       bean10.ticketNumberAttr.value must beEqualTo(new BigDecimal(31521))
     }
+  }
 
+    /*
     val bean01: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean01.releaseIdAttr.setValue(new BigDecimal(207))
     bean01.trkmIdAttr.setValue(new BigDecimal(2693))
