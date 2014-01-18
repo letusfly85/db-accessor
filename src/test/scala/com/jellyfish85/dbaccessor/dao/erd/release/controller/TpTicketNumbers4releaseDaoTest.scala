@@ -35,13 +35,42 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean00.releaseIdAttr.setValue(new BigDecimal(207))
     bean00.trkmIdAttr.setValue(new BigDecimal(2693))
-    val bean10: TpTicketNumbers4releaseBean = dao.find(db.conn, bean00).head
 
-    db.jClose
+    val bean10: TpTicketNumbers4releaseBean = dao.find(db.conn, bean00).head
     "return ticket number:31521 for TP_TICKET_NUMBERS4RELEASE" in {
       bean10.ticketNumberAttr.value must beEqualTo(new BigDecimal(31521))
     }
 
 
+    val bean01: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
+    bean01.releaseIdAttr.setValue(new BigDecimal(207))
+    bean01.trkmIdAttr.setValue(new BigDecimal(2693))
+    bean01.ticketNumberAttr.setValue(new BigDecimal(100))
+
+    dao.update(db.conn, List(bean01))
+    db.jCommit
+
+    val bean11: TpTicketNumbers4releaseBean = dao.find(db.conn, bean01).head
+    "return ticket number:100 for TP_TICKET_NUMBERS4RELEASE" in {
+      bean11.ticketNumberAttr.value must beEqualTo(new BigDecimal(100))
+    }
+
+    dao.delete(db.conn, bean01)
+    db.jCommit
+
+    val list12: List[TpTicketNumbers4releaseBean] = dao.find(db.conn, bean01)
+    db.jClose
+    "return empty for TP_TICKET_NUMBERS4RELEASE" in {
+      list12.isEmpty must beTrue
+    }
+  }
+
+  "return SQLException for not unique record to TP_TICKET_NUMBERS4RELEASE" should {
+    db.connect
+
+    val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
+    bean00.releaseIdAttr.setValue(new BigDecimal(0))
+
+    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
   }
 }

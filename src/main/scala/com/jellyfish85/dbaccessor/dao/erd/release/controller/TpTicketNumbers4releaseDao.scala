@@ -96,6 +96,9 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
       stmt.setBigDecimal(1, bean.releaseIdAttr.value)
       stmt.setBigDecimal(2, bean.trkmIdAttr.value)
       stmt.setBigDecimal(3, bean.ticketNumberAttr.value)
+
+      stmt.setBigDecimal(4, bean.releaseIdAttr.value)
+      stmt.setBigDecimal(5, bean.trkmIdAttr.value)
       
       stmt.addBatch()
     }
@@ -123,7 +126,9 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
     val sql: String = generateSimpleQuery("/query/erd/release/controller/DELETE_TP_TICKET_NUMBERS4RELEASE.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setBigDecimal(1, bean.releaseIdAttr.value)
+    stmt.setBigDecimal(2, bean.trkmIdAttr.value)
+
     result = stmt.executeUpdate()
     stmt.close()
 
@@ -148,7 +153,6 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
     val sql: String = generateSimpleQuery("/query/erd/release/controller/MERGE_TP_TICKET_NUMBERS4RELEASE.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
     stmt.close()
 
