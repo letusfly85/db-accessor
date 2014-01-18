@@ -1,7 +1,6 @@
 package com.jellyfish85.dbaccessor.dao.erd.release.controller
 
 import org.specs2.mutable.Specification
-import org.specs2.specification.{BeforeExample, AfterExample, Scope}
 
 import java.math.BigDecimal
 import java.sql.SQLException
@@ -20,7 +19,7 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
 
   val db:  DatabaseManager            = new DatabaseManager
   val dao: TpTicketNumbers4releaseDao = new TpTicketNumbers4releaseDao
-
+  /*
   "return true" should {
     db.connect
 
@@ -64,6 +63,7 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
       list12.isEmpty must beTrue
     }
   }
+  */
 
   "return SQLException for not unique record to TP_TICKET_NUMBERS4RELEASE" should {
     db.connect
