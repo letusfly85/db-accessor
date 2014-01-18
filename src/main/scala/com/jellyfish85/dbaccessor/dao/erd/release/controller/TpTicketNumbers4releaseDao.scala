@@ -27,7 +27,8 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
     val sql:  String = generateSimpleQuery("/query/erd/release/controller/SELECT_TP_TICKET_NUMBERS4RELEASE.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setBigDecimal(1, bean.releaseIdAttr.value)
+    stmt.setBigDecimal(2, bean.trkmIdAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {

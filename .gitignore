@@ -3,3 +3,6 @@
 *.properties
 output
 tmp
+project/target
+project/project/target
+target

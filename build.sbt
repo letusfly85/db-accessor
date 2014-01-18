@@ -18,7 +18,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" % "akka-actor" % "2.0.1",
   //"org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1",
   "org.fusesource.scalate" % "scalate-core" % "1.5.3",
-  "reaktor" % "scct_2.9.2" % "0.2-SNAPSHOT"
+  "reaktor" % "scct_2.9.2" % "0.2-SNAPSHOT",
+  "org.apache.poi" % "poi" % "3.8",
+  "org.apache.poi" % "poi-ooxml" % "3.8"
 )
 
 testOptions += Tests.Argument(TestFrameworks.Specs2, "console", "junitxml")
