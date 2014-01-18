@@ -31,6 +31,8 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     val partialDataSet: IDataSet = new XlsDataSet(inputStream)
 
     DatabaseOperation.CLEAN_INSERT.execute(iConn, partialDataSet)
+    iConn.close()
+    inputStream.close()
 
     val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean00.releaseIdAttr.setValue(new BigDecimal(207))
