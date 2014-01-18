@@ -1,6 +1,7 @@
 package com.jellyfish85.dbaccessor.dao.erd.release.controller
 
 import org.specs2.mutable.Specification
+import org.specs2.specification.{BeforeExample, AfterExample, Scope}
 
 import java.math.BigDecimal
 import java.sql.SQLException
@@ -23,8 +24,7 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
   "return true" should {
     db.connect
 
-    val iConn: IDatabaseConnection = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
-
+    val iConn: IDatabaseConnection  = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
     val url: String = "/excel/erd/release/controller/TP_TICKET_NUMBERS4RELEASE.xls"
     val file: File  = new File(getClass().getResource(url).toURI())
     val inputStream: FileInputStream = new FileInputStream(file)
@@ -40,7 +40,6 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     "return ticket number:31521 for TP_TICKET_NUMBERS4RELEASE" in {
       bean10.ticketNumberAttr.value must beEqualTo(new BigDecimal(31521))
     }
-
 
     val bean01: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean01.releaseIdAttr.setValue(new BigDecimal(207))
@@ -59,15 +58,12 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     db.jCommit
 
     val list12: List[TpTicketNumbers4releaseBean] = dao.find(db.conn, bean01)
-    db.jClose
     "return empty for TP_TICKET_NUMBERS4RELEASE" in {
       list12.isEmpty must beTrue
     }
   }
 
   "return SQLException for not unique record to TP_TICKET_NUMBERS4RELEASE" should {
-    db.connect
-
     val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean00.releaseIdAttr.setValue(new BigDecimal(0))
 
