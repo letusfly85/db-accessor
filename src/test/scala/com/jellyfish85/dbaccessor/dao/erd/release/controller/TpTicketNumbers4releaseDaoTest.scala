@@ -31,8 +31,8 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     val partialDataSet: IDataSet = new XlsDataSet(inputStream)
 
     DatabaseOperation.CLEAN_INSERT.execute(iConn, partialDataSet)
-    iConn.close()
-    inputStream.close()
+    //iConn.close()
+    //inputStream.close()
 
     val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean00.releaseIdAttr.setValue(new BigDecimal(207))
@@ -66,6 +66,8 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
   }
 
   "return SQLException for not unique record to TP_TICKET_NUMBERS4RELEASE" should {
+    db.connect
+
     val bean00: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
     bean00.releaseIdAttr.setValue(new BigDecimal(0))
 
