@@ -1,0 +1,4 @@
+select
+	max(RELEASE_ID) as RELEASE_ID
+from
+	MS_ERD_RELEASES

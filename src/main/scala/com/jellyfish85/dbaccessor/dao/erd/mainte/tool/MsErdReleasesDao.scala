@@ -4,6 +4,8 @@ import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsErdReleasesBean
 
+import java.math.BigDecimal
+
 /**
  * == MsErdReleasesDao ==
  *
@@ -45,6 +47,32 @@ class MsErdReleasesDao extends GeneralDao[MsErdReleasesBean] {
     stmt.close()
 
     list
+  }
+
+  /**
+   * == findMaxReleaseId ==
+   *
+   * it searches MS_ERD_RELEASES by primary keys, and returns list of MsErdReleasesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_ERD_RELEASES
+   */
+  @throws(classOf[SQLException])
+  def findMaxReleaseId(conn: Connection): BigDecimal = {
+    var maxReleaseId: BigDecimal = null
+
+    val sql:  String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_ERD_RELEASES_MAX_RELEASE_ID.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      maxReleaseId = result.getBigDecimal("RELEASE_ID")
+    }
+    stmt.close()
+
+    maxReleaseId
   }
 
   /**

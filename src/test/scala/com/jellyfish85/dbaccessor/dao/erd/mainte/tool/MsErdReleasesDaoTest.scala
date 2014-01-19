@@ -7,6 +7,13 @@ import java.math.BigDecimal
 import java.sql.SQLException
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.MsErdReleasesBean
 
+import org.dbunit.database.DatabaseConnection
+import org.dbunit.database.IDatabaseConnection
+import org.dbunit.dataset.IDataSet
+import org.dbunit.dataset.excel.XlsDataSet
+import java.io.{FileInputStream, File}
+import org.dbunit.operation.DatabaseOperation
+
 /**
  * == MsErdReleasesDaoTest ==
  * 
@@ -71,6 +78,20 @@ class MsErdReleasesDaoTest extends Specification {
       bean03.revisionAttr.value	   must beEqualTo(new BigDecimal(0))
       bean03.objectNameAttr.value  must beEqualTo("my.object")
       bean03.diffTypeAttr.value	   must beEqualTo("Y")
+    }
+
+    val iConn: IDatabaseConnection  = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
+    val url: String = "/excel/erd/mainte/tool/MS_ERD_RELEASES_01.xls"
+    val file: File  = new File(getClass().getResource(url).toURI())
+    val inputStream: FileInputStream = new FileInputStream(file)
+    val partialDataSet: IDataSet = new XlsDataSet(inputStream)
+    DatabaseOperation.CLEAN_INSERT.execute(iConn, partialDataSet)
+    db.jCommit
+
+    val maxReleaseId: BigDecimal = dao.findMaxReleaseId(db.conn)
+
+    "max released id should be 305" in {
+      maxReleaseId mustEqual(new BigDecimal(305))
     }
   }
 
