@@ -205,6 +205,55 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
     findByTableNames(conn, _tableNames)
   }
 
+  //
+  /**
+   * == findByTrkmIdRange ==
+   *
+   * it searches MS_TABLES by trkm id range, and returns list of MsTablesBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param preTrkmId
+   * @param curTrkmId
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
+   */
+  @throws(classOf[SQLException])
+  def findByTrkmIdRange(conn: Connection,   preTrkmId: BigDecimal, curTrkmId: BigDecimal): List[MsTablesBean] = {
+    var list: List[MsTablesBean] = List()
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_TABLES_BETWEEN_TRKM_ID.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+    try {
+      stmt.setBigDecimal(1, preTrkmId)
+      stmt.setBigDecimal(2, curTrkmId)
+
+      val result: ResultSet = stmt.executeQuery()
+
+      while (result.next()) {
+        val bean: MsTablesBean = new MsTablesBean()
+
+        bean.trkmIdAttr.value             = result.getBigDecimal("TRKM_ID")
+        bean.ticketNumberAttr.value       = result.getBigDecimal("TICKET_NUMBER")
+
+        list ::= bean
+
+      }
+
+    } catch {
+      case e: SQLException =>
+        println(sql)
+        conn.rollback()
+        e.printStackTrace()
+        throw new RuntimeException
+
+    } finally {
+      stmt.close()
+    }
+
+    list
+  }
+
   /**
    * == findOne ==
    *

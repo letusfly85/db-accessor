@@ -111,8 +111,6 @@ class KrTrkmStatusDao extends GeneralDao[KrTrkmStatusBean] {
       stmt.setBigDecimal(1, bean.trkmIdAttr.value)
       stmt.setString(2, bean.trkmStatusAttr.value)
       stmt.setString(3, bean.currentFlgAttr.value)
-      stmt.setString(4, bean.trkmYmdAttr.value)
-      stmt.setString(5, bean.trkmHhmissAttr.value)
     
       stmt.addBatch()
     }
