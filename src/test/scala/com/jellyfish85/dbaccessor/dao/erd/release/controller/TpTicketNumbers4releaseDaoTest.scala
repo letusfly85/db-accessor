@@ -61,6 +61,7 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     db.jCommit
 
     val list12: List[TpTicketNumbers4releaseBean] = dao.find(db.conn, bean01)
+    db.jClose
     "return empty for TP_TICKET_NUMBERS4RELEASE" in {
       list12.isEmpty must beTrue
     }

@@ -170,6 +170,28 @@ class MsErdReleasesDao extends GeneralDao[MsErdReleasesBean] {
   }
 
   /**
+   * == deleteAll ==
+   *
+   * it deletes MS_ERD_RELEASES all, and returns a number of deleted records.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def deleteAll(conn: Connection): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/DELETE_MS_ERD_RELEASES_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    result = stmt.executeUpdate()
+    stmt.close()
+
+    result
+  }
+
+  /**
    * == merge ==
    *
    * it merge to MS_ERD_RELEASES using a MsErdReleasesBean, and returns a number of merged records.

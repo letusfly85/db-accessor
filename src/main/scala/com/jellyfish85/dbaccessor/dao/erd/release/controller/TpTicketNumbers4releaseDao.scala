@@ -5,6 +5,9 @@ import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.release.controller.TpTicketNumbers4releaseBean
 import java.math.BigDecimal
 
+import scala.collection.JavaConversions._
+import java.util
+
 /**
  * == TpTicketNumbers4releaseDao ==
  *
@@ -92,14 +95,34 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
       stmt.setBigDecimal(1, bean.releaseIdAttr.value)
       stmt.setBigDecimal(2, bean.trkmIdAttr.value)
       stmt.setBigDecimal(3, bean.ticketNumberAttr.value)
-    
-     stmt.addBatch()
+
+      stmt.addBatch()
     }
 
     result = stmt.executeBatch().size
     stmt.close()
 
     result
+  }
+
+  /**
+   * == insert ==
+   *
+   * it inserts to TP_TICKET_NUMBERS4RELEASE using list of TpTicketNumbers4releaseBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of TpTicketNumbers4releaseBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[TpTicketNumbers4releaseBean]): Int  = {
+    var _list: List[TpTicketNumbers4releaseBean] = List()
+
+    for (i <- 0 until list.size()) {
+      _list ::= list.get(i)
+    }
+
+    return insert(conn, _list)
   }
 
   /**
