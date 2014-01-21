@@ -5,6 +5,7 @@ import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.RrErdReleasesBean
 
 import java.math.BigDecimal
+import java.util
 
 /**
  * == RrErdReleasesDao ==
@@ -81,6 +82,52 @@ class RrErdReleasesDao extends GeneralDao[RrErdReleasesBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
+
+    result
+  }
+
+  /**
+   * == insert ==
+   *
+   * it inserts to MS_ERD_RELEASES using list of MsErdReleasesBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of MsErdReleasesBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, list: util.ArrayList[RrErdReleasesBean]): Int  = {
+    var _list: List[RrErdReleasesBean] = List()
+
+    for (i <- 0 until list.size()) {bean: RrErdReleasesBean =>
+      _list ::= list.get(i)
+    }
+
+    insert(conn, _list)
+  }
+
+  //INSERT_RR_ERD_RELEASES_FROM_MS_ERD_RELEASES
+  /**
+   * == insert ==
+   *
+   * it inserts to MS_ERD_RELEASES using list of MsErdReleasesBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param releaseId
+   * @return result which is the number of executed records
+   * @todo   test
+   */
+  @throws(classOf[SQLException])
+  def insertFromCur(conn: Connection, releaseId: BigDecimal): Int  = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/INSERT_RR_ERD_RELEASES_FROM_MS_ERD_RELEASES.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setBigDecimal(1, releaseId)
+
+    result = stmt.executeUpdate()
     stmt.close()
 
     result
