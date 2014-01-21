@@ -86,6 +86,30 @@ class RrErdReleasesDaoTest extends Specification {
       bean12.afReleaseIdAttr.value mustEqual(new BigDecimal(306))
     }
 
+
+    DatabaseOperation.DELETE_ALL.execute(iConn, partialDataSet)
+    db.jCommit
+
+    val url02: String = "/excel/erd/mainte/tool/RR_ERD_RELEASES_02_FROM_MS_ERD_RELEASES.xls"
+    val file02: File  = new File(getClass().getResource(url02).toURI())
+    val inputStream02: FileInputStream = new FileInputStream(file02)
+    val partialDataSet02: IDataSet = new XlsDataSet(inputStream02)
+    DatabaseOperation.CLEAN_INSERT.execute(iConn, partialDataSet02)
+    db.jCommit
+
+    dao.insertFromCur(db.conn, (new BigDecimal(305)))
+    db.jCommit
+
+    val bean04: RrErdReleasesBean = new RrErdReleasesBean
+    bean04.afReleaseIdAttr.setValue(new BigDecimal(9999999999L))
+    bean04.objectTypeAttr.setValue("TABLE")
+    bean04.objectNameAttr.setValue("a")
+    val bean14: RrErdReleasesBean = dao.find(db.conn, bean04).head
+    "return 306 ReleaseId Mode for object name 'b'" in {
+      bean14.bfReleaseIdAttr.value mustEqual(new BigDecimal(305))
+      bean14.afReleaseIdAttr.value mustEqual(new BigDecimal(9999999999L))
+    }
+
   }
 
 }

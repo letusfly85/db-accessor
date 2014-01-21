@@ -116,7 +116,6 @@ class RrErdReleasesDao extends GeneralDao[RrErdReleasesBean] {
    * @param conn JDBC Connection
    * @param releaseId
    * @return result which is the number of executed records
-   * @todo   test
    */
   @throws(classOf[SQLException])
   def insertFromCur(conn: Connection, releaseId: BigDecimal): Int  = {
