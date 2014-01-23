@@ -93,6 +93,26 @@ class MsErdReleasesDaoTest extends Specification {
     "max released id should be 305" in {
       maxReleaseId mustEqual(new BigDecimal(305))
     }
+
+    val iConn02: IDatabaseConnection  = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
+    val url02: String = "/excel/erd/mainte/tool/MS_ERD_RELEASES_02_FROM_RR_ERD_RELEASES.xls"
+    val file02: File  = new File(getClass().getResource(url02).toURI())
+    val inputStream02: FileInputStream = new FileInputStream(file02)
+    val partialDataSet02: IDataSet = new XlsDataSet(inputStream02)
+    DatabaseOperation.CLEAN_INSERT.execute(iConn02, partialDataSet02)
+    db.jCommit
+
+    val releaseId: BigDecimal = new BigDecimal(305)
+    dao.insertFromHst(db.conn, releaseId)
+    db.jCommit
+
+    val bean04: MsErdReleasesBean = new MsErdReleasesBean
+    bean04.objectNameAttr.setValue("a")
+
+    val bean05: MsErdReleasesBean = dao.find(db.conn, bean04).head
+    "release id should be 305" in {
+      bean05.releaseIdAttr.value mustEqual(new BigDecimal(305))
+    }
   }
 
 }
