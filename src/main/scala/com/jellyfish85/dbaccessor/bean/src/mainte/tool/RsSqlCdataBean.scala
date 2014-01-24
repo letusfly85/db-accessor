@@ -2,7 +2,6 @@ package com.jellyfish85.dbaccessor.bean.src.mainte.tool
 
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
 import java.math.BigDecimal
-import com.jellyfish85.dbaccessor.src.mainte.tool.RsSvnSrcInfoBean
 
 class RsSqlCdataBean extends GeneralBean {
 
