@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import java.sql.SQLException
 
 import com.jellyfish85.dbaccessor.manager.DatabaseManager
-import com.jellyfish85.dbaccessor.src.mainte.tool.RsSvnSrcInfoBean
+import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsSvnSrcInfoBean
 
 class RsSvnSrcInfoDaoTest extends Specification {
 
