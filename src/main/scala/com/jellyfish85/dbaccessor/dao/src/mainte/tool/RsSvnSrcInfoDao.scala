@@ -2,7 +2,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
-import com.jellyfish85.dbaccessor.src.mainte.tool.RsSvnSrcInfoBean
+import com.jellyfish85.dbaccessor.bean.src.mainte.tool.RsSvnSrcInfoBean
 
 import java.math.BigDecimal
 

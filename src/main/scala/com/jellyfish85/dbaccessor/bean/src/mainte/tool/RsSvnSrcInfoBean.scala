@@ -1,4 +1,4 @@
-package com.jellyfish85.dbaccessor.src.mainte.tool
+package com.jellyfish85.dbaccessor.bean.src.mainte.tool
 
 import com.jellyfish85.dbaccessor.bean.{ColumnAttribute, GeneralBean}
 import java.math.BigDecimal
