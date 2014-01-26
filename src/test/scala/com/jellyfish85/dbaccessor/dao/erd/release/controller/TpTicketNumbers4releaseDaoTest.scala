@@ -23,7 +23,7 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     db.connect
 
     val iConn: IDatabaseConnection  = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
-    val url: String = "/excel/erd/release/controller/TP_TICKET_NUMBERS4RELEASE.xls"
+    val url: String = "/excel/erd/release/controller/TP_TICKET_NUMBERS4RELEASE_01.xls"
     val file: File  = new File(getClass().getResource(url).toURI())
     val inputStream: FileInputStream = new FileInputStream(file)
     val partialDataSet: IDataSet = new XlsDataSet(inputStream)
@@ -61,10 +61,22 @@ class TpTicketNumbers4releaseDaoTest extends Specification {
     db.jCommit
 
     val list12: List[TpTicketNumbers4releaseBean] = dao.find(db.conn, bean01)
-    db.jClose
     "return empty for TP_TICKET_NUMBERS4RELEASE" in {
       list12.isEmpty must beTrue
     }
+
+    val bean02: TpTicketNumbers4releaseBean = new TpTicketNumbers4releaseBean
+    bean02.releaseIdAttr.setValue(new BigDecimal(1))
+    bean02.trkmIdAttr.setValue(new BigDecimal(1))
+    bean02.ticketNumberAttr.setValue(new BigDecimal(1))
+
+    dao.insert(db.conn, List(bean02))
+
+    val bean12: TpTicketNumbers4releaseBean = dao.find(db.conn, bean02).head
+    "return ticket number:1 for TP_TICKET_NUMBERS4RELEASE" in {
+      bean12.ticketNumberAttr.value must beEqualTo(new BigDecimal(1))
+    }
+
   }
 
   "return SQLException for not unique record to TP_TICKET_NUMBERS4RELEASE" should {
