@@ -122,7 +122,9 @@ class TpTicketNumbers4releaseDao extends GeneralDao[TpTicketNumbers4releaseBean]
       _list ::= list.get(i)
     }
 
-    return insert(conn, _list)
+    val result: Int = insert(conn, _list)
+
+    result
   }
 
   /**
