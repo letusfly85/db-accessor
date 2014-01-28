@@ -37,6 +37,8 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
         bean.trkmIdAttr.value             = result.getBigDecimal("TRKM_ID")
         bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
         bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
+        bean.serviceNameAttr.value        = result.getString("SERVICE_NAME")
+        bean.subsystemNameAttr.value      = result.getString("SUBSYSTEM_NAME")
         bean.revisionAttr.value           = result.getBigDecimal("REVISION")
         bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
         bean.logicalTableNameAttr.value   = result.getString("LOGICAL_TABLE_NAME")
@@ -97,6 +99,8 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
         bean.trkmIdAttr.value             = result.getBigDecimal("TRKM_ID")
         bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
         bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
+        bean.serviceNameAttr.value        = result.getString("SERVICE_NAME")
+        bean.subsystemNameAttr.value      = result.getString("SUBSYSTEM_NAME")
         bean.revisionAttr.value           = result.getBigDecimal("REVISION")
         bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
         bean.logicalTableNameAttr.value   = result.getString("LOGICAL_TABLE_NAME")
@@ -153,6 +157,8 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
         bean.trkmIdAttr.value             = result.getBigDecimal("TRKM_ID")
         bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
         bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
+        bean.serviceNameAttr.value        = result.getString("SERVICE_NAME")
+        bean.subsystemNameAttr.value      = result.getString("SUBSYSTEM_NAME")
         bean.revisionAttr.value           = result.getBigDecimal("REVISION")
         bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
         bean.logicalTableNameAttr.value   = result.getString("LOGICAL_TABLE_NAME")
@@ -277,15 +283,17 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
         stmt.setBigDecimal(1, bean.trkmIdAttr.value)
         stmt.setBigDecimal(2, bean.tabDefIdAttr.value)
         stmt.setBigDecimal(3, bean.tableIdAttr.value)
-        stmt.setBigDecimal(4, bean.revisionAttr.value)
-        stmt.setString(5, bean.logicalTableTagAttr.value)
-        stmt.setString(6, bean.logicalTableNameAttr.value)
-        stmt.setString(7, bean.physicalTableNameAttr.value)
-        stmt.setString(8, bean.trkmStatusAttr.value)
-        stmt.setString(9, bean.tableCommentAttr.value)
-        stmt.setString(10, bean.segoseiCheckStatusAttr.value)
-        stmt.setBigDecimal(11, bean.ticketNumberAttr.value)
-        stmt.setString(12, bean.existsFlgAttr.value)
+        stmt.setString(4, bean.serviceNameAttr.value)
+        stmt.setString(5, bean.subsystemNameAttr.value)
+        stmt.setBigDecimal(6, bean.revisionAttr.value)
+        stmt.setString(7, bean.logicalTableTagAttr.value)
+        stmt.setString(8, bean.logicalTableNameAttr.value)
+        stmt.setString(9, bean.physicalTableNameAttr.value)
+        stmt.setString(10, bean.trkmStatusAttr.value)
+        stmt.setString(11, bean.tableCommentAttr.value)
+        stmt.setString(12, bean.segoseiCheckStatusAttr.value)
+        stmt.setBigDecimal(13, bean.ticketNumberAttr.value)
+        stmt.setString(14, bean.existsFlgAttr.value)
 
         stmt.addBatch()
       }
@@ -335,6 +343,7 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
    * @param  conn JDBC Connection
    * @param  bean MsTablesBean
    * @return result which is the number of executed records
+   * @todo
    */
   def merge(conn: Connection,  bean: MsTablesBean): Int = {
     var result: Int = 0
