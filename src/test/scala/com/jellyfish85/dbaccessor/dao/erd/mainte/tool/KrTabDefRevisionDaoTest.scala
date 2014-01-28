@@ -5,7 +5,14 @@ import com.jellyfish85.dbaccessor.manager.DatabaseManager
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.KrTabDefRevisionBean
 
 import java.math.BigDecimal
-import java.sql.SQLException
+import java.sql.{BatchUpdateException, SQLException}
+
+import org.dbunit.database.DatabaseConnection
+import org.dbunit.database.IDatabaseConnection
+import org.dbunit.dataset.IDataSet
+import org.dbunit.dataset.excel.XlsDataSet
+import java.io.{FileInputStream, File}
+import org.dbunit.operation.DatabaseOperation
 
 /**
  * == KrTabDefRevisionDaoTest ==
@@ -18,6 +25,14 @@ class KrTabDefRevisionDaoTest extends Specification {
 
   "return true" should {
     db.connect
+
+    val iConn: IDatabaseConnection  = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
+    val url: String = "/excel/erd/mainte/tool/KR_TAB_DEF_REVISION_01.xls"
+    val file: File  = new File(getClass().getResource(url).toURI())
+    val inputStream: FileInputStream = new FileInputStream(file)
+    val partialDataSet: IDataSet = new XlsDataSet(inputStream)
+    DatabaseOperation.CLEAN_INSERT.execute(iConn, partialDataSet)
+    db.jCommit
 
     /**
      * TAB_DEF_ID		    NOT NULL,
@@ -76,6 +91,18 @@ class KrTabDefRevisionDaoTest extends Specification {
       bean03.svnPathAttr.value          must beEqualTo("path3")
     }
 
+    val tableDefineNames: List[String] = List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
+    val list01: List[KrTabDefRevisionBean] = dao.findByTableDefineNames(db.conn, tableDefineNames)
+
+    var result: List[BigDecimal] = List()
+    list01.reverse.foreach(x => result ::= x.tabDefRevisionAttr.value)
+
+    val tabDefRevisions: List[BigDecimal] =
+      List(22387,5537,11602,20124,2365,21987,20120,20118,24825,1485).map(x => new BigDecimal(x))
+
+    "return true for findByTableDefineNames" in {
+      result must haveTheSameElementsAs(tabDefRevisions)
+    }
   }
 
   //exception
@@ -88,15 +115,17 @@ class KrTabDefRevisionDaoTest extends Specification {
      *
      */
     val bean00: KrTabDefRevisionBean = new KrTabDefRevisionBean
-    bean00.tabDefIdAttr.value         = new BigDecimal(0)
-    bean00.svnRevisionAttr.value      = new BigDecimal(0)
-    bean00.tabDefRevisionAttr.value   = new BigDecimal(0)
+    bean00.tabDefIdAttr.value         = new BigDecimal(1)
+    bean00.svnRevisionAttr.value      = new BigDecimal(1)
+    bean00.tabDefRevisionAttr.value   = new BigDecimal(1)
     bean00.svnPathAttr.value          = "path"
     bean00.lastUpdateYmdAttr.value    = "20130827"
     bean00.lastUpdateHhmissAttr.value = "220000"
 
     dao.delete(db.conn, bean00)
     db.jCommit
-    (dao.insert(db.conn, List(bean00))) must throwA[SQLException]
+    dao.insert(db.conn, List(bean00))
+    db.jCommit
+    (dao.insert(db.conn, List(bean00))) must throwA[BatchUpdateException]
   }
 }

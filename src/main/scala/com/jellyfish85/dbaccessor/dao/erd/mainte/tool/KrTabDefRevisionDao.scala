@@ -1,7 +1,7 @@
 package com.jellyfish85.dbaccessor.dao.erd.mainte.tool
 
 import com.jellyfish85.dbaccessor.dao.GeneralDao
-import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
+import java.sql._
 import com.jellyfish85.dbaccessor.bean.erd.mainte.tool.KrTabDefRevisionBean
 
 /**
@@ -50,6 +50,51 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
   }
 
   /**
+   * == findByTableDefineNames ==
+
+   * @param conn JDBC Connection
+   * @param tableDefineNames KrTabDefRevisionBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of KR_TAB_DEF_REVISION
+   */
+  @throws(classOf[SQLException])
+  def findByTableDefineNames(conn: Connection,   tableDefineNames: List[String]): List[KrTabDefRevisionBean] = {
+    var list: List[KrTabDefRevisionBean] = List()
+
+    val map:  Map[String, List[String]] = Map("tabDefNames" -> tableDefineNames)
+    val sql:  String =
+      generateSQLIncludesList("/query/erd/mainte/tool/SELECT_KR_TAB_DEF_REVISION_BY_TAB_DEF_NAMES.sql", map)
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    var i: Int = 1
+    tableDefineNames.foreach {v =>
+      stmt.setString(i, v)
+      i += 1
+    }
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: KrTabDefRevisionBean = new KrTabDefRevisionBean
+
+      bean.tabDefIdAttr.value = result.getBigDecimal("TAB_DEF_ID")
+      bean.tabDefRevisionAttr.value = result.getBigDecimal("TAB_DEF_REVISION")
+      bean.tabDefNameAttr.value = result.getString("TAB_DEF_NAME")
+      bean.lastUpdateYmdAttr.value = result.getString("LAST_UPDATE_YMD")
+      bean.lastUpdateHhmissAttr.value = result.getString("LAST_UPDATE_HHMISS")
+      bean.updateFlgAttr.value = result.getString("UPDATE_FLG")
+      bean.newFlgAttr.value = result.getString("NEW_FLG")
+      bean.svnRevisionAttr.value = result.getBigDecimal("SVN_REVISION")
+      bean.svnPathAttr.value = result.getString("SVN_PATH")
+      bean.existsFlgAttr.value = result.getString("EXISTS_FLG")
+      bean.trkmStatusAttr.value = result.getString("TRKM_STATUS")
+
+      list ::= bean
+    }
+
+    list
+  }
+
+  /**
    *
    *
    * @param conn JDBC Connection
@@ -57,6 +102,7 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
    * @return result which is the number of executed records
    */
   @throws(classOf[SQLException])
+  @throws(classOf[BatchUpdateException])
   def insert(conn: Connection, list: List[KrTabDefRevisionBean]): Int  = {
     var result: Int = 0
 
@@ -80,6 +126,7 @@ class KrTabDefRevisionDao extends GeneralDao[KrTabDefRevisionBean] {
     }
 
     result = stmt.executeBatch().size
+    stmt.close()
 
     result
   }
