@@ -79,9 +79,30 @@ class MsTablesDaoTest extends Specification {
 
     val list02: List[MsTablesBean] = dao.findByTableNames(db.conn, tableNames)
 
-    "return true for indexNames" in {
+    "return 3 for inserted list" in {
       list02.size must beEqualTo(3)
     }
+
+    val bean04: MsTablesBean = new MsTablesBean
+
+    bean04.physicalTableNameAttr.value = "my.table"
+    bean04.logicalTableNameAttr.value  = "my.table"
+    bean04.tableIdAttr.value  = new java.math.BigDecimal(1)
+    bean04.revisionAttr.value = new java.math.BigDecimal(1)
+    bean04.trkmIdAttr.value   = new BigDecimal(1)
+    bean04.tabDefIdAttr.value = new BigDecimal(1)
+    bean04.serviceNameAttr.value = "my.service"
+    bean04.subsystemNameAttr.value = "my.subsystem.name"
+
+    dao.update(db.conn, List(bean04))
+    db.jCommit
+
+    val bean05: MsTablesBean = dao.find(db.conn, bean04).head
+    "return true for my.table" in {
+      bean05.physicalTableNameAttr.value must beEqualTo("my.table")
+      bean05.serviceNameAttr.value  must beEqualTo("my.service")
+    }
+
 
     val iConn: IDatabaseConnection  = new DatabaseConnection(db.conn, dao.getSchemaName(db.conn))
     val url: String = "/excel/erd/mainte/tool/MS_TABLES_01.xls"
