@@ -161,6 +161,7 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
    * @param bean KrReleaseDiffsBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
+   * @deprecated there is no necessary to use delete for this class.
    */
   @throws(classOf[SQLException])
   def delete(conn: Connection, bean: KrReleaseDiffsBean): Int = {
