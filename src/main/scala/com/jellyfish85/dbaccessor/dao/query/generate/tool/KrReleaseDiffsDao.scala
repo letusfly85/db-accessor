@@ -24,10 +24,10 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
   def find(conn: Connection,   bean: KrReleaseDiffsBean): List[KrReleaseDiffsBean] = {
     var list: List[KrReleaseDiffsBean] = List()
 
-    val sql:  String = generateSimpleQuery("/query/generator/tool/SELECT_KR_RELEASE_DIFFS.sql")
+    val sql:  String = generateSimpleQuery("/query/query/generate/tool/SELECT_KR_RELEASE_DIFFS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.tagNameAttr.value)
 
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
@@ -39,6 +39,44 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
       bean.headerFlgAttr.value = result.getString("HEADER_FLG")
       bean.targetEnvNameAttr.value = result.getString("TARGET_ENV_NAME")
       
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
+   * == find ==
+   *
+   * it searches KR_RELEASE_DIFFS by primary keys, and returns list of KrReleaseDiffsBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param bean KrReleaseDiffsBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of KR_RELEASE_DIFFS
+   */
+  @throws(classOf[SQLException])
+  def findByToRevision(conn: Connection,   bean: KrReleaseDiffsBean): List[KrReleaseDiffsBean] = {
+    var list: List[KrReleaseDiffsBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/query/generate/tool/SELECT_KR_RELEASE_DIFFS_BY_TO_REVISION.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, bean.tagNameAttr.value)
+    stmt.setBigDecimal(2, bean.toRevisionAttr.value)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: KrReleaseDiffsBean = new KrReleaseDiffsBean
+
+      bean.tagNameAttr.value = result.getString("TAG_NAME")
+      bean.fromRevisionAttr.value = result.getBigDecimal("FROM_REVISION")
+      bean.toRevisionAttr.value = result.getBigDecimal("TO_REVISION")
+      bean.headerFlgAttr.value = result.getString("HEADER_FLG")
+      bean.targetEnvNameAttr.value = result.getString("TARGET_ENV_NAME")
+
       list ::= bean
     }
     stmt.close()
@@ -59,7 +97,7 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
   def insert(conn: Connection, list: List[KrReleaseDiffsBean]): Int  = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/generator/tool/INSERT_KR_RELEASE_DIFFS.sql")
+    val sql: String = generateSimpleQuery("/query/query/generate/tool/INSERT_KR_RELEASE_DIFFS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: KrReleaseDiffsBean =>
@@ -92,7 +130,7 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
   def update(conn: Connection, list: List[KrReleaseDiffsBean]): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/generator/tool/UPDATE_KR_RELEASE_DIFFS.sql")
+    val sql: String = generateSimpleQuery("/query/query/generate/tool/UPDATE_KR_RELEASE_DIFFS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: KrReleaseDiffsBean =>
@@ -101,7 +139,10 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
       stmt.setBigDecimal(3, bean.toRevisionAttr.value)
       stmt.setString(4, bean.headerFlgAttr.value)
       stmt.setString(5, bean.targetEnvNameAttr.value)
-      
+
+      stmt.setString(6, bean.tagNameAttr.value)
+      stmt.setBigDecimal(7, bean.toRevisionAttr.value)
+
       stmt.addBatch()
     }
 
@@ -125,10 +166,9 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
   def delete(conn: Connection, bean: KrReleaseDiffsBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/generator/tool/DELETE_KR_RELEASE_DIFFS.sql")
+    val sql: String = generateSimpleQuery("/query/query/generate/tool/DELETE_KR_RELEASE_DIFFS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
     stmt.close()
 
@@ -150,10 +190,9 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
   def merge(conn: Connection,  bean: KrReleaseDiffsBean): Int = {
     var result: Int = 0
 
-    val sql: String = generateSimpleQuery("/query/generator/tool/MERGE_KR_RELEASE_DIFFS.sql")
+    val sql: String = generateSimpleQuery("/query/query/generate/tool/MERGE_KR_RELEASE_DIFFS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
     result = stmt.executeUpdate()
     stmt.close()
 
