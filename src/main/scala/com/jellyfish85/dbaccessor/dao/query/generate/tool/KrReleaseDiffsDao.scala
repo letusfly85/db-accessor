@@ -116,7 +116,23 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
     result
   }
 
+  /**
+   * == insert ==
+   *
+   * it inserts to KR_RELEASE_DIFFS using list of KrReleaseDiffsBean, and returns a number of inserted records.
+   *
+   * @param conn JDBC Connection
+   * @param bean bean of KrReleaseDiffsBean
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def insert(conn: Connection, bean: KrReleaseDiffsBean): Int  = {
+    var result: Int = 0
 
+    result = insert(conn, List(bean))
+
+    result
+  }
 
   /**
    * == update ==
