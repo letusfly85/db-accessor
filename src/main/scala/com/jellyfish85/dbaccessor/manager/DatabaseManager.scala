@@ -9,7 +9,7 @@ class DatabaseManager {
   var user: String     = _
 
   /**
-   * Database接続を行う
+   * connect to Oracle
    *
    */
   def connect {
@@ -36,6 +36,31 @@ class DatabaseManager {
       case e:Exception =>
         e.printStackTrace()
     }
+  }
+
+  /**
+   * connect to MySQL
+   *
+   */
+  def myConnect {
+
+    val property: Properties = new Properties()
+
+    try {
+      property.load(getClass().getResourceAsStream("/properties/my.properties"))
+
+      user = property.getProperty("USER")
+      val pass: String = property.getProperty("PASS")
+      val url : String = property.getProperty("URL")
+
+      Class.forName("com.mysql.jdbc.Driver")
+      conn = DriverManager.getConnection(url,user,pass)
+
+    } catch {
+      case e:Exception =>
+        e.printStackTrace()
+    }
+
   }
 
   def jRollback {
