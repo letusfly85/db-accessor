@@ -153,6 +153,27 @@ class KrReleaseDiffsDao extends GeneralDao[KrReleaseDiffsBean] {
   }
 
   /**
+   * == update ==
+   *
+   * it updates KR_RELEASE_DIFFS using list of KrReleaseDiffsBean, and returns a number of updated records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of KrReleaseDiffsBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def update(conn: Connection, bean: KrReleaseDiffsBean): Int = {
+    var result: Int = 0
+
+
+    result = update(conn, List(bean))
+    stmt.close()
+
+    result
+  }
+
+  /**
    * == delete ==
    *
    * it deletes KR_RELEASE_DIFFS by primary keys, and returns a number of deleted records.
