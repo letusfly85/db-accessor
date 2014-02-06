@@ -160,19 +160,24 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     list.foreach {bean: TrCommitHistoryBean =>
-      stmt.setString(1, bean.repositoryKindAttr.value)
-      stmt.setString(2, bean.repositoryNameAttr.value)
-      stmt.setString(3, bean.rootUrlAttr.value)
-      stmt.setString(4, bean.rightBaseUrlAttr.value)
-      stmt.setString(5, bean.leftBaseUrlAttr.value)
+      stmt.setString(1,  bean.repositoryKindAttr.value)
+      stmt.setString(2,  bean.repositoryNameAttr.value)
+      stmt.setString(3,  bean.rootUrlAttr.value)
+      stmt.setString(4,  bean.rightBaseUrlAttr.value)
+      stmt.setString(5,  bean.leftBaseUrlAttr.value)
       stmt.setBigDecimal(6, bean.revisionAttr.value)
-      stmt.setString(7, bean.committerAttr.value)
-      stmt.setString(8, bean.commentsAttr.value)
-      stmt.setString(9, bean.actionAttr.value)
+      stmt.setString(7,  bean.committerAttr.value)
+      stmt.setString(8,  bean.commentsAttr.value)
+      stmt.setString(9,  bean.actionAttr.value)
       stmt.setString(10, bean.pathAttr.value)
       stmt.setString(11, bean.fileNameAttr.value)
       stmt.setString(12, bean.commitYmdAttr.value)
       stmt.setString(13, bean.commitHmsAttr.value)
+
+      stmt.setString(14, bean.repositoryNameAttr.value)
+      stmt.setString(15, bean.rootUrlAttr.value)
+      stmt.setString(16, bean.rightBaseUrlAttr.value)
+      stmt.setString(17, bean.leftBaseUrlAttr.value)
       
       stmt.addBatch()
     }
@@ -200,7 +205,11 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
     val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_TR_COMMIT_HISTORY.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
+    stmt.setString(1, bean.repositoryNameAttr.value)
+    stmt.setString(2, bean.rootUrlAttr.value)
+    stmt.setString(3, bean.rightBaseUrlAttr.value)
+    stmt.setString(4, bean.leftBaseUrlAttr.value)
+
     result = stmt.executeUpdate()
     stmt.close()
 
