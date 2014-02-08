@@ -3,6 +3,7 @@ package com.jellyfish85.dbaccessor.dao.src.mainte.tool
 import com.jellyfish85.dbaccessor.dao.GeneralDao
 import java.sql.{SQLException, ResultSet, PreparedStatement, Connection}
 import com.jellyfish85.dbaccessor.bean.src.mainte.tool.TrCommitHistoryBean
+import java.util
 
 /**
  * == TrCommitHistoryDao ==
@@ -142,6 +143,18 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
     result
   }
 
+  def insert(conn: Connection, list: util.ArrayList[TrCommitHistoryBean]): Int  = {
+    var _list: List[TrCommitHistoryBean] = List()
+
+    for (i <- 0 until list.size) {
+      _list ::= list.get(i)
+    }
+
+    val result: Int = insert(conn, _list)
+
+    result
+  }
+
   /**
    * == update ==
    *
@@ -209,6 +222,28 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
     stmt.setString(2, bean.rootUrlAttr.value)
     stmt.setString(3, bean.rightBaseUrlAttr.value)
     stmt.setString(4, bean.leftBaseUrlAttr.value)
+
+    result = stmt.executeUpdate()
+    stmt.close()
+
+    result
+  }
+
+  /**
+   * == delete ==
+   *
+   * it deletes TR_COMMIT_HISTORY by primary keys, and returns a number of deleted records.
+   *
+   * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def deleteAll(conn: Connection): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/DELETE_TR_COMMIT_HISTORY_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
 
     result = stmt.executeUpdate()
     stmt.close()
