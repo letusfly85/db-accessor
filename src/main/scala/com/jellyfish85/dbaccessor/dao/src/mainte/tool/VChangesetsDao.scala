@@ -6,6 +6,7 @@ import com.jellyfish85.dbaccessor.bean.src.mainte.tool.VChangesetsBean
 
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
+import org.apache.commons.io.FilenameUtils
 
 /**
  * == VChangesetsDao ==
@@ -182,7 +183,7 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
       bean.commentsAttr.value = result.getString("COMMENTS")
       bean.actionAttr.value = result.getString("ACTION")
       bean.pathAttr.value = result.getString("PATH")
-      //bean.fileNameAttr.value = result.getString("FILE_NAME")
+      bean.fileNameAttr.value = FilenameUtils.getName(bean.pathAttr.value)
 
       val commitDate: Date      = result.getDate("COMMIT_DATE")
       bean.commitDateAttr.value = formatYmd.format(commitDate)
