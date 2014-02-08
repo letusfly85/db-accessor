@@ -147,6 +147,54 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     list
   }
 
+  //SELECT_V_CHANGESETS_UNIQUE
+  /**
+   * == findByRevisionAndPath ==
+   *
+   * it searches V_CHANGESETS by primary keys, and returns list of VChangesetsBean
+   *
+   *
+   * @param conn JDBC Connection
+   * @param revision
+   * @param path
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of V_CHANGESETS
+   */
+  @throws(classOf[SQLException])
+  def findUnique(conn: Connection, revision: BigDecimal, path: String): VChangesetsBean = {
+    val formatYmd: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
+    val formatHms: SimpleDateFormat = new SimpleDateFormat("hhmmss")
+
+    var list: List[VChangesetsBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_V_CHANGESETS_UNIQUE.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setBigDecimal(1, revision)
+    stmt.setString(2, path)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: VChangesetsBean = new VChangesetsBean
+
+      bean.revisionAttr.value = result.getBigDecimal("REVISION")
+      bean.committerAttr.value = result.getString("COMMITTER")
+      bean.commentsAttr.value = result.getString("COMMENTS")
+      bean.actionAttr.value = result.getString("ACTION")
+      bean.pathAttr.value = result.getString("PATH")
+      //bean.fileNameAttr.value = result.getString("FILE_NAME")
+
+      val commitDate: Date      = result.getDate("COMMIT_DATE")
+      bean.commitDateAttr.value = formatYmd.format(commitDate)
+      bean.commitHmsAttr.value  = formatHms.format(commitDate)
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list.head
+  }
+
   /**
    * == find ==
    *
