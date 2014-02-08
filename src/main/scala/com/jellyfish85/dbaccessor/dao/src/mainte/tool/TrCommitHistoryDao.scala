@@ -64,6 +64,46 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
    *
    *
    * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of TR_COMMIT_HISTORY
+   */
+  @throws(classOf[SQLException])
+  def findAll(conn: Connection): List[TrCommitHistoryBean] = {
+    var list: List[TrCommitHistoryBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_TR_COMMIT_HISTORY_ALL.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: TrCommitHistoryBean = new TrCommitHistoryBean
+
+      bean.repositoryKindAttr.value = result.getString("REPOSITORY_KIND")
+      bean.repositoryNameAttr.value = result.getString("REPOSITORY_NAME")
+      bean.rootUrlAttr.value = result.getString("ROOT_URL")
+      bean.rightBaseUrlAttr.value = result.getString("RIGHT_BASE_URL")
+      bean.leftBaseUrlAttr.value = result.getString("LEFT_BASE_URL")
+      bean.revisionAttr.value = result.getBigDecimal("REVISION")
+      bean.committerAttr.value = result.getString("COMMITTER")
+      bean.commentsAttr.value = result.getString("COMMENTS")
+      bean.actionAttr.value = result.getString("ACTION")
+      bean.pathAttr.value = result.getString("PATH")
+      bean.fileNameAttr.value = result.getString("FILE_NAME")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
+   * == find ==
+   *
+   * it searches TR_COMMIT_HISTORY by primary keys, and returns list of TrCommitHistoryBean
+   *
+   *
+   * @param conn JDBC Connection
    * @param bean TrCommitHistoryBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return list of TR_COMMIT_HISTORY
