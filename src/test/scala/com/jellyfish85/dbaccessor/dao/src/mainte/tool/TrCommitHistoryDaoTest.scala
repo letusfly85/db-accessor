@@ -40,5 +40,14 @@ class TrCommitHistoryDaoTest extends Specification {
     "return true for TR_COMMIT_HISTORY" in {
       bean11.revisionAttr.value must beEqualTo(new BigDecimal(1))
     }
+
+    bean01.repositoryKindAttr.setValue("subversion")
+    dao.update(db.conn, List(bean01))
+    db.jCommit
+
+    val bean12: TrCommitHistoryBean = dao.find(db.conn, bean01).head
+    "return true for TR_COMMIT_HISTORY" in {
+      bean12.repositoryKindAttr.value must beEqualTo("subversion")
+    }
   }
 }
