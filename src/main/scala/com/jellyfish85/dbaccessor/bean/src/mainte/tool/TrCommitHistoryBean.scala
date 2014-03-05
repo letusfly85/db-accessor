@@ -22,4 +22,8 @@ class TrCommitHistoryBean extends GeneralBean {
   var commitYmdAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var commitHmsAttr:	ColumnAttribute[String] = new ColumnAttribute()
 
+  var checkSumLeft:  ColumnAttribute[String] = new ColumnAttribute()
+  var checkSumRight: ColumnAttribute[String] = new ColumnAttribute()
+  var diffExists:    ColumnAttribute[Boolean] = new ColumnAttribute()
+
 }

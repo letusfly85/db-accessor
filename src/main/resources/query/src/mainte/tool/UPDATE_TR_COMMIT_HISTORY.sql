@@ -13,12 +13,15 @@ SET
   ,FILE_NAME         = ?            /* 11, FILE_NAME */
   ,COMMIT_YMD        = ?            /* 12, COMMIT_YMD */
   ,COMMIT_HMS        = ?            /* 13, COMMIT_HMS */
+  ,CHECKSUM_LEFT     = ?            /* 14, CHECKSUM_LEFT */
+  ,CHECKSUM_RIGHT    = ?            /* 15, CHECKSUM_RIGHT */
   ,KOSINYMD	    =	 TO_CHAR(SYSDATE,'YYYYMMDD')
   ,KOSINHMS	    =	 TO_CHAR(SYSDATE,'HH24MISS')
   ,KOSINUSER	=	 SYS_CONTEXT('USERENV','MODULE')
 WHERE
     1 = 1
-AND REPOSITORY_NAME = ?             /* 14, REPOSITORY_NAME */
-AND ROOT_URL        = ?             /* 15, ROOT_URL        */
-AND RIGHT_BASE_URL  = ?             /* 16, RIGHT_BASE_URL  */
-AND LEFT_BASE_URL   = ?             /* 17, LEFT_BASE_URL   */
+AND REPOSITORY_NAME = ?             /* 16, REPOSITORY_NAME */
+AND ROOT_URL        = ?             /* 17, ROOT_URL        */
+AND RIGHT_BASE_URL  = ?             /* 18, RIGHT_BASE_URL  */
+AND LEFT_BASE_URL   = ?             /* 19, LEFT_BASE_URL   */
+AND PATH            = ?             /* 20, PATH            */

@@ -104,6 +104,49 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
    *
    *
    * @param conn JDBC Connection
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of TR_COMMIT_HISTORY
+   */
+  @throws(classOf[SQLException])
+  def findModified(conn: Connection, leftBaseUrl: String): List[TrCommitHistoryBean] = {
+    var list: List[TrCommitHistoryBean] = List()
+
+    val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_TR_COMMIT_HISTORY_EXISTS.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, leftBaseUrl)
+    stmt.setString(2, leftBaseUrl)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      val bean: TrCommitHistoryBean = new TrCommitHistoryBean
+
+      bean.repositoryKindAttr.value = result.getString("REPOSITORY_KIND")
+      bean.repositoryNameAttr.value = result.getString("REPOSITORY_NAME")
+      bean.rootUrlAttr.value = result.getString("ROOT_URL")
+      bean.rightBaseUrlAttr.value = result.getString("RIGHT_BASE_URL")
+      bean.leftBaseUrlAttr.value = result.getString("LEFT_BASE_URL")
+      bean.revisionAttr.value = result.getBigDecimal("REVISION")
+      bean.committerAttr.value = result.getString("COMMITTER")
+      bean.commentsAttr.value = result.getString("COMMENTS")
+      bean.actionAttr.value = result.getString("ACTION")
+      bean.pathAttr.value = result.getString("PATH")
+      bean.fileNameAttr.value = result.getString("FILE_NAME")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
+  /**
+   * == find ==
+   *
+   * it searches TR_COMMIT_HISTORY by primary keys, and returns list of TrCommitHistoryBean
+   *
+   *
+   * @param conn JDBC Connection
    * @param bean TrCommitHistoryBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return list of TR_COMMIT_HISTORY
@@ -226,12 +269,15 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
       stmt.setString(11, bean.fileNameAttr.value)
       stmt.setString(12, bean.commitYmdAttr.value)
       stmt.setString(13, bean.commitHmsAttr.value)
+      stmt.setString(14, bean.checkSumLeft.value)
+      stmt.setString(15, bean.checkSumRight.value)
 
-      stmt.setString(14, bean.repositoryNameAttr.value)
-      stmt.setString(15, bean.rootUrlAttr.value)
-      stmt.setString(16, bean.rightBaseUrlAttr.value)
-      stmt.setString(17, bean.leftBaseUrlAttr.value)
-      
+      stmt.setString(16, bean.repositoryNameAttr.value)
+      stmt.setString(17, bean.rootUrlAttr.value)
+      stmt.setString(18, bean.rightBaseUrlAttr.value)
+      stmt.setString(19, bean.leftBaseUrlAttr.value)
+      stmt.setString(20, bean.pathAttr.value)
+
       stmt.addBatch()
     }
 
@@ -242,6 +288,84 @@ class TrCommitHistoryDao extends GeneralDao[TrCommitHistoryBean] {
   }
 
   /**
+   * == update ==
+   *
+   * it updates TR_COMMIT_HISTORY using list of TrCommitHistoryBean, and returns a number of updated records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of TrCommitHistoryBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def update(conn: Connection, list: util.ArrayList[TrCommitHistoryBean]): Int = {
+    var result: Int = 0
+
+    var _list: List[TrCommitHistoryBean] = List()
+    for (i <- 0 until list.size()) {
+      _list ::= list.get(i)
+    }
+
+    result = update(conn, _list)
+    result
+  }
+
+  /**
+   * == update ==
+   *
+   * it updates TR_COMMIT_HISTORY using list of TrCommitHistoryBean, and returns a number of updated records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of TrCommitHistoryBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def updateByRelativePath(conn: Connection, list: List[TrCommitHistoryBean]): Int = {
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/UPDATE_TR_COMMIT_HISTORY_BY_RELATIVE_PATH.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    list.foreach {bean: TrCommitHistoryBean =>
+      stmt.setString(1, bean.checkSumLeft.value)
+      stmt.setString(2, bean.checkSumRight.value)
+
+      stmt.setString(3, bean.pathAttr.value.replaceAll(bean.leftBaseUrlAttr.value, ""))
+
+      stmt.addBatch()
+    }
+
+    result = stmt.executeBatch().size
+    stmt.close()
+
+    result
+  }
+
+  /**
+   * == update ==
+   *
+   * it updates TR_COMMIT_HISTORY using list of TrCommitHistoryBean, and returns a number of updated records.
+   *
+   * @param conn JDBC Connection
+   * @param list list of TrCommitHistoryBean
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return result which is the number of executed records
+   */
+  @throws(classOf[SQLException])
+  def updateByRelativePath(conn: Connection, list: util.ArrayList[TrCommitHistoryBean]): Int = {
+    var result: Int = 0
+
+    var _list: List[TrCommitHistoryBean] = List()
+    for (i <- 0 until list.size()) {
+      _list ::= list.get(i)
+    }
+
+    result = updateByRelativePath(conn, _list)
+    result
+  }
+
+    /**
    * == delete ==
    *
    * it deletes TR_COMMIT_HISTORY by primary keys, and returns a number of deleted records.

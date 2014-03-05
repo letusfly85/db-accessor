@@ -193,7 +193,12 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     }
     stmt.close()
 
-    list.head
+    if (list.isEmpty) {
+      throw new SQLException()
+
+    } else {
+      list.head
+    }
   }
 
   /**
