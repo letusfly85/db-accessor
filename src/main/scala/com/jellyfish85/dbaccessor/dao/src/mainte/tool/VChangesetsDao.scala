@@ -114,7 +114,7 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
       conn: Connection, fromRevision: BigDecimal, toRevision: BigDecimal, path: String, repositoryCd: String
                             ): List[VChangesetsBean] = {
     val formatYmd: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
-    val formatHms: SimpleDateFormat = new SimpleDateFormat("hhmmss")
+    val formatHms: SimpleDateFormat = new SimpleDateFormat("HHmmss")
 
     var list: List[VChangesetsBean] = List()
 
