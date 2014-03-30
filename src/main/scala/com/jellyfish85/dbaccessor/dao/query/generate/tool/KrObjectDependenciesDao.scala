@@ -41,7 +41,10 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
       bean.backupOwnerAttr.value = result.getString("BACKUP_OWNER")
       bean.ifFlgAttr.value = result.getString("IF_FLG")
       bean.masterDataCheckFlgAttr.value = result.getString("MASTER_DATA_CHECK_FLG")
-      
+
+      bean.serviceNameAttr.value = result.getString("SERVICE_NAME")
+      bean.systemNameAttr.value  = result.getString("SYSTEM_NAME")
+
       list ::= bean
     }
     stmt.close()
@@ -81,11 +84,41 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
       bean.ifFlgAttr.value = result.getString("IF_FLG")
       bean.masterDataCheckFlgAttr.value = result.getString("MASTER_DATA_CHECK_FLG")
 
+      bean.serviceNameAttr.value = result.getString("SERVICE_NAME")
+      bean.systemNameAttr.value  = result.getString("SYSTEM_NAME")
+
       list ::= bean
     }
     stmt.close()
 
     list
+  }
+
+  /**
+   * グループコードを引数にサービス名を特定します。
+   *
+   *
+   * @param conn JDBC Connection
+   * @param dependentGrpCd dependentGrpCd
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of KR_OBJECT_DEPENDENCIES
+   */
+  @throws(classOf[SQLException])
+  def findServiceNameByDependentGrpCd(conn: Connection,   dependentGrpCd: String): String = {
+    var serviceName: String = ""
+
+    val sql:  String = generateSimpleQuery("/query/query/generate/tool/SELECT_KR_OBJECT_DEPENDENCIES_4_SERVICE_NAME.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    stmt.setString(1, dependentGrpCd)
+
+    val result: ResultSet = stmt.executeQuery()
+    while (result.next()) {
+      serviceName = result.getString("SERVICE_NAME")
+    }
+    stmt.close()
+
+    serviceName
   }
 
   /**
@@ -112,6 +145,7 @@ class KrObjectDependenciesDao extends GeneralDao[KrObjectDependenciesBean] {
       stmt.setString(5, bean.backupOwnerAttr.value)
       stmt.setString(6, bean.ifFlgAttr.value)
       stmt.setString(7, bean.masterDataCheckFlgAttr.value)
+      stmt.setString(8, bean.serviceNameAttr.value)
     
       stmt.addBatch()
     }

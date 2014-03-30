@@ -33,6 +33,7 @@ class KrObjectDependenciesDaoTest extends Specification {
     bean00.backupOwnerAttr.value        = "scott"
     bean00.ifFlgAttr.value              = "0"
     bean00.masterDataCheckFlgAttr.value = "0"
+    bean00.serviceNameAttr.value        = "my.service"
 
     //delete
     dao.delete(db.conn, bean00)
@@ -65,6 +66,7 @@ class KrObjectDependenciesDaoTest extends Specification {
     bean02.objectOwnerAttr.value        = "tiger"
     bean02.backupOwnerAttr.value        = "tiger"
     bean02.ifFlgAttr.value              = "0"
+    bean02.serviceNameAttr.value        = "my.service"
     bean02.masterDataCheckFlgAttr.value = "0"
 
     //update
@@ -80,6 +82,11 @@ class KrObjectDependenciesDaoTest extends Specification {
       bean03.backupOwnerAttr.value must beEqualTo("tiger")
       bean03.ifFlgAttr.value must beEqualTo("0")
       bean03.masterDataCheckFlgAttr.value must beEqualTo("0")
+    }
+
+    val serviceName: String = dao.findServiceNameByDependentGrpCd(db.conn, "00")
+    "return my.service for KR_OBJECT_DEPENDENCIES" in {
+      serviceName must beEqualTo("my.service")
     }
 
   }

@@ -1,0 +1,10 @@
+UPDATE KR_NASA_TABLE_SEQ
+SET
+   TABLE_NAME  = ?            /* 1, TABLE_NAME */
+  ,CURRENT_ID  = ?            /* 2, CURRENT_ID */
+  ,PREVIOUS_ID = ?            /* 3, PREVIOUS_ID */
+  ,KOSINYMD	    =	 TO_CHAR(SYSDATE,'YYYYMMDD')
+  ,KOSINHMS	    =	 TO_CHAR(SYSDATE,'HH24MISS')
+  ,KOSINUSER	=	 SYS_CONTEXT('USERENV','MODULE')
+WHERE
+    TABLE_NAME  = ?            /* 4, TABLE_NAME */

@@ -38,6 +38,7 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
         bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
         bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
         bean.serviceNameAttr.value        = result.getString("SERVICE_NAME")
+        bean.systemNameAttr.value      = result.getString("SYSTEM_NAME")
         bean.subsystemNameAttr.value      = result.getString("SUBSYSTEM_NAME")
         bean.revisionAttr.value           = result.getBigDecimal("REVISION")
         bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
@@ -99,6 +100,7 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
       bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
       bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
       bean.serviceNameAttr.value        = result.getString("SERVICE_NAME")
+      bean.systemNameAttr.value      = result.getString("SYSTEM_NAME")
       bean.subsystemNameAttr.value      = result.getString("SUBSYSTEM_NAME")
       bean.revisionAttr.value           = result.getBigDecimal("REVISION")
       bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
@@ -146,6 +148,7 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
       bean.tabDefIdAttr.value           = result.getBigDecimal("TAB_DEF_ID")
       bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
       bean.serviceNameAttr.value        = result.getString("SERVICE_NAME")
+      bean.systemNameAttr.value      = result.getString("SYSTEM_NAME")
       bean.subsystemNameAttr.value      = result.getString("SUBSYSTEM_NAME")
       bean.revisionAttr.value           = result.getBigDecimal("REVISION")
       bean.logicalTableTagAttr.value    = result.getString("LOGICAL_TABLE_TAG")
@@ -223,6 +226,40 @@ class MsTablesDao extends GeneralDao[MsTablesBean] {
 
     list
   }
+
+  /**
+   * システム名称を引数にテーブル一覧を取得します。
+   *
+   *
+   * @param conn JDBC Connection
+   * @param systemName システム名称
+   * @throws java.sql.SQLException, which will be caught outside of itself.
+   * @return list of MS_TABLES
+   */
+  @throws(classOf[SQLException])
+  def findAllBySystemName(conn: Connection, systemName: String): List[MsTablesBean] = {
+    var list: List[MsTablesBean] = List()
+
+    val sql: String = generateSimpleQuery("/query/erd/mainte/tool/SELECT_MS_TABLES_BY_SYSTEM_NAME.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+    stmt.setString(1, systemName)
+
+    val result: ResultSet = stmt.executeQuery()
+
+    while (result.next()) {
+      val bean: MsTablesBean = new MsTablesBean()
+
+      bean.physicalTableNameAttr.value  = result.getString("PHYSICAL_TABLE_NAME")
+      bean.tableIdAttr.value            = result.getBigDecimal("TABLE_ID")
+      bean.revisionAttr.value           = result.getBigDecimal("REVISION")
+
+      list ::= bean
+    }
+    stmt.close()
+
+    list
+  }
+
 
   /**
    * == findOne ==

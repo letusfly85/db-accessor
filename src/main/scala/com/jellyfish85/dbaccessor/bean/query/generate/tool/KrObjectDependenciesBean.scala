@@ -16,4 +16,7 @@ class KrObjectDependenciesBean extends GeneralBean {
   var ifFlgAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var masterDataCheckFlgAttr:	ColumnAttribute[String] = new ColumnAttribute()
 
+  var serviceNameAttr: ColumnAttribute[String] = new ColumnAttribute()
+  var systemNameAttr:  ColumnAttribute[String] = new ColumnAttribute()
+
 }

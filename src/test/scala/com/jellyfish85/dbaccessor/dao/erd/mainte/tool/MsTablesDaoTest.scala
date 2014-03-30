@@ -121,5 +121,11 @@ class MsTablesDaoTest extends Specification {
     "return true for" in {
       _ticketNumbers must haveTheSameElementsAs(ticketNumbers)
     }
+
+    val bean06: MsTablesBean = dao.findAllBySystemName(db.conn, "hogehoge").head
+
+    "return x for the method findBySystemName" in {
+      bean06.physicalTableNameAttr.value must beEqualTo("x")
+    }
   }
 }

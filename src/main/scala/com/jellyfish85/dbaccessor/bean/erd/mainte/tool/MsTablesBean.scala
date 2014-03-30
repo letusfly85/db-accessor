@@ -12,6 +12,7 @@ class MsTablesBean extends GeneralBean {
   var tabDefIdAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var tableIdAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var serviceNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
+  var systemNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var subsystemNameAttr:	ColumnAttribute[String] = new ColumnAttribute()
   var revisionAttr:	ColumnAttribute[BigDecimal] = new ColumnAttribute()
   var logicalTableTagAttr:	ColumnAttribute[String] = new ColumnAttribute()

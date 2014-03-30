@@ -8,6 +8,9 @@ import org.apache.commons.io.FileUtils
 import org.fusesource.scalate.support.ScalaCompiler
 import com.jellyfish85.dbaccessor.dao.scaffold.AllTabColumnsDao
 import com.jellyfish85.dbaccessor.bean.scaffold.AllTabColumnsBean
+import org.apache.velocity.app.VelocityEngine
+import org.apache.velocity.{Template, VelocityContext}
+import org.apache.velocity.runtime.RuntimeConstants
 
 /**
  * == ORMapper Generator ==
@@ -61,7 +64,6 @@ class ORMapperGenerator extends CamelCase {
     FileUtils.forceMkdir(queryDir)
   }
 
-
   /**
    * == generate ==
    *
@@ -88,7 +90,9 @@ class ORMapperGenerator extends CamelCase {
 
     val tm: TypeMapper = new TypeMapper {}
     val cc: CamelCase  = new CamelCase  {}
-    val engine: TemplateEngine = new TemplateEngine()
+    val engine = new TemplateEngine
+
+
     try {
       engine.workingDirectory = new File("tmp")
 
@@ -107,6 +111,7 @@ class ORMapperGenerator extends CamelCase {
       )
 
       // generate bean and dao
+
       val bean = engine.layout("/template/scaffold/scala/bean.ssp", bindings)
       val dao  = engine.layout("/template/scaffold/scala/dao.ssp",  bindings)
 
@@ -166,11 +171,27 @@ class ORMapperGenerator extends CamelCase {
       case e: IOException =>
         e.printStackTrace()
 
-    } finally {
+    }
+    finally {
       //TODO need to confirm if it's necessary or not.
       engine.compiler.asInstanceOf[ScalaCompiler].compiler.askShutdown()
-
     }
   }
 
+  def generateByVelocity(tableName: String) {
+    val ve = new VelocityEngine()
+    ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+    ve.setProperty("classpath.resource.loader.class",
+      "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    ve.init()
+
+    val template: Template = ve.getTemplate("template/scaffold/hoge.vm")
+    val stringWriter: StringWriter = new StringWriter()
+
+    val context: VelocityContext = new VelocityContext()
+    context.put("tableName", tableName)
+    template.merge(context, stringWriter)
+
+    println(stringWriter.toString)
+  }
 }

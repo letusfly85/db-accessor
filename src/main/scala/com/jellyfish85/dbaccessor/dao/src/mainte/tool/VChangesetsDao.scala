@@ -219,8 +219,6 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
     val sql:  String = generateSimpleQuery("/query/src/mainte/tool/SELECT_V_CHANGESETS.sql")
     val stmt: PreparedStatement = conn.prepareStatement(sql)
 
-    //TODO stmt.setMethods
-
     val result: ResultSet = stmt.executeQuery()
     while (result.next()) {
       val bean: VChangesetsBean = new VChangesetsBean
@@ -350,11 +348,16 @@ class VChangesetsDao extends GeneralDao[VChangesetsBean] {
    * @param  bean VChangesetsBean
    * @throws java.sql.SQLException, which will be caught outside of itself.
    * @return result which is the number of executed records
-   * @deprecated there is no necessary to use merge for this class.
    */
   @throws(classOf[SQLException])
   def merge(conn: Connection,  bean: VChangesetsBean): Int = {
-    val result: Int = 0
+    var result: Int = 0
+
+    val sql: String = generateSimpleQuery("/query/src/mainte/tool/MERGE_V_CHANGESETS.sql")
+    val stmt: PreparedStatement = conn.prepareStatement(sql)
+
+    result = stmt.executeUpdate()
+    stmt.close()
 
     result
   }

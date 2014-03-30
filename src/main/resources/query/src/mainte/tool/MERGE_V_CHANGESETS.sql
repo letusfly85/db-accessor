@@ -1,23 +1,24 @@
-MERGE INTO V_CHANGESETS
-USING DUAL
+MERGE INTO V_CHANGESETS TGT
+USING (
+    SELECT
+        WK.REVISION,
+        WK.COMMITTER,
+        WK.COMMENTS,
+        WK.ACTION,
+        WK.PATH,
+        WK.FILE_NAME,
+        WK.COMMIT_DATE,
+        WK.COMMIT_HMS
+    FROM
+        WK_CHANGE_SETS WK
+) SRC
   ON (
-    /* TODO */
+    TGT.REVISION = SRC.REVISION
   )
--- 既存レコードの更新
-WHEN MATCHED THEN
-UPDATE SET
-  REVISION = ?             /* 1, REVISION */
-  ,COMMITTER = ?            /* 2, COMMITTER */
-  ,COMMENTS = ?            /* 3, COMMENTS */
-  ,ACTION = ?            /* 4, ACTION */
-  ,PATH = ?            /* 5, PATH */
-  ,FILE_NAME = ?            /* 6, FILE_NAME */
-  ,COMMIT_DATE = ?            /* 7, COMMIT_DATE */
-  ,COMMIT_HMS = ?            /* 8, COMMIT_HMS */
 -- 新規レコードの作成
 WHEN NOT MATCHED THEN
 INSERT (
-  REVISION
+   REVISION
   ,COMMITTER
   ,COMMENTS
   ,ACTION
@@ -28,12 +29,12 @@ INSERT (
 )
 VALUES
 (
-  ?   /* 1, REVISION */
-  ,?  /* 2, COMMITTER */
-  ,?  /* 3, COMMENTS */
-  ,?  /* 4, ACTION */
-  ,?  /* 5, PATH */
-  ,?  /* 6, FILE_NAME */
-  ,?  /* 7, COMMIT_DATE */
-  ,?  /* 8, COMMIT_HMS */
+   SRC.REVISION
+  ,SRC.COMMITTER
+  ,SRC.COMMENTS
+  ,SRC.ACTION
+  ,SRC.PATH
+  ,SRC.FILE_NAME
+  ,SRC.COMMIT_DATE
+  ,SRC.COMMIT_HMS
 )
