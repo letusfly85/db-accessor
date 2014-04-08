@@ -65,7 +65,7 @@ class WkChangeSetsDao extends GeneralDao[WkChangeSetsBean] {
   @throws(classOf[SQLException])
   def findByRevision(conn: Connection,   revision: BigDecimal): List[WkChangeSetsBean] = {
     val formatYmd: SimpleDateFormat = new SimpleDateFormat("yyyyMMdd")
-    val formatHms: SimpleDateFormat = new SimpleDateFormat("hhmmss")
+    val formatHms: SimpleDateFormat = new SimpleDateFormat("HHmmss")
 
     var list: List[WkChangeSetsBean] = List()
 
@@ -85,7 +85,7 @@ class WkChangeSetsDao extends GeneralDao[WkChangeSetsBean] {
       bean.pathAttr.value       = result.getString("PATH")
       bean.fileNameAttr.value   = FilenameUtils.getName(bean.pathAttr.value)
 
-      val commitDate: Date      = result.getDate("COMMIT_DATE")
+      val commitDate: Timestamp = result.getTimestamp("COMMIT_DATE")
       bean.commitDateAttr.value = formatYmd.format(commitDate)
       bean.commitHmsAttr.value  = formatHms.format(commitDate)
 

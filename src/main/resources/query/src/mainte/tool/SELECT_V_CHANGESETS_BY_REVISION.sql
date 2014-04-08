@@ -6,7 +6,7 @@ select
 	,cs.comments
 	,c.action
 	,c.path
-	,cs.commit_date
+	,cs.committed_on as "commit_date"
 from
 	 changesets cs
 join changes c on cs.id = c.changeset_id
